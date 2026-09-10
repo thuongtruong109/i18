@@ -189,7 +189,10 @@ export function PhoneScene({ containerRef, model, finish, foldAngle, exploded, r
       const orbit = scrollProgress * Math.PI * 2.75;
       const breathing = reducedMotion ? 0 : Math.sin(elapsed * 0.72) * 0.055;
       const cameraPush = Math.sin(Math.min(1, Math.max(0, chapter - 1)) * Math.PI) * 1.2;
-      const targetRotationY = Math.PI + orbit + dragY;
+      const foldRatio = fold / (Math.PI / 2);
+      const closeViewAssist = THREE.MathUtils.smoothstep(foldRatio, 0.52, 0.9);
+      const duoViewRotation = config.model === "duo" ? fold * closeViewAssist : 0;
+      const targetRotationY = Math.PI + duoViewRotation + orbit + dragY;
       const targetRotationX = -0.08 + Math.sin(scrollProgress * Math.PI * 2) * 0.24 + dragX;
       world.rotation.y += (targetRotationY - world.rotation.y) * 0.055;
       world.rotation.x += (targetRotationX - world.rotation.x) * 0.055;
