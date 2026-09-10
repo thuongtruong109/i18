@@ -3,6 +3,14 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import type { Finish, Model } from "../product-data";
+import {
+  loadOfficialProduct,
+  OFFICIAL_DUO_MODEL_URLS,
+  OFFICIAL_PRO_MODEL_URLS,
+  setOfficialExploded,
+  type DuoPose,
+  type OfficialProduct,
+} from "./official-models";
 import { createDuoModel, createProModel, setAssemblyExploded } from "./scene-builders";
 
 const finishColors: Record<Finish, string> = {
@@ -18,19 +26,19 @@ type PhoneSceneProps = {
   containerRef: RefObject<HTMLElement | null>;
   model: Model;
   finish: Finish;
-  foldAngle: number;
+  duoPose: DuoPose;
   exploded: boolean;
   resetKey: number;
 };
 
-export function PhoneScene({ containerRef, model, finish, foldAngle, exploded, resetKey }: PhoneSceneProps) {
+export function PhoneScene({ containerRef, model, finish, duoPose, exploded, resetKey }: PhoneSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const configRef = useRef({ model, finish, foldAngle, exploded, resetKey });
+  const configRef = useRef({ model, finish, duoPose, exploded, resetKey });
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    configRef.current = { model, finish, foldAngle, exploded, resetKey };
-  }, [exploded, finish, foldAngle, model, resetKey]);
+    configRef.current = { model, finish, duoPose, exploded, resetKey };
+  }, [duoPose, exploded, finish, model, resetKey]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -61,8 +69,55 @@ export function PhoneScene({ containerRef, model, finish, foldAngle, exploded, r
     const world = new THREE.Group();
     const pro = createProModel();
     const duo = createDuoModel();
-    world.add(pro.root, duo.root);
+    const officialProHost = new THREE.Group();
+    const officialDuoHost = new THREE.Group();
+    world.add(pro.root, duo.root, officialProHost, officialDuoHost);
     scene.add(world);
+
+    const officialProModels = new Map<Finish, OfficialProduct>();
+    const pendingOfficialFinishes = new Set<Finish>();
+    let disposed = false;
+    const requestOfficialPro = (requestedFinish: Finish) => {
+      const url = OFFICIAL_PRO_MODEL_URLS[requestedFinish];
+      if (!url || officialProModels.has(requestedFinish) || pendingOfficialFinishes.has(requestedFinish)) return;
+      pendingOfficialFinishes.add(requestedFinish);
+      void loadOfficialProduct(url, 6.42)
+        .then((product) => {
+          pendingOfficialFinishes.delete(requestedFinish);
+          if (disposed || product.meshCount === 0) {
+            canvas.dataset.modelSource = "procedural-fallback";
+            return;
+          }
+          product.root.visible = false;
+          officialProModels.set(requestedFinish, product);
+          officialProHost.add(product.root);
+          canvas.dataset.modelSource = "apple-ar-mesh";
+          canvas.dataset.meshCount = String(product.meshCount);
+        })
+        .catch(() => {
+          pendingOfficialFinishes.delete(requestedFinish);
+          canvas.dataset.modelSource = "procedural-fallback";
+        });
+    };
+    requestOfficialPro("burgundy");
+
+    const officialDuoModels = new Map<string, OfficialProduct>();
+    const pendingOfficialDuoModels = new Set<string>();
+    const requestOfficialDuo = (requestedFinish: Finish, requestedPose: DuoPose) => {
+      const url = OFFICIAL_DUO_MODEL_URLS[requestedPose][requestedFinish];
+      const key = `${requestedFinish}:${requestedPose}`;
+      if (!url || officialDuoModels.has(key) || pendingOfficialDuoModels.has(key)) return;
+      pendingOfficialDuoModels.add(key);
+      void loadOfficialProduct(url, 6.1)
+        .then((product) => {
+          pendingOfficialDuoModels.delete(key);
+          if (disposed || product.meshCount === 0) return;
+          product.root.visible = false;
+          officialDuoModels.set(key, product);
+          officialDuoHost.add(product.root);
+        })
+        .catch(() => pendingOfficialDuoModels.delete(key));
+    };
 
     const ambient = new THREE.HemisphereLight("#b7d8ff", "#16090d", 1.7);
     const key = new THREE.DirectionalLight("#ffffff", 7.5);
@@ -169,12 +224,28 @@ export function PhoneScene({ containerRef, model, finish, foldAngle, exploded, r
         lastResetKey = config.resetKey;
       }
 
-      pro.root.visible = config.model === "pro";
-      duo.root.visible = config.model === "duo";
+      requestOfficialPro(config.finish);
+      const activeOfficialPro = officialProModels.get(config.finish) ?? null;
+      if (config.model === "duo") requestOfficialDuo(config.finish, config.duoPose);
+      const activeDuoKey = `${config.finish}:${config.duoPose}`;
+      const activeOfficialDuo = officialDuoModels.get(activeDuoKey) ?? null;
+      const useOfficialPro = activeOfficialPro !== null;
+      const useOfficialDuo = activeOfficialDuo !== null;
+      pro.root.visible = config.model === "pro" && !useOfficialPro;
+      officialProHost.visible = config.model === "pro" && useOfficialPro;
+      officialProModels.forEach((product, productFinish) => {
+        product.root.visible = useOfficialPro && productFinish === config.finish;
+      });
+      duo.root.visible = config.model === "duo" && !useOfficialDuo;
+      officialDuoHost.visible = config.model === "duo" && useOfficialDuo;
+      officialDuoModels.forEach((product, productKey) => {
+        product.root.visible = useOfficialDuo && productKey === activeDuoKey;
+      });
       targetColor.set(finishColors[config.finish]);
       [...pro.finishMaterials, ...duo.finishMaterials].forEach((material) => material.color.lerp(targetColor, 0.08));
 
-      const fold = (Math.PI - THREE.MathUtils.degToRad(config.foldAngle)) / 2;
+      const foldAngle = config.duoPose === "landscape" ? 180 : 24;
+      const fold = (Math.PI - THREE.MathUtils.degToRad(foldAngle)) / 2;
       duo.leftPivot.rotation.y += (fold - duo.leftPivot.rotation.y) * 0.1;
       duo.rightPivot.rotation.y += (-fold - duo.rightPivot.rotation.y) * 0.1;
 
@@ -184,6 +255,8 @@ export function PhoneScene({ containerRef, model, finish, foldAngle, exploded, r
       explodeAmount += ((config.exploded ? 1 : 0) - explodeAmount) * 0.08;
       setAssemblyExploded(pro, explodeAmount);
       setAssemblyExploded(duo, explodeAmount);
+      if (activeOfficialPro) setOfficialExploded(activeOfficialPro, explodeAmount);
+      if (activeOfficialDuo) setOfficialExploded(activeOfficialDuo, explodeAmount);
 
       const chapter = scrollProgress * 4;
       const orbit = scrollProgress * Math.PI * 2.75;
@@ -216,6 +289,7 @@ export function PhoneScene({ containerRef, model, finish, foldAngle, exploded, r
     animationFrame = window.requestAnimationFrame(animate);
 
     return () => {
+      disposed = true;
       window.cancelAnimationFrame(animationFrame);
       timer.dispose();
       resizeObserver.disconnect();

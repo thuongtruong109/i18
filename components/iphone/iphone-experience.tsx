@@ -4,15 +4,15 @@ import { Box, Maximize2, Minimize2, Rotate3D, Scan, Sparkles } from "lucide-reac
 import { useRef, useState, type CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Slider } from "@/components/ui/slider";
 import { finishes, modelCopy, modelFinishes, type Finish, type Model } from "./product-data";
+import type { DuoPose } from "./three/official-models";
 import { PhoneScene } from "./three/phone-scene";
 import { useConceptTool } from "./use-webmcp";
 
 export function IphoneExperience() {
   const [model, setModel] = useState<Model>("pro");
   const [finish, setFinish] = useState<Finish>("burgundy");
-  const [foldAngle, setFoldAngle] = useState([142]);
+  const [duoPose, setDuoPose] = useState<DuoPose>("landscape");
   const [exploded, setExploded] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const experienceRef = useRef<HTMLElement>(null);
@@ -35,7 +35,7 @@ export function IphoneExperience() {
             containerRef={experienceRef}
             model={model}
             finish={finish}
-            foldAngle={foldAngle[0]}
+            duoPose={duoPose}
             exploded={exploded}
             resetKey={resetKey}
           />
@@ -91,15 +91,17 @@ export function IphoneExperience() {
 
             {model === "duo" && (
               <div className="control-block control-block--fold">
-                <span className="control-caption">FOLD · {foldAngle[0]}°</span>
-                <Slider
-                  min={24}
-                  max={180}
-                  step={1}
-                  value={foldAngle}
-                  onValueChange={setFoldAngle}
-                  aria-label="Góc mở iPhone Duo"
-                />
+                <span className="control-caption">POSE</span>
+                <RadioGroup value={duoPose} onValueChange={(value) => setDuoPose(value as DuoPose)} className="model-picker pose-picker">
+                  <label htmlFor="pose-closed" className={duoPose === "closed" ? "is-active" : ""}>
+                    <RadioGroupItem id="pose-closed" value="closed" className="model-radio" />
+                    Closed
+                  </label>
+                  <label htmlFor="pose-landscape" className={duoPose === "landscape" ? "is-active" : ""}>
+                    <RadioGroupItem id="pose-landscape" value="landscape" className="model-radio" />
+                    Landscape
+                  </label>
+                </RadioGroup>
               </div>
             )}
 
@@ -164,15 +166,15 @@ export function IphoneExperience() {
           <article className="journey-copy journey-copy--five">
             <p className="journey-kicker">YOUR TURN / 04</p>
             <h2>Don’t just look.<br />Take control.</h2>
-            <p>Dùng bảng điều khiển để đổi model, vật liệu, góc gập và tách từng lớp phần cứng trong không gian 3D.</p>
+            <p>Dùng bảng điều khiển để đổi model, vật liệu, pose AR và tách từng lớp phần cứng trong không gian 3D.</p>
             <Button onClick={() => setExploded(true)} className="final-action"><Box aria-hidden="true" /> Explode the hardware</Button>
           </article>
         </div>
       </section>
 
       <section className="source-bar" id="sources">
-        <div><Sparkles aria-hidden="true" /><span>TRUE WEBGL / THREE.JS</span></div>
-        <p>Thiết kế 3D tham chiếu hình dáng và thông tin sản phẩm công khai.</p>
+        <div><Sparkles aria-hidden="true" /><span>APPLE AR MESH / THREE.JS</span></div>
+        <p>Topology, độ bo, cụm camera, UV và vật liệu được chuyển trực tiếp từ asset AR công khai của Apple.</p>
         <nav aria-label="Nguồn tham chiếu">
           <a href="https://www.apple.com/iphone-18-pro/" target="_blank" rel="noreferrer">Apple · 18 Pro</a>
           <a href="https://www.apple.com/iphone-duo/" target="_blank" rel="noreferrer">Apple · Duo</a>
