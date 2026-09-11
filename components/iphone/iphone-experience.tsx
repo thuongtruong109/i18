@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Box, Maximize2, Minimize2, Rotate3D, Scan } from "lucide-react";
 import { useRef, useState, type CSSProperties } from "react";
 import { ExperienceFooter } from "./experience-footer";
 import { LanguageSelect } from "./language-select";
+import { SegmentedControl } from "./segmented-control";
 import {
   finishes,
   modelFinishes,
@@ -92,34 +92,16 @@ export function IphoneExperience() {
           >
             <div className="control-block control-block--model">
               <span className="control-caption">{content.controls.model}</span>
-              <RadioGroup
+              <SegmentedControl
+                label={content.controls.model}
+                name="iphone-model"
                 value={model}
-                onValueChange={(value) => changeModel(value as Model)}
-                className="model-picker"
-              >
-                <label
-                  htmlFor="model-pro"
-                  className={model === "pro" ? "is-active" : ""}
-                >
-                  <RadioGroupItem
-                    id="model-pro"
-                    value="pro"
-                    className="model-radio"
-                  />
-                  18 Pro
-                </label>
-                <label
-                  htmlFor="model-duo"
-                  className={model === "duo" ? "is-active" : ""}
-                >
-                  <RadioGroupItem
-                    id="model-duo"
-                    value="duo"
-                    className="model-radio"
-                  />
-                  iPhone Duo
-                </label>
-              </RadioGroup>
+                onChange={changeModel}
+                options={[
+                  { value: "pro", label: "18 Pro" },
+                  { value: "duo", label: "iPhone Duo" },
+                ]}
+              />
             </div>
 
             <div className="control-block control-block--finish">
@@ -149,34 +131,17 @@ export function IphoneExperience() {
             {model === "duo" && (
               <div className="control-block control-block--fold">
                 <span className="control-caption">{content.controls.pose}</span>
-                <RadioGroup
+                <SegmentedControl
+                  label={content.controls.pose}
+                  name="duo-pose"
                   value={duoPose}
-                  onValueChange={(value) => setDuoPose(value as DuoPose)}
-                  className="model-picker pose-picker"
-                >
-                  <label
-                    htmlFor="pose-closed"
-                    className={duoPose === "closed" ? "is-active" : ""}
-                  >
-                    <RadioGroupItem
-                      id="pose-closed"
-                      value="closed"
-                      className="model-radio"
-                    />
-                    {content.controls.closed}
-                  </label>
-                  <label
-                    htmlFor="pose-landscape"
-                    className={duoPose === "landscape" ? "is-active" : ""}
-                  >
-                    <RadioGroupItem
-                      id="pose-landscape"
-                      value="landscape"
-                      className="model-radio"
-                    />
-                    {content.controls.landscape}
-                  </label>
-                </RadioGroup>
+                  onChange={setDuoPose}
+                  className="pose-picker"
+                  options={[
+                    { value: "closed", label: content.controls.closed },
+                    { value: "landscape", label: content.controls.landscape },
+                  ]}
+                />
               </div>
             )}
 

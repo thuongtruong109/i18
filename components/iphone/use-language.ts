@@ -18,12 +18,16 @@ export function useLanguage() {
   const [language, setLanguage] = useState<Language>("vi");
 
   useEffect(() => {
+    let initialLanguage: Language;
     try {
       const savedLanguage = window.localStorage.getItem(STORAGE_KEY);
-      setLanguage(isLanguage(savedLanguage) ? savedLanguage : browserLanguage());
+      initialLanguage = isLanguage(savedLanguage) ? savedLanguage : browserLanguage();
     } catch {
-      setLanguage(browserLanguage());
+      initialLanguage = browserLanguage();
     }
+
+    const hydrationTimer = window.setTimeout(() => setLanguage(initialLanguage), 0);
+    return () => window.clearTimeout(hydrationTimer);
   }, []);
 
   useEffect(() => {

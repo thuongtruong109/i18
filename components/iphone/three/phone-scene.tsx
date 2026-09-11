@@ -22,6 +22,10 @@ const finishColors: Record<Finish, string> = {
   "star-white": "#e4e2dd",
 };
 
+const AUTO_ROTATION_IDLE_DELAY_MS = 1800;
+const AUTO_ROTATION_SPEED = 0.18;
+const AUTO_ROTATION_EASING = 2.8;
+
 type PhoneSceneProps = {
   containerRef: RefObject<HTMLElement | null>;
   model: Model;
@@ -150,10 +154,18 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
     let zoom = 0;
     let targetZoom = 0;
     let explodeAmount = 0;
+    let autoRotation = 0;
+    let autoRotationSpeed = 0;
+    let lastFrameTime = performance.now();
+    let lastInteractionTime = performance.now();
     let lastResetKey = configRef.current.resetKey;
     let animationFrame = 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targetColor = new THREE.Color();
+
+    const markInteraction = () => {
+      lastInteractionTime = performance.now();
+    };
 
     const updateScroll = () => {
       const bounds = container.getBoundingClientRect();
@@ -171,6 +183,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
     };
 
     const handlePointerDown = (event: PointerEvent) => {
+      markInteraction();
       pointerDown = true;
       pointerX = event.clientX;
       pointerY = event.clientY;
@@ -178,6 +191,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       canvas.classList.add("is-grabbing");
     };
     const handlePointerMove = (event: PointerEvent) => {
+      markInteraction();
       if (!pointerDown) return;
       targetDragY += (event.clientX - pointerX) * 0.008;
       targetDragX += (event.clientY - pointerY) * 0.006;
@@ -186,12 +200,15 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       pointerY = event.clientY;
     };
     const handlePointerUp = (event: PointerEvent) => {
+      markInteraction();
       pointerDown = false;
       if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
       canvas.classList.remove("is-grabbing");
     };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "+", "-"].includes(event.key)) event.preventDefault();
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "+", "-"].includes(event.key)) return;
+      markInteraction();
+      event.preventDefault();
       if (event.key === "ArrowLeft") targetDragY -= 0.18;
       if (event.key === "ArrowRight") targetDragY += 0.18;
       if (event.key === "ArrowUp") targetDragX -= 0.12;
@@ -199,10 +216,14 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       if (event.key === "+") targetZoom = Math.min(2, targetZoom + 0.3);
       if (event.key === "-") targetZoom = Math.max(-1.2, targetZoom - 0.3);
     };
+    const handleScroll = () => {
+      markInteraction();
+      updateScroll();
+    };
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas);
-    window.addEventListener("scroll", updateScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     canvas.addEventListener("pointerdown", handlePointerDown);
     canvas.addEventListener("pointermove", handlePointerMove);
     canvas.addEventListener("pointerup", handlePointerUp);
@@ -216,13 +237,24 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
     const animate = (timestamp: number) => {
       timer.update(timestamp);
       const elapsed = timer.getElapsed();
+      const frameDelta = Math.min((timestamp - lastFrameTime) / 1000, 0.05);
+      lastFrameTime = timestamp;
       const config = configRef.current;
       if (config.resetKey !== lastResetKey) {
         targetDragX = 0;
         targetDragY = 0;
         targetZoom = 0;
+        autoRotation = 0;
+        autoRotationSpeed = 0;
+        markInteraction();
         lastResetKey = config.resetKey;
       }
+
+      const idleRotationSpeed = !reducedMotion && !pointerDown && timestamp - lastInteractionTime >= AUTO_ROTATION_IDLE_DELAY_MS
+        ? AUTO_ROTATION_SPEED
+        : 0;
+      autoRotationSpeed += (idleRotationSpeed - autoRotationSpeed) * Math.min(1, frameDelta * AUTO_ROTATION_EASING);
+      autoRotation += autoRotationSpeed * frameDelta;
 
       requestOfficialPro(config.finish);
       const activeOfficialPro = officialProModels.get(config.finish) ?? null;
@@ -265,7 +297,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       const foldRatio = fold / (Math.PI / 2);
       const closeViewAssist = THREE.MathUtils.smoothstep(foldRatio, 0.52, 0.9);
       const duoViewRotation = config.model === "duo" ? fold * closeViewAssist : 0;
-      const targetRotationY = Math.PI + duoViewRotation + orbit + dragY;
+      const targetRotationY = Math.PI + duoViewRotation + orbit + dragY + autoRotation;
       const targetRotationX = -0.08 + Math.sin(scrollProgress * Math.PI * 2) * 0.24 + dragX;
       world.rotation.y += (targetRotationY - world.rotation.y) * 0.055;
       world.rotation.x += (targetRotationX - world.rotation.x) * 0.055;
@@ -293,7 +325,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       window.cancelAnimationFrame(animationFrame);
       timer.dispose();
       resizeObserver.disconnect();
-      window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("scroll", handleScroll);
       canvas.removeEventListener("pointerdown", handlePointerDown);
       canvas.removeEventListener("pointermove", handlePointerMove);
       canvas.removeEventListener("pointerup", handlePointerUp);
