@@ -108,17 +108,39 @@ a { color: inherit; }
 }
 
 .experience-header > p,
-.experience-header > a:last-child {
+.sources-link {
   margin: 0;
   color: #89878c;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
 }
-.experience-header > a:last-child { justify-self: end; text-decoration: none; transition: color 180ms ease; }
-.experience-header > a:last-child:hover { color: #fff; }
+.header-actions { display: flex; align-items: center; justify-self: end; gap: 0.85rem; }
+.sources-link { text-decoration: none; transition: color 180ms ease; }
+.sources-link:hover { color: #fff; }
 .apple-mark { width: fit-content; color: #f7f5f1; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.06em; text-decoration: none; }
 .apple-mark span { color: #ad3f57; font-family: Georgia, serif; font-style: italic; }
+
+.language-trigger {
+  min-width: 5.2rem;
+  height: 2.35rem;
+  justify-content: center;
+  border-color: #ffffff24;
+  border-radius: 999px;
+  background: #111114b8;
+  color: #f4f2ed;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  box-shadow: inset 0 1px #ffffff0d;
+  backdrop-filter: blur(16px);
+}
+.language-trigger:hover { border-color: #ffffff3d; background: #1a1a1ed9; }
+.language-menu { min-width: 12rem; border-color: #ffffff20; background: #111114f2; backdrop-filter: blur(24px); }
+.language-menu [data-slot="select-item"] { min-height: 2.5rem; font-size: 0.875rem; }
+.language-menu [data-slot="select-item"]:focus { background: #752636; color: #fff5f6; }
+.language-option-code { width: 2.25rem; color: #9a979e; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; }
+.language-menu [data-slot="select-item"]:focus .language-option-code { color: #edb5c0; }
 
 .scene-reticle {
   position: absolute;
@@ -374,6 +396,11 @@ a { color: inherit; }
   .control-actions button:first-child { width: 2rem; padding: 0; font-size: 0; }
   .source-bar { grid-template-columns: 1fr; gap: 1rem; }
   .source-bar nav { flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .sources-link { display: none; }
+  .language-trigger { min-width: 4.8rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

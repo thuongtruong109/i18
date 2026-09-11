@@ -27,7 +27,9 @@ export default defineConfig(async () => {
 
   return {
     server: isCodexSeatbeltSandbox
-      ? { watch: { useFsEvents: false, usePolling: true } }
+      ? {
+          watch: { useFsEvents: false, usePolling: true },
+        }
       : undefined,
     plugins: [
       vinext(),

@@ -14,22 +14,3 @@ export const modelFinishes: Record<Model, Finish[]> = {
   pro: ["burgundy", "glacier", "silver", "black"],
   duo: ["night-sky", "star-white"],
 };
-
-export const modelCopy = {
-  pro: {
-    name: "iPhone 18 Pro",
-    eyebrow: "PRO FURTHER.",
-    intro: "Nhôm nguyên khối. Ba camera Fusion 48MP. Một cỗ máy A20 Pro được làm mát bằng buồng hơi.",
-    display: "6.3″ / 6.9″",
-    camera: "3 × 48MP",
-    battery: "45 giờ",
-  },
-  duo: {
-    name: "iPhone Duo",
-    eyebrow: "HELLO, HELLO.",
-    intro: "Hai màn hình, một bản lề titanium. Gập, mở và đứng ở đúng góc bạn muốn.",
-    display: "Màn hình kép",
-    camera: "Dual Fusion 48MP",
-    battery: "Pin kép",
-  },
-} as const;
