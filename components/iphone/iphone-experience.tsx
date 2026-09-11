@@ -1,9 +1,10 @@
 "use client";
 
-import { Box, Maximize2, Minimize2, Rotate3D, Scan, Sparkles } from "lucide-react";
+import { Box, Maximize2, Minimize2, Rotate3D, Scan } from "lucide-react";
 import { useRef, useState, type CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ExperienceFooter } from "./experience-footer";
 import { LanguageSelect } from "./language-select";
 import { finishes, modelFinishes, type Finish, type Model } from "./product-data";
 import type { DuoPose } from "./three/official-models";
@@ -174,15 +175,7 @@ export function IphoneExperience() {
         </div>
       </section>
 
-      <section className="source-bar" id="sources">
-        <div><Sparkles aria-hidden="true" /><span>{content.sources.badge}</span></div>
-        <p>{content.sources.description}</p>
-        <nav aria-label={content.sources.navLabel}>
-          <a href="https://www.apple.com/iphone-18-pro/" target="_blank" rel="noreferrer">Apple · 18 Pro</a>
-          <a href="https://www.apple.com/iphone-duo/" target="_blank" rel="noreferrer">Apple · Duo</a>
-          <a href="https://cellphones.com.vn/mobile/apple/iphone-18.html" target="_blank" rel="noreferrer">CellphoneS</a>
-        </nav>
-      </section>
+      <ExperienceFooter content={content.sources} />
     </main>
   );
 }

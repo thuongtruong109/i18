@@ -11,7 +11,7 @@ type ModelContent = {
   battery: string;
 };
 
-type Translation = {
+export type Translation = {
   meta: { title: string; description: string };
   header: {
     homeLabel: string;
@@ -52,7 +52,16 @@ type Translation = {
     finalBody: string;
     finalAction: string;
   };
-  sources: { badge: string; description: string; navLabel: string };
+  sources: {
+    badge: string;
+    title: string;
+    description: string;
+    navLabel: string;
+    resources: string;
+    experience: string;
+    backToTop: string;
+    conceptNote: string;
+  };
   finishes: Record<Finish, string>;
   models: Record<Model, ModelContent>;
 };
@@ -138,8 +147,13 @@ export const translations: Record<Language, Translation> = {
     },
     sources: {
       badge: "APPLE AR MESH / THREE.JS",
+      title: "Shaped from real geometry.",
       description: "Topology, curves, camera geometry, UVs, and materials are converted directly from Apple’s public AR assets.",
       navLabel: "Reference sources",
+      resources: "RESOURCES",
+      experience: "EXPERIENCE",
+      backToTop: "Back to the top",
+      conceptNote: "Independent product concept visualization.",
     },
     finishes: {
       burgundy: "Burgundy",
@@ -226,8 +240,13 @@ export const translations: Record<Language, Translation> = {
     },
     sources: {
       badge: "APPLE AR MESH / THREE.JS",
+      title: "Tạo hình từ hình học nguyên bản.",
       description: "Topology, độ bo, cụm camera, UV và vật liệu được chuyển trực tiếp từ asset AR công khai của Apple.",
       navLabel: "Nguồn tham chiếu",
+      resources: "NGUỒN THAM KHẢO",
+      experience: "TRẢI NGHIỆM",
+      backToTop: "Về đầu trang",
+      conceptNote: "Trực quan hóa concept sản phẩm độc lập.",
     },
     finishes: {
       burgundy: "Đỏ Burgundy",
@@ -314,8 +333,13 @@ export const translations: Record<Language, Translation> = {
     },
     sources: {
       badge: "MALHA AR APPLE / THREE.JS",
+      title: "Criado a partir de geometria real.",
       description: "Topologia, curvas, câmeras, UVs e materiais são convertidos diretamente dos recursos públicos de AR da Apple.",
       navLabel: "Fontes de referência",
+      resources: "RECURSOS",
+      experience: "EXPERIÊNCIA",
+      backToTop: "Voltar ao início",
+      conceptNote: "Visualização independente de um conceito de produto.",
     },
     finishes: {
       burgundy: "Borgonha",
@@ -402,8 +426,13 @@ export const translations: Record<Language, Translation> = {
     },
     sources: {
       badge: "MALLA AR DE APPLE / THREE.JS",
+      title: "Creado a partir de geometría real.",
       description: "La topología, las curvas, las cámaras, los UV y los materiales se convierten directamente desde los recursos AR públicos de Apple.",
       navLabel: "Fuentes de referencia",
+      resources: "RECURSOS",
+      experience: "EXPERIENCIA",
+      backToTop: "Volver al inicio",
+      conceptNote: "Visualización independiente de un concepto de producto.",
     },
     finishes: {
       burgundy: "Borgoña",
@@ -490,8 +519,13 @@ export const translations: Record<Language, Translation> = {
     },
     sources: {
       badge: "APPLE AR 网格 / THREE.JS",
+      title: "源自真实几何结构。",
       description: "拓扑结构、曲面、相机组件、UV 和材质均直接转换自 Apple 公开的 AR 资源。",
       navLabel: "参考资料",
+      resources: "参考资料",
+      experience: "体验",
+      backToTop: "返回顶部",
+      conceptNote: "独立制作的产品概念可视化。",
     },
     finishes: {
       burgundy: "勃艮第红",
@@ -578,8 +612,13 @@ export const translations: Record<Language, Translation> = {
     },
     sources: {
       badge: "APPLE ARメッシュ / THREE.JS",
+      title: "実際のジオメトリから生まれた造形。",
       description: "トポロジー、曲面、カメラ形状、UV、マテリアルは、Appleが公開するARアセットから直接変換されています。",
       navLabel: "参照元",
+      resources: "リソース",
+      experience: "体験",
+      backToTop: "ページの先頭へ",
+      conceptNote: "独自に制作した製品コンセプトのビジュアライゼーションです。",
     },
     finishes: {
       burgundy: "バーガンディ",
