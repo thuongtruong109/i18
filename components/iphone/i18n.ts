@@ -69,14 +69,14 @@ export type Translation = {
 export const languageOptions: ReadonlyArray<{
   value: Language;
   label: string;
-  shortLabel: string;
+  flagCode: string;
 }> = [
-  { value: "en", label: "English", shortLabel: "EN" },
-  { value: "vi", label: "Tiếng Việt", shortLabel: "VI" },
-  { value: "pt", label: "Português", shortLabel: "PT" },
-  { value: "es", label: "Español", shortLabel: "ES" },
-  { value: "zh", label: "简体中文", shortLabel: "中文" },
-  { value: "ja", label: "日本語", shortLabel: "日本" },
+  { value: "en", label: "English", flagCode: "gb" },
+  { value: "vi", label: "Tiếng Việt", flagCode: "vn" },
+  { value: "pt", label: "Português", flagCode: "pt" },
+  { value: "es", label: "Español", flagCode: "es" },
+  { value: "zh", label: "简体中文", flagCode: "cn" },
+  { value: "ja", label: "日本語", flagCode: "jp" },
 ];
 
 export const htmlLanguage: Record<Language, string> = {
