@@ -2,11 +2,18 @@
 
 import { useEffect, type Dispatch, type SetStateAction } from "react";
 import {
+  isProductCategory,
+  productCategoryCatalog,
+  productCategoryIds,
+  type ProductCategory,
+} from "./product-category-data";
+import {
   finishes,
   isFinish,
   isModel,
   modelFinishes,
   modelIds,
+  productCatalog,
   type Finish,
   type Model,
 } from "./product-data";
@@ -27,6 +34,7 @@ declare global {
 }
 
 export function useConceptTool(
+  setCategory: Dispatch<SetStateAction<ProductCategory>>,
   setModel: Dispatch<SetStateAction<Model>>,
   setFinish: Dispatch<SetStateAction<Finish>>,
 ) {
@@ -36,33 +44,49 @@ export function useConceptTool(
     const lifecycle = new AbortController();
 
     void Promise.resolve(registerTool({
-      name: "configure_iphone_concept",
-      title: "Cấu hình trải nghiệm iPhone 3D",
-      description: "Chọn dòng iPhone và lớp hoàn thiện đang hiển thị trong trải nghiệm.",
+      name: "configure_apple_product_experience",
+      title: "Cấu hình trải nghiệm sản phẩm Apple",
+      description: "Chọn nhóm sản phẩm Apple; với iPhone có thể chọn thêm model và màu hoàn thiện.",
       inputSchema: {
         type: "object",
         properties: {
+          product: { type: "string", enum: productCategoryIds },
           model: { type: "string", enum: modelIds },
           finish: { type: "string", enum: Object.keys(finishes) },
         },
-        required: ["model", "finish"],
+        required: ["product"],
         additionalProperties: false,
       },
       annotations: { readOnlyHint: false, untrustedContentHint: false },
       async execute(input) {
-        const value = input as { model?: string; finish?: string };
-        const requestedModel = value?.model ?? "";
-        const requestedFinish = value?.finish ?? "";
+        const value = input as { product?: string; model?: string; finish?: string };
+        const requestedCategory = value?.product ?? "";
+        if (!isProductCategory(requestedCategory)) {
+          throw new Error("Nhóm sản phẩm không hợp lệ.");
+        }
+
+        setCategory(requestedCategory);
+        if (requestedCategory !== "iphone") {
+          return { configured: true, product: requestedCategory };
+        }
+
+        const requestedModel = value.model ?? productCategoryCatalog.iphone.defaultModel ?? "";
         if (!isModel(requestedModel)) throw new Error("Dòng máy không hợp lệ.");
+        const requestedFinish = value.finish ?? productCatalog[requestedModel].defaultFinish;
         if (!isFinish(requestedFinish) || !modelFinishes[requestedModel].includes(requestedFinish)) {
           throw new Error("Màu không phù hợp với dòng máy đã chọn.");
         }
         setModel(requestedModel);
         setFinish(requestedFinish);
-        return { configured: true, model: value.model, finish: value.finish };
+        return {
+          configured: true,
+          product: requestedCategory,
+          model: requestedModel,
+          finish: requestedFinish,
+        };
       },
     }, { signal: lifecycle.signal })).catch(() => undefined);
 
     return () => lifecycle.abort();
-  }, [setFinish, setModel]);
+  }, [setCategory, setFinish, setModel]);
 }

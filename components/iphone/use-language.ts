@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { htmlLanguage, translations, type Language } from "./i18n";
 
-const STORAGE_KEY = "iphone-experience-language";
+const STORAGE_KEY = "apple-product-experience-language";
+const LEGACY_STORAGE_KEY = "iphone-experience-language";
 
 function isLanguage(value: string | null): value is Language {
   return value === "en" || value === "vi" || value === "pt" || value === "es" || value === "zh" || value === "ja";
@@ -20,7 +21,8 @@ export function useLanguage() {
   useEffect(() => {
     let initialLanguage: Language;
     try {
-      const savedLanguage = window.localStorage.getItem(STORAGE_KEY);
+      const savedLanguage = window.localStorage.getItem(STORAGE_KEY)
+        ?? window.localStorage.getItem(LEGACY_STORAGE_KEY);
       initialLanguage = isLanguage(savedLanguage) ? savedLanguage : browserLanguage();
     } catch {
       initialLanguage = browserLanguage();

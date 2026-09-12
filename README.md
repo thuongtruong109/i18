@@ -1,13 +1,16 @@
-# iPhone lineup interactive 3D
+# Apple Product Lab interactive 3D
 
-An interactive iPhone lineup experience built with React, Three.js, Vinext, and
-the Cloudflare runtime. It includes iPhone 18 Pro, iPhone Duo, and the complete
-iPhone 17, iPhone 16, and iPhone 15 families, including each Pro, Pro Max, Plus,
-base, Air, and e model Apple released in those generations. Every model is
-converted from Apple's public AR assets.
+An extensible Apple product catalog built with React, Three.js, Vinext, and the
+Cloudflare runtime. The product selector separates iPhone, iPad, Apple Watch,
+Mac, AirPods, and Apple Vision into independent catalog boundaries.
 
-The control dock groups devices by generation: choose a series first, then pick
-from only the models available in that series.
+The iPhone catalog currently includes iPhone 18 Pro, iPhone Duo, and the complete
+iPhone 17, iPhone 16, and iPhone 15 families. Its browser-ready models are
+converted from Apple's public AR assets. Other product categories expose their
+planned series and can receive dedicated model, finish, copy, and AR modules
+without coupling them to the iPhone catalog.
+
+The control dock follows the hierarchy `Product → Series → Model → Finish`.
 
 ## Requirements
 

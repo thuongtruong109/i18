@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Các dòng iPhone — Trải nghiệm 3D tương tác",
-  description: "Khám phá đầy đủ iPhone 16, iPhone 17 series và các dòng iPhone mới bằng mô hình AR chính thức của Apple.",
+  title: "Apple Product Lab — Trải nghiệm 3D tương tác",
+  description: "Khám phá các nhóm sản phẩm Apple và mô hình AR chính thức trong catalog 3D tương tác.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

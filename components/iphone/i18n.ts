@@ -22,6 +22,7 @@ export type Translation = {
   gesture: { rotate: string; zoom: string };
   controls: {
     panelLabel: string;
+    product: string;
     series: string;
     model: string;
     finish: string;
@@ -92,11 +93,11 @@ export const htmlLanguage: Record<Language, string> = {
 export const translations: Record<Language, Translation> = {
   en: {
     meta: {
-      title: "iPhone lineup — Interactive 3D",
-      description: "Explore Apple’s current iPhone lineup through official AR geometry in an interactive 3D experience.",
+      title: "Apple Product Lab — Interactive 3D",
+      description: "Explore Apple product families and official AR geometry in an interactive 3D catalog.",
     },
     header: {
-      homeLabel: "Interactive iPhone lineup, return to the start",
+      homeLabel: "Interactive Apple product catalog, return to the start",
       productLab: "INTERACTIVE PRODUCT LAB",
       sources: "SOURCES",
       language: "Choose display language",
@@ -104,6 +105,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "DRAG TO ROTATE", zoom: "+ / − KEYS TO ZOOM" },
     controls: {
       panelLabel: "3D model controls",
+      product: "PRODUCT",
       series: "SERIES",
       model: "MODEL",
       finish: "FINISH",
@@ -195,11 +197,11 @@ export const translations: Record<Language, Translation> = {
   },
   vi: {
     meta: {
-      title: "Các dòng iPhone — Trải nghiệm 3D tương tác",
-      description: "Khám phá các dòng iPhone hiện tại bằng hình học AR chính thức của Apple trong không gian 3D tương tác.",
+      title: "Apple Product Lab — Trải nghiệm 3D tương tác",
+      description: "Khám phá các nhóm sản phẩm Apple và hình học AR chính thức trong catalog 3D tương tác.",
     },
     header: {
-      homeLabel: "Các dòng iPhone tương tác, về đầu trải nghiệm",
+      homeLabel: "Catalog sản phẩm Apple tương tác, về đầu trải nghiệm",
       productLab: "PHÒNG LAB SẢN PHẨM TƯƠNG TÁC",
       sources: "NGUỒN",
       language: "Chọn ngôn ngữ hiển thị",
@@ -207,6 +209,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "KÉO ĐỂ XOAY", zoom: "PHÍM + / − ĐỂ ZOOM" },
     controls: {
       panelLabel: "Điều khiển mô hình 3D",
+      product: "SẢN PHẨM",
       series: "DÒNG",
       model: "PHIÊN BẢN",
       finish: "MÀU",
@@ -298,11 +301,11 @@ export const translations: Record<Language, Translation> = {
   },
   pt: {
     meta: {
-      title: "Linha iPhone — Experiência 3D interativa",
-      description: "Explore a linha atual do iPhone com a geometria AR oficial da Apple em uma experiência 3D interativa.",
+      title: "Apple Product Lab — Experiência 3D interativa",
+      description: "Explore famílias de produtos Apple e geometria AR oficial em um catálogo 3D interativo.",
     },
     header: {
-      homeLabel: "Linha iPhone interativa, voltar ao início",
+      homeLabel: "Catálogo interativo de produtos Apple, voltar ao início",
       productLab: "LABORATÓRIO INTERATIVO DE PRODUTOS",
       sources: "FONTES",
       language: "Escolher idioma de exibição",
@@ -310,6 +313,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ARRASTE PARA GIRAR", zoom: "TECLAS + / − PARA ZOOM" },
     controls: {
       panelLabel: "Controles do modelo 3D",
+      product: "PRODUTO",
       series: "SÉRIE",
       model: "MODELO",
       finish: "ACABAMENTO",
@@ -401,11 +405,11 @@ export const translations: Record<Language, Translation> = {
   },
   es: {
     meta: {
-      title: "Gama iPhone — Experiencia 3D interactiva",
-      description: "Explora la gama actual de iPhone con la geometría AR oficial de Apple en una experiencia 3D interactiva.",
+      title: "Apple Product Lab — Experiencia 3D interactiva",
+      description: "Explora las familias de productos Apple y su geometría AR oficial en un catálogo 3D interactivo.",
     },
     header: {
-      homeLabel: "Gama iPhone interactiva, volver al inicio",
+      homeLabel: "Catálogo interactivo de productos Apple, volver al inicio",
       productLab: "LABORATORIO INTERACTIVO DE PRODUCTOS",
       sources: "FUENTES",
       language: "Elegir idioma de visualización",
@@ -413,6 +417,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ARRASTRA PARA GIRAR", zoom: "TECLAS + / − PARA ZOOM" },
     controls: {
       panelLabel: "Controles del modelo 3D",
+      product: "PRODUCTO",
       series: "SERIE",
       model: "MODELO",
       finish: "ACABADO",
@@ -504,11 +509,11 @@ export const translations: Record<Language, Translation> = {
   },
   zh: {
     meta: {
-      title: "iPhone 系列 — 互动 3D 体验",
-      description: "通过 Apple 官方 AR 几何结构，在互动 3D 体验中探索当前 iPhone 系列。",
+      title: "Apple 产品实验室 — 互动 3D 体验",
+      description: "在互动 3D 目录中探索 Apple 产品家族与官方 AR 几何结构。",
     },
     header: {
-      homeLabel: "iPhone 系列互动体验，返回开头",
+      homeLabel: "Apple 产品互动目录，返回开头",
       productLab: "互动产品实验室",
       sources: "资料来源",
       language: "选择显示语言",
@@ -516,6 +521,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "拖动以旋转", zoom: "按 + / − 键缩放" },
     controls: {
       panelLabel: "3D 模型控制",
+      product: "产品",
       series: "系列",
       model: "机型",
       finish: "外观",
@@ -607,11 +613,11 @@ export const translations: Record<Language, Translation> = {
   },
   ja: {
     meta: {
-      title: "iPhoneラインナップ — インタラクティブ3D",
-      description: "Apple公式ARジオメトリで、現在のiPhoneラインナップをインタラクティブな3D空間で探索できます。",
+      title: "Apple Product Lab — インタラクティブ3D",
+      description: "Apple製品ファミリーと公式ARジオメトリをインタラクティブな3Dカタログで探索できます。",
     },
     header: {
-      homeLabel: "iPhoneラインナップのインタラクティブ体験の先頭へ戻る",
+      homeLabel: "Apple製品のインタラクティブカタログの先頭へ戻る",
       productLab: "インタラクティブ・プロダクトラボ",
       sources: "情報源",
       language: "表示言語を選択",
@@ -619,6 +625,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ドラッグして回転", zoom: "+ / − キーでズーム" },
     controls: {
       panelLabel: "3Dモデルの操作",
+      product: "製品",
       series: "シリーズ",
       model: "モデル",
       finish: "仕上げ",

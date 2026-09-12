@@ -1,5 +1,5 @@
-import { IphoneExperience } from "@/components/iphone/iphone-experience";
+import { AppleProductExperience } from "@/components/iphone/iphone-experience";
 
 export default function Home() {
-  return <IphoneExperience />;
+  return <AppleProductExperience />;
 }

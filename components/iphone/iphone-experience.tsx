@@ -6,6 +6,12 @@ import { useRef, useState, type CSSProperties } from "react";
 import { DeviceSelect } from "./device-select";
 import { ExperienceFooter } from "./experience-footer";
 import { LanguageSelect } from "./language-select";
+import {
+  productCategoryCatalog,
+  type ProductCategory,
+} from "./product-category-data";
+import { ProductCategoryPreview } from "./product-category-preview";
+import { ProductSelect } from "./product-select";
 import { SegmentedControl } from "./segmented-control";
 import { SeriesSelect } from "./series-select";
 import { getProductCopy } from "./product-copy";
@@ -23,7 +29,8 @@ import { PhoneScene } from "./three/phone-scene";
 import { useLanguage } from "./use-language";
 import { useConceptTool } from "./use-webmcp";
 
-export function IphoneExperience() {
+export function AppleProductExperience() {
+  const [category, setCategory] = useState<ProductCategory>("iphone");
   const [model, setModel] = useState<Model>("pro");
   const [finish, setFinish] = useState<Finish>("burgundy");
   const [duoPose, setDuoPose] = useState<DuoPose>("landscape");
@@ -34,8 +41,9 @@ export function IphoneExperience() {
   const active = getProductCopy(content, language, model);
   const availableFinishes = modelFinishes[model];
   const series = getSeriesForModel(model);
+  const isIphone = category === "iphone";
 
-  useConceptTool(setModel, setFinish);
+  useConceptTool(setCategory, setModel, setFinish);
 
   function changeModel(next: Model) {
     setModel(next);
@@ -43,18 +51,33 @@ export function IphoneExperience() {
     setFinish(productCatalog[next].defaultFinish);
   }
 
+  function changeCategory(next: ProductCategory) {
+    setCategory(next);
+    setExploded(false);
+    const defaultModel = productCategoryCatalog[next].defaultModel;
+    if (defaultModel) changeModel(defaultModel);
+  }
+
   return (
-    <main className={`immersive-page immersive-page--${model}`}>
-      <section ref={experienceRef} className="immersive-stage" id="experience">
+    <main className={`immersive-page immersive-page--${category} immersive-page--${model}`}>
+      <section
+        ref={experienceRef}
+        className={`immersive-stage${isIphone ? "" : " immersive-stage--category"}`}
+        id="experience"
+      >
         <div className="stage-sticky">
-          <PhoneScene
-            containerRef={experienceRef}
-            model={model}
-            finish={finish}
-            duoPose={duoPose}
-            exploded={exploded}
-            resetKey={resetKey}
-          />
+          {isIphone ? (
+            <PhoneScene
+              containerRef={experienceRef}
+              model={model}
+              finish={finish}
+              duoPose={duoPose}
+              exploded={exploded}
+              resetKey={resetKey}
+            />
+          ) : (
+            <ProductCategoryPreview category={category} language={language} />
+          )}
 
           <header className="experience-header">
             <a
@@ -62,7 +85,7 @@ export function IphoneExperience() {
               className="apple-mark"
               aria-label={content.header.homeLabel}
             >
-              <span>i</span>Phone
+              <span>Apple</span> {productCategoryCatalog[category].shortLabel}
             </a>
             <p>{content.header.productLab}</p>
             <div className="header-actions">
@@ -74,73 +97,90 @@ export function IphoneExperience() {
             </div>
           </header>
 
-          <div className="scene-reticle" aria-hidden="true">
-            <span />
-            <span />
-          </div>
-          <div className="scene-index" aria-hidden="true">
-            <span>01</span>
-            <i />
-            <span>05</span>
-          </div>
+          {isIphone && (
+            <>
+              <div className="scene-reticle" aria-hidden="true">
+                <span />
+                <span />
+              </div>
+              <div className="scene-index" aria-hidden="true">
+                <span>01</span>
+                <i />
+                <span>05</span>
+              </div>
 
-          <div className="gesture-hint">
-            <Rotate3D size={18} aria-hidden="true" />
-            <span>
-              {content.gesture.rotate}
-              <br />
-              {content.gesture.zoom}
-            </span>
-          </div>
+              <div className="gesture-hint">
+                <Rotate3D size={18} aria-hidden="true" />
+                <span>
+                  {content.gesture.rotate}
+                  <br />
+                  {content.gesture.zoom}
+                </span>
+              </div>
+            </>
+          )}
 
           <aside
             className="control-dock"
             aria-label={content.controls.panelLabel}
           >
-            <div className="control-block control-block--series">
-              <span className="control-caption">{content.controls.series}</span>
-              <SeriesSelect
-                label={content.controls.series}
-                value={series}
-                onChange={(next) => changeModel(seriesCatalog[next].defaultModel)}
+            <div className="control-block control-block--product">
+              <span className="control-caption">{content.controls.product}</span>
+              <ProductSelect
+                label={content.controls.product}
+                value={category}
+                onChange={changeCategory}
               />
             </div>
 
-            <div className="control-block control-block--model">
-              <span className="control-caption">{content.controls.model}</span>
-              <DeviceSelect
-                label={content.controls.model}
-                value={model}
-                models={seriesCatalog[series].models}
-                onChange={changeModel}
-              />
-            </div>
-
-            <div className="control-block control-block--finish">
-              <span className="control-caption">
-                {content.controls.finish} · {content.finishes[finish]}
-              </span>
-              <div className="finish-picker">
-                {availableFinishes.map((finishId) => (
-                  <button
-                    key={finishId}
-                    className={finish === finishId ? "is-active" : ""}
-                    onClick={() => setFinish(finishId)}
-                    aria-label={content.controls.chooseFinish(
-                      content.finishes[finishId],
-                    )}
-                    aria-pressed={finish === finishId}
-                    style={
-                      {
-                        "--finish-color": finishes[finishId].color,
-                      } as CSSProperties
-                    }
+            {isIphone && (
+              <>
+                <div className="control-block control-block--series">
+                  <span className="control-caption">{content.controls.series}</span>
+                  <SeriesSelect
+                    label={content.controls.series}
+                    value={series}
+                    onChange={(next) => changeModel(seriesCatalog[next].defaultModel)}
                   />
-                ))}
-              </div>
-            </div>
+                </div>
 
-            {productCatalog[model].isFoldable && (
+                <div className="control-block control-block--model">
+                  <span className="control-caption">{content.controls.model}</span>
+                  <DeviceSelect
+                    label={content.controls.model}
+                    value={model}
+                    models={seriesCatalog[series].models}
+                    onChange={changeModel}
+                  />
+                </div>
+
+                <div className="control-block control-block--finish">
+                  <span className="control-caption">
+                    {content.controls.finish} · {content.finishes[finish]}
+                  </span>
+                  <div className="finish-picker">
+                    {availableFinishes.map((finishId) => (
+                      <button
+                        key={finishId}
+                        className={finish === finishId ? "is-active" : ""}
+                        onClick={() => setFinish(finishId)}
+                        aria-label={content.controls.chooseFinish(
+                          content.finishes[finishId],
+                        )}
+                        aria-pressed={finish === finishId}
+                        style={
+                          {
+                            "--finish-color": finishes[finishId].color,
+                          } as CSSProperties
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {isIphone && productCatalog[model].isFoldable && (
               <div className="control-block control-block--fold">
                 <span className="control-caption">{content.controls.pose}</span>
                 <SegmentedControl
@@ -157,34 +197,36 @@ export function IphoneExperience() {
               </div>
             )}
 
-            <div className="control-actions">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setExploded((value) => !value)}
-                aria-pressed={exploded}
-              >
-                {exploded ? (
-                  <Minimize2 aria-hidden="true" />
-                ) : (
-                  <Maximize2 aria-hidden="true" />
-                )}
-                {exploded
-                  ? content.controls.collapse
-                  : content.controls.explode}
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                onClick={() => setResetKey((value) => value + 1)}
-                aria-label={content.controls.resetView}
-              >
-                <Scan aria-hidden="true" />
-              </Button>
-            </div>
+            {isIphone && (
+              <div className="control-actions">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setExploded((value) => !value)}
+                  aria-pressed={exploded}
+                >
+                  {exploded ? (
+                    <Minimize2 aria-hidden="true" />
+                  ) : (
+                    <Maximize2 aria-hidden="true" />
+                  )}
+                  {exploded
+                    ? content.controls.collapse
+                    : content.controls.explode}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => setResetKey((value) => value + 1)}
+                  aria-label={content.controls.resetView}
+                >
+                  <Scan aria-hidden="true" />
+                </Button>
+              </div>
+            )}
           </aside>
 
-          <div className="live-specs" aria-live="polite">
+          {isIphone && <div className="live-specs" aria-live="polite">
             <span>
               {active.display}
               <small>{content.controls.display}</small>
@@ -197,10 +239,10 @@ export function IphoneExperience() {
               {active.battery}
               <small>{content.controls.power}</small>
             </span>
-          </div>
+          </div>}
         </div>
 
-        <div className="scroll-narrative">
+        {isIphone && <div className="scroll-narrative">
           <article className="journey-copy journey-copy--one">
             <p className="journey-kicker">{content.journey.introKicker}</p>
             <h1>{active.name}</h1>
@@ -241,7 +283,7 @@ export function IphoneExperience() {
               <Box aria-hidden="true" /> {content.journey.finalAction}
             </Button>
           </article>
-        </div>
+        </div>}
       </section>
 
       <ExperienceFooter content={content.sources} />
