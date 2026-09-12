@@ -7,10 +7,11 @@ Mac, AirPods, and Apple Vision into independent catalog boundaries.
 The iPhone catalog includes iPhone 18 Pro, iPhone Duo, and the complete iPhone
 17, iPhone 16, and iPhone 15 families. The iPad catalog includes iPad Pro M5,
 iPad Air M4, iPad A16, and iPad mini A17 Pro. The Apple Watch catalog includes
-Apple Watch Series 11, Apple Watch Ultra 3, and Apple Watch SE 3. Their
-browser-ready models are converted from Apple's public AR assets. Mac, AirPods,
-and Apple Vision expose their planned series and can receive dedicated model,
-finish, copy, and AR modules without coupling them to the existing catalogs.
+Apple Watch Series 11, Apple Watch Ultra 3, and Apple Watch SE 3. The AirPods
+catalog includes AirPods 5, AirPods Pro 3, and AirPods Max 2. Their browser-ready
+models are converted from Apple's public AR assets. Mac and Apple Vision expose
+their planned series and can receive dedicated model, finish, copy, and AR
+modules without coupling them to the existing catalogs.
 
 Apple introduced Series 12 and Ultra 4 in September 2026, but their current
 product pages do not publish downloadable USDZ assets. The catalog therefore

@@ -3,6 +3,7 @@ export type ProductCopy = {
   eyebrow: string;
   intro: string;
   display: string;
+  primarySpecLabel?: string;
   camera: string;
   secondarySpecLabel?: string;
   battery: string;

@@ -3,6 +3,7 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import {
+  isAirPodsModel,
   isAppleWatchModel,
   isIpadModel,
   productCatalog,
@@ -281,6 +282,7 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
       const useOfficial = activeOfficial !== null;
       pro.root.visible = !isIpadModel(config.model)
         && !isAppleWatchModel(config.model)
+        && !isAirPodsModel(config.model)
         && config.model !== "duo"
         && !useOfficial;
       duo.root.visible = config.model === "duo" && !useOfficial;
@@ -329,6 +331,8 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
           ? (window.innerWidth < 760 ? 0.58 : 0.76)
           : isAppleWatchModel(config.model)
             ? (window.innerWidth < 760 ? 0.68 : 0.88)
+          : isAirPodsModel(config.model)
+            ? (window.innerWidth < 760 ? 0.66 : 0.86)
           : (window.innerWidth < 760 ? 0.72 : 0.94);
       const focusScale = 1 + Math.max(0, 1 - Math.abs(scrollProgress - 0.48) * 7) * 0.33;
       world.scale.setScalar(baseScale * focusScale);

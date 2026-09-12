@@ -1,4 +1,5 @@
 import {
+  airPodsSeriesIds,
   appleWatchSeriesIds,
   ipadSeriesIds,
   iphoneSeriesIds,
@@ -60,9 +61,9 @@ export const productCategoryCatalog: Record<
   airpods: {
     label: "AirPods",
     shortLabel: "AirPods",
-    defaultModel: null,
-    series: [],
-    plannedSeries: ["AirPods", "AirPods Pro", "AirPods Max"],
+    defaultModel: "airpods-5",
+    series: airPodsSeriesIds,
+    plannedSeries: [],
   },
   "apple-vision": {
     label: "Apple Vision",

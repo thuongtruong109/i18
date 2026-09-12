@@ -13,7 +13,10 @@ from pxr import Usd, UsdGeom, UsdShade
 
 
 ARRAY_BUFFER = 34962
+ELEMENT_ARRAY_BUFFER = 34963
 FLOAT = 5126
+UNSIGNED_SHORT = 5123
+UNSIGNED_INT = 5125
 
 
 class GlbBuilder:
@@ -56,6 +59,21 @@ class GlbBuilder:
             accessor["min"] = values.min(axis=0).astype(float).tolist()
             accessor["max"] = values.max(axis=0).astype(float).tolist()
         self.accessors.append(accessor)
+        return len(self.accessors) - 1
+
+    def add_index_accessor(self, values: np.ndarray) -> int:
+        component_type = UNSIGNED_SHORT if int(values.max(initial=0)) <= 65535 else UNSIGNED_INT
+        dtype = "<u2" if component_type == UNSIGNED_SHORT else "<u4"
+        values = np.ascontiguousarray(values, dtype=dtype)
+        view = self.add_blob(values.tobytes(), ELEMENT_ARRAY_BUFFER)
+        self.accessors.append(
+            {
+                "bufferView": view,
+                "componentType": component_type,
+                "count": int(values.shape[0]),
+                "type": "SCALAR",
+            }
+        )
         return len(self.accessors) - 1
 
     def add_image(self, data: bytes, mime_type: str, name: str) -> int:
@@ -318,6 +336,25 @@ def expanded_attribute(
     return np.asarray(values, dtype=np.float32)[lookup]
 
 
+def compact_vertex_attributes(
+    attributes: dict[str, np.ndarray],
+) -> tuple[dict[str, np.ndarray], np.ndarray]:
+    """Deduplicate identical glTF vertices while preserving face-varying seams."""
+    ordered_names = list(attributes)
+    packed = np.concatenate([attributes[name] for name in ordered_names], axis=1)
+    _, unique_indices, inverse = np.unique(
+        packed,
+        axis=0,
+        return_index=True,
+        return_inverse=True,
+    )
+    compacted = {
+        name: np.ascontiguousarray(values[unique_indices], dtype=np.float32)
+        for name, values in attributes.items()
+    }
+    return compacted, inverse
+
+
 def convert(source: Path, output: Path, variants: list[str], subtree: str | None = None) -> None:
     stage = Usd.Stage.Open(str(source))
     if not stage:
@@ -366,9 +403,7 @@ def convert(source: Path, output: Path, variants: list[str], subtree: str | None
             world_points = transformed_vectors(matrix, points)
             positions = world_points[point_indices]
 
-            attributes: dict[str, int] = {
-                "POSITION": builder.add_float_accessor(positions, "VEC3", include_bounds=True)
-            }
+            vertex_attributes: dict[str, np.ndarray] = {"POSITION": positions}
             normals = mesh.GetNormalsAttr().Get() or []
             if normals:
                 world_normals = transformed_vectors(matrix, normals, is_normal=True)
@@ -380,7 +415,7 @@ def convert(source: Path, output: Path, variants: list[str], subtree: str | None
                     face_indices,
                 )
                 if expanded_normals is not None:
-                    attributes["NORMAL"] = builder.add_float_accessor(expanded_normals, "VEC3")
+                    vertex_attributes["NORMAL"] = expanded_normals
 
             st = UsdGeom.PrimvarsAPI(prim).GetPrimvar("st")
             if st and st.HasValue():
@@ -396,7 +431,18 @@ def convert(source: Path, output: Path, variants: list[str], subtree: str | None
                 )
                 if uvs is not None:
                     uvs[:, 1] = 1.0 - uvs[:, 1]
-                    attributes["TEXCOORD_0"] = builder.add_float_accessor(uvs, "VEC2")
+                    vertex_attributes["TEXCOORD_0"] = uvs
+
+            compacted_attributes, indices = compact_vertex_attributes(vertex_attributes)
+            attributes = {
+                name: builder.add_float_accessor(
+                    values,
+                    "VEC2" if name == "TEXCOORD_0" else "VEC3",
+                    include_bounds=name == "POSITION",
+                )
+                for name, values in compacted_attributes.items()
+            }
+            index_accessor = builder.add_index_accessor(indices)
 
             bound_material = UsdShade.MaterialBindingAPI(prim).ComputeBoundMaterial()[0]
             material_index = materials.export(bound_material if bound_material else None)
@@ -404,7 +450,12 @@ def convert(source: Path, output: Path, variants: list[str], subtree: str | None
                 {
                     "name": prim.GetName(),
                     "primitives": [
-                        {"attributes": attributes, "material": material_index, "mode": 4}
+                        {
+                            "attributes": attributes,
+                            "indices": index_accessor,
+                            "material": material_index,
+                            "mode": 4,
+                        }
                     ],
                 }
             )

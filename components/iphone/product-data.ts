@@ -25,17 +25,23 @@ export type AppleWatchModel =
   | "apple-watch-series-11"
   | "apple-watch-ultra-3"
   | "apple-watch-se-3";
+export type AirPodsModel =
+  | "airpods-5"
+  | "airpods-pro-3"
+  | "airpods-max-2";
 export type NewModel =
   | Iphone17Model
   | Iphone16Model
   | Iphone15Model
   | IpadModel
-  | AppleWatchModel;
+  | AppleWatchModel
+  | AirPodsModel;
 export type Model = LegacyModel | NewModel;
 export type IphoneSeries = "18" | "17" | "16" | "15";
 export type IpadSeries = "ipad-pro" | "ipad-air" | "ipad" | "ipad-mini";
 export type AppleWatchSeries = "apple-watch-series" | "apple-watch-ultra" | "apple-watch-se";
-export type Series = IphoneSeries | IpadSeries | AppleWatchSeries;
+export type AirPodsSeries = "airpods" | "airpods-pro" | "airpods-max";
+export type Series = IphoneSeries | IpadSeries | AppleWatchSeries | AirPodsSeries;
 
 export type Finish =
   | "burgundy"
@@ -243,6 +249,30 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     sceneRotationX: 1.92,
     sceneRotationY: -0.18,
   },
+  "airpods-5": {
+    label: "AirPods 5",
+    shortLabel: "AirPods 5",
+    defaultFinish: "white",
+    isFoldable: false,
+    sceneHeight: 6.1,
+    sceneRotationY: 0.18,
+  },
+  "airpods-pro-3": {
+    label: "AirPods Pro 3",
+    shortLabel: "Pro 3",
+    defaultFinish: "white",
+    isFoldable: false,
+    sceneHeight: 6.1,
+    sceneRotationY: 0.18,
+  },
+  "airpods-max-2": {
+    label: "AirPods Max 2",
+    shortLabel: "Max 2",
+    defaultFinish: "midnight",
+    isFoldable: false,
+    sceneHeight: 6.5,
+    sceneRotationY: 0.18,
+  },
 };
 
 type SeriesDefinition = {
@@ -259,10 +289,16 @@ export const appleWatchSeriesIds = [
   "apple-watch-ultra",
   "apple-watch-se",
 ] as const satisfies ReadonlyArray<AppleWatchSeries>;
+export const airPodsSeriesIds = [
+  "airpods",
+  "airpods-pro",
+  "airpods-max",
+] as const satisfies ReadonlyArray<AirPodsSeries>;
 export const seriesIds = [
   ...iphoneSeriesIds,
   ...ipadSeriesIds,
   ...appleWatchSeriesIds,
+  ...airPodsSeriesIds,
 ] as const satisfies ReadonlyArray<Series>;
 
 export const seriesCatalog: Record<Series, SeriesDefinition> = {
@@ -332,6 +368,24 @@ export const seriesCatalog: Record<Series, SeriesDefinition> = {
     defaultModel: "apple-watch-se-3",
     models: ["apple-watch-se-3"],
   },
+  airpods: {
+    label: "AirPods",
+    shortLabel: "AirPods",
+    defaultModel: "airpods-5",
+    models: ["airpods-5"],
+  },
+  "airpods-pro": {
+    label: "AirPods Pro",
+    shortLabel: "Pro",
+    defaultModel: "airpods-pro-3",
+    models: ["airpods-pro-3"],
+  },
+  "airpods-max": {
+    label: "AirPods Max",
+    shortLabel: "Max",
+    defaultModel: "airpods-max-2",
+    models: ["airpods-max-2"],
+  },
 };
 
 export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
@@ -385,6 +439,9 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   "apple-watch-series-11": ["rose-gold"],
   "apple-watch-ultra-3": ["natural-titanium"],
   "apple-watch-se-3": ["midnight"],
+  "airpods-5": ["white"],
+  "airpods-pro-3": ["white"],
+  "airpods-max-2": ["midnight"],
 };
 
 export function isModel(value: string): value is Model {
@@ -426,6 +483,12 @@ export function isAppleWatchModel(model: Model): model is AppleWatchModel {
   return model === "apple-watch-series-11"
     || model === "apple-watch-ultra-3"
     || model === "apple-watch-se-3";
+}
+
+export function isAirPodsModel(model: Model): model is AirPodsModel {
+  return model === "airpods-5"
+    || model === "airpods-pro-3"
+    || model === "airpods-max-2";
 }
 
 export function isFinish(value: string): value is Finish {

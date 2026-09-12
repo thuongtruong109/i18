@@ -72,6 +72,15 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
   "apple-watch-se-3": {
     midnight: "/models/apple-watch-se-3.glb",
   },
+  "airpods-5": {
+    white: "/models/airpods-5.glb",
+  },
+  "airpods-pro-3": {
+    white: "/models/airpods-pro-3.glb",
+  },
+  "airpods-max-2": {
+    midnight: "/models/airpods-max-2.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";

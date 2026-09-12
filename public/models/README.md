@@ -18,6 +18,9 @@
 - `apple-watch-series-11.usdz` — Apple AR asset for Apple Watch Series 11 in Rose Gold with a Light Blush Sport Band.
 - `apple-watch-ultra-3.usdz` — Apple AR asset for Apple Watch Ultra 3 in Natural Titanium.
 - `apple-watch-se-3.usdz` — Apple AR asset for Apple Watch SE 3 in Midnight.
+- `airpods-5.usdz` — Apple AR asset for AirPods 5 in White.
+- `airpods-pro-3.usdz` — Apple AR asset for AirPods Pro 3 in White.
+- `airpods-max-2.usdz` — Apple AR asset for AirPods Max 2 with Apple's Midnight color variant selected for the browser export.
 - `iphone-18-pro*.glb` — browser-ready exports for Apple's Burgundy, Glacier, Silver, and Black variants.
 - `iphone-duo.glb` / `iphone-duo-night-sky.glb` — browser-ready Duo color exports.
 - `iphone-17-pro.glb` / `iphone-17-pro-max.glb` — separate browser-ready exports of the Pro and Pro Max subtrees from Apple's shared Cosmic Orange scene.
@@ -26,6 +29,7 @@
 - `iphone-15-pro*.glb` and `iphone-15*.glb` — browser-ready exports of all four iPhone 15 series devices.
 - `ipad-pro-m5.glb`, `ipad-air-m4.glb`, `ipad-a16.glb`, and `ipad-mini-a17-pro.glb` — browser-ready exports of the current iPad families.
 - `apple-watch-series-11.glb`, `apple-watch-ultra-3.glb`, and `apple-watch-se-3.glb` — browser-ready exports of the latest complete Apple Watch lineup for which Apple published public AR assets.
+- `airpods-5.glb`, `airpods-pro-3.glb`, and `airpods-max-2.glb` — indexed browser-ready exports of Apple's current AirPods, AirPods Pro, and AirPods Max AR scenes.
 
 The Three.js experience loads the GLB exports. They retain the source meshes, per-vertex normals,
 face-varying UVs, textures, and PBR material values; `scripts/convert_usdz_to_glb.py` performs the conversion.
@@ -54,3 +58,6 @@ Original public AR URLs:
 - https://www.apple.com/105/media/us/apple-watch-series-11/2025/cb7dae4b-d675-49db-8fe3-d4f635c1a345/ar/watch-series-11.usdz
 - https://www.apple.com/105/media/us/apple-watch-ultra-3/2025/dabb0ca4-1556-466c-a314-ae3ba2cc088e/ar/watch-ultra-3.usdz
 - https://www.apple.com/105/media/us/apple-watch-se-3/2025/499c4097-d6f9-4dbe-b2c3-7cdf022ce822/ar/watch-se-3.usdz
+- https://www.apple.com/105/media/us/airpods-5/2026/1bae77a6-82ef-46c2-875f-571e880dbfe2/ar/airpods-mid.usdz
+- https://www.apple.com/105/media/us/airpods-pro/2025/7acffb13-4adb-40b1-9393-8f1c99bc6c90/ar/airpods-pro.usdz
+- https://www.apple.com/105/media/us/airpods-max/2024/e8f376d6-82b2-40ca-8a22-5f87de755d6b/ar/airpods-max-midnight-variant.usdz

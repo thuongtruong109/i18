@@ -36,6 +36,9 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
             <a href="https://www.apple.com/newsroom/2025/09/apple-debuts-apple-watch-series-11-featuring-groundbreaking-health-insights/" target="_blank" rel="noreferrer">Apple · Watch Series 11 <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/newsroom/2025/09/introducing-apple-watch-ultra-3/" target="_blank" rel="noreferrer">Apple · Watch Ultra 3 <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/newsroom/2025/09/apple-introduces-apple-watch-se-3/" target="_blank" rel="noreferrer">Apple · Watch SE 3 <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/airpods-5/" target="_blank" rel="noreferrer">Apple · AirPods 5 <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/airpods-pro/" target="_blank" rel="noreferrer">Apple · AirPods Pro 3 <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/airpods-max/" target="_blank" rel="noreferrer">Apple · AirPods Max 2 <ArrowUpRight aria-hidden="true" /></a>
           </nav>
         </div>
 
@@ -47,7 +50,7 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
       </div>
 
       <div className="footer-bottom">
-        <span>iPHONE AR LAB / 2026</span>
+        <span>APPLE PRODUCT LAB / 2026</span>
         <span>THREE.JS / APPLE AR</span>
       </div>
     </footer>

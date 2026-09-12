@@ -231,7 +231,7 @@ export function AppleProductExperience() {
           {hasCatalog && <div className="live-specs" aria-live="polite">
             <span>
               {active.display}
-              <small>{content.controls.display}</small>
+              <small>{active.primarySpecLabel ?? content.controls.display}</small>
             </span>
             <span>
               {active.camera}
