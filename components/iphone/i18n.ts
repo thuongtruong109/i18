@@ -105,7 +105,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "DRAG TO ROTATE", zoom: "+ / − KEYS TO ZOOM" },
     controls: {
       panelLabel: "3D model controls",
-      product: "PRODUCT",
+      product: "CATALOG",
       series: "SERIES",
       model: "MODEL",
       finish: "FINISH",
@@ -214,7 +214,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "KÉO ĐỂ XOAY", zoom: "PHÍM + / − ĐỂ ZOOM" },
     controls: {
       panelLabel: "Điều khiển mô hình 3D",
-      product: "SẢN PHẨM",
+      product: "DANH MỤC",
       series: "DÒNG",
       model: "PHIÊN BẢN",
       finish: "MÀU",
@@ -323,7 +323,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ARRASTE PARA GIRAR", zoom: "TECLAS + / − PARA ZOOM" },
     controls: {
       panelLabel: "Controles do modelo 3D",
-      product: "PRODUTO",
+      product: "CATÁLOGO",
       series: "SÉRIE",
       model: "MODELO",
       finish: "ACABAMENTO",
@@ -432,7 +432,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ARRASTRA PARA GIRAR", zoom: "TECLAS + / − PARA ZOOM" },
     controls: {
       panelLabel: "Controles del modelo 3D",
-      product: "PRODUCTO",
+      product: "CATÁLOGO",
       series: "SERIE",
       model: "MODELO",
       finish: "ACABADO",
@@ -541,7 +541,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "拖动以旋转", zoom: "按 + / − 键缩放" },
     controls: {
       panelLabel: "3D 模型控制",
-      product: "产品",
+      product: "产品目录",
       series: "系列",
       model: "机型",
       finish: "外观",
@@ -650,7 +650,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ドラッグして回転", zoom: "+ / − キーでズーム" },
     controls: {
       panelLabel: "3Dモデルの操作",
-      product: "製品",
+      product: "カタログ",
       series: "シリーズ",
       model: "モデル",
       finish: "仕上げ",
