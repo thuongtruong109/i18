@@ -33,6 +33,9 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
             <a href="https://www.apple.com/ipad-air/" target="_blank" rel="noreferrer">Apple · iPad Air <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/ipad-11/" target="_blank" rel="noreferrer">Apple · iPad <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/ipad-mini/" target="_blank" rel="noreferrer">Apple · iPad mini <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/newsroom/2025/09/apple-debuts-apple-watch-series-11-featuring-groundbreaking-health-insights/" target="_blank" rel="noreferrer">Apple · Watch Series 11 <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/newsroom/2025/09/introducing-apple-watch-ultra-3/" target="_blank" rel="noreferrer">Apple · Watch Ultra 3 <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/newsroom/2025/09/apple-introduces-apple-watch-se-3/" target="_blank" rel="noreferrer">Apple · Watch SE 3 <ArrowUpRight aria-hidden="true" /></a>
           </nav>
         </div>
 

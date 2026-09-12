@@ -3,6 +3,7 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import {
+  isAppleWatchModel,
   isIpadModel,
   productCatalog,
   type Finish,
@@ -31,6 +32,8 @@ const finishColors: Record<Finish, string> = {
   "desert-titanium": "#b9a08e",
   "natural-titanium": "#8f897f",
   "space-black": "#3a3a3c",
+  "rose-gold": "#c98978",
+  midnight: "#20252d",
   ultramarine: "#5463c6",
   blue: "#9eb7c6",
   purple: "#aaa5bd",
@@ -271,7 +274,10 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
       const activeModelKey = officialModelKey(config.model, config.finish, config.duoPose);
       const activeOfficial = officialModels.get(activeModelKey) ?? null;
       const useOfficial = activeOfficial !== null;
-      pro.root.visible = !isIpadModel(config.model) && config.model !== "duo" && !useOfficial;
+      pro.root.visible = !isIpadModel(config.model)
+        && !isAppleWatchModel(config.model)
+        && config.model !== "duo"
+        && !useOfficial;
       duo.root.visible = config.model === "duo" && !useOfficial;
       officialHost.visible = useOfficial;
       officialModels.forEach((product, productKey) => {
@@ -303,8 +309,9 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
       const closeViewAssist = THREE.MathUtils.smoothstep(foldRatio, 0.52, 0.9);
       const duoViewRotation = config.model === "duo" ? fold * closeViewAssist : 0;
       const sceneRotationY = productCatalog[config.model].sceneRotationY ?? 0;
+      const sceneRotationX = productCatalog[config.model].sceneRotationX ?? 0;
       const targetRotationY = Math.PI + sceneRotationY + duoViewRotation + orbit + dragY + autoRotation;
-      const targetRotationX = -0.08 + Math.sin(scrollProgress * Math.PI * 2) * 0.24 + dragX;
+      const targetRotationX = -0.08 + sceneRotationX + Math.sin(scrollProgress * Math.PI * 2) * 0.24 + dragX;
       world.rotation.y += (targetRotationY - world.rotation.y) * 0.055;
       world.rotation.x += (targetRotationX - world.rotation.x) * 0.055;
       world.rotation.z += ((scrollProgress - 0.5) * 0.12 - world.rotation.z) * 0.04;
@@ -315,6 +322,8 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
         ? (window.innerWidth < 760 ? 0.58 : 0.76)
         : isIpadModel(config.model)
           ? (window.innerWidth < 760 ? 0.58 : 0.76)
+          : isAppleWatchModel(config.model)
+            ? (window.innerWidth < 760 ? 0.68 : 0.88)
           : (window.innerWidth < 760 ? 0.72 : 0.94);
       const focusScale = 1 + Math.max(0, 1 - Math.abs(scrollProgress - 0.48) * 7) * 0.33;
       world.scale.setScalar(baseScale * focusScale);

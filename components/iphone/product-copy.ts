@@ -1,8 +1,10 @@
 import type { Language, Translation } from "./i18n";
+import { getAppleWatchProductCopy } from "./product-copy-apple-watch";
 import { getIphone15ProductCopy } from "./product-copy-15";
 import { getIphone16ProductCopy } from "./product-copy-16";
 import { getIpadProductCopy } from "./product-copy-ipad";
 import {
+  isAppleWatchModel,
   isIpadModel,
   isIphone15Model,
   isIphone16Model,
@@ -411,5 +413,6 @@ export function getProductCopy(
   if (isIphone16Model(model)) return getIphone16ProductCopy(language, model);
   if (isIphone15Model(model)) return getIphone15ProductCopy(language, model);
   if (isIpadModel(model)) return getIpadProductCopy(language, model);
+  if (isAppleWatchModel(model)) return getAppleWatchProductCopy(language, model);
   return iphone17ProductCopy[language][model];
 }

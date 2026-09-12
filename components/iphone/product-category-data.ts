@@ -1,4 +1,5 @@
 import {
+  appleWatchSeriesIds,
   ipadSeriesIds,
   iphoneSeriesIds,
   type Model,
@@ -45,9 +46,9 @@ export const productCategoryCatalog: Record<
   "apple-watch": {
     label: "Apple Watch",
     shortLabel: "Watch",
-    defaultModel: null,
-    series: [],
-    plannedSeries: ["Apple Watch Ultra", "Apple Watch Series", "Apple Watch SE"],
+    defaultModel: "apple-watch-series-11",
+    series: appleWatchSeriesIds,
+    plannedSeries: [],
   },
   mac: {
     label: "Mac",

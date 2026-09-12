@@ -21,11 +21,21 @@ export type IpadModel =
   | "ipad-air-m4"
   | "ipad-a16"
   | "ipad-mini-a17-pro";
-export type NewModel = Iphone17Model | Iphone16Model | Iphone15Model | IpadModel;
+export type AppleWatchModel =
+  | "apple-watch-series-11"
+  | "apple-watch-ultra-3"
+  | "apple-watch-se-3";
+export type NewModel =
+  | Iphone17Model
+  | Iphone16Model
+  | Iphone15Model
+  | IpadModel
+  | AppleWatchModel;
 export type Model = LegacyModel | NewModel;
 export type IphoneSeries = "18" | "17" | "16" | "15";
 export type IpadSeries = "ipad-pro" | "ipad-air" | "ipad" | "ipad-mini";
-export type Series = IphoneSeries | IpadSeries;
+export type AppleWatchSeries = "apple-watch-series" | "apple-watch-ultra" | "apple-watch-se";
+export type Series = IphoneSeries | IpadSeries | AppleWatchSeries;
 
 export type Finish =
   | "burgundy"
@@ -41,6 +51,8 @@ export type Finish =
   | "desert-titanium"
   | "natural-titanium"
   | "space-black"
+  | "rose-gold"
+  | "midnight"
   | "ultramarine"
   | "blue"
   | "purple"
@@ -53,6 +65,7 @@ type ProductDefinition = {
   defaultFinish: Finish;
   isFoldable: boolean;
   sceneHeight: number;
+  sceneRotationX?: number;
   sceneRotationY?: number;
   sceneRotationZ?: number;
 };
@@ -203,6 +216,33 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     isFoldable: false,
     sceneHeight: 6.15,
   },
+  "apple-watch-series-11": {
+    label: "Apple Watch Series 11",
+    shortLabel: "Series 11",
+    defaultFinish: "rose-gold",
+    isFoldable: false,
+    sceneHeight: 6.4,
+    sceneRotationX: 1.92,
+    sceneRotationY: -0.18,
+  },
+  "apple-watch-ultra-3": {
+    label: "Apple Watch Ultra 3",
+    shortLabel: "Ultra 3",
+    defaultFinish: "natural-titanium",
+    isFoldable: false,
+    sceneHeight: 6.55,
+    sceneRotationX: 1.92,
+    sceneRotationY: -0.18,
+  },
+  "apple-watch-se-3": {
+    label: "Apple Watch SE 3",
+    shortLabel: "SE 3",
+    defaultFinish: "midnight",
+    isFoldable: false,
+    sceneHeight: 6.3,
+    sceneRotationX: 1.92,
+    sceneRotationY: -0.18,
+  },
 };
 
 type SeriesDefinition = {
@@ -214,7 +254,16 @@ type SeriesDefinition = {
 
 export const iphoneSeriesIds = ["18", "17", "16", "15"] as const satisfies ReadonlyArray<IphoneSeries>;
 export const ipadSeriesIds = ["ipad-pro", "ipad-air", "ipad", "ipad-mini"] as const satisfies ReadonlyArray<IpadSeries>;
-export const seriesIds = [...iphoneSeriesIds, ...ipadSeriesIds] as const satisfies ReadonlyArray<Series>;
+export const appleWatchSeriesIds = [
+  "apple-watch-series",
+  "apple-watch-ultra",
+  "apple-watch-se",
+] as const satisfies ReadonlyArray<AppleWatchSeries>;
+export const seriesIds = [
+  ...iphoneSeriesIds,
+  ...ipadSeriesIds,
+  ...appleWatchSeriesIds,
+] as const satisfies ReadonlyArray<Series>;
 
 export const seriesCatalog: Record<Series, SeriesDefinition> = {
   "18": {
@@ -265,6 +314,24 @@ export const seriesCatalog: Record<Series, SeriesDefinition> = {
     defaultModel: "ipad-mini-a17-pro",
     models: ["ipad-mini-a17-pro"],
   },
+  "apple-watch-series": {
+    label: "Apple Watch Series",
+    shortLabel: "Series",
+    defaultModel: "apple-watch-series-11",
+    models: ["apple-watch-series-11"],
+  },
+  "apple-watch-ultra": {
+    label: "Apple Watch Ultra",
+    shortLabel: "Ultra",
+    defaultModel: "apple-watch-ultra-3",
+    models: ["apple-watch-ultra-3"],
+  },
+  "apple-watch-se": {
+    label: "Apple Watch SE",
+    shortLabel: "SE",
+    defaultModel: "apple-watch-se-3",
+    models: ["apple-watch-se-3"],
+  },
 };
 
 export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
@@ -285,6 +352,8 @@ export const finishes: Record<Finish, { name: string; color: string; accent: str
   "desert-titanium": { name: "Desert Titanium", color: "#b9a08e", accent: "#ead3c1" },
   "natural-titanium": { name: "Natural Titanium", color: "#8f897f", accent: "#d5cec2" },
   "space-black": { name: "Space Black", color: "#3a3a3c", accent: "#a5a5aa" },
+  "rose-gold": { name: "Rose Gold", color: "#c98978", accent: "#f2c4b7" },
+  midnight: { name: "Midnight", color: "#20252d", accent: "#858f9f" },
   ultramarine: { name: "Ultramarine", color: "#5463c6", accent: "#a8b0ff" },
   blue: { name: "Blue", color: "#9eb7c6", accent: "#dceef7" },
   purple: { name: "Purple", color: "#aaa5bd", accent: "#e8e4f3" },
@@ -313,6 +382,9 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   "ipad-air-m4": ["blue"],
   "ipad-a16": ["pink"],
   "ipad-mini-a17-pro": ["purple"],
+  "apple-watch-series-11": ["rose-gold"],
+  "apple-watch-ultra-3": ["natural-titanium"],
+  "apple-watch-se-3": ["midnight"],
 };
 
 export function isModel(value: string): value is Model {
@@ -348,6 +420,12 @@ export function isIpadModel(model: Model): model is IpadModel {
     || model === "ipad-air-m4"
     || model === "ipad-a16"
     || model === "ipad-mini-a17-pro";
+}
+
+export function isAppleWatchModel(model: Model): model is AppleWatchModel {
+  return model === "apple-watch-series-11"
+    || model === "apple-watch-ultra-3"
+    || model === "apple-watch-se-3";
 }
 
 export function isFinish(value: string): value is Finish {

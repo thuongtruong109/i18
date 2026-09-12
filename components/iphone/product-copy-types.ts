@@ -4,11 +4,13 @@ export type ProductCopy = {
   intro: string;
   display: string;
   camera: string;
+  secondarySpecLabel?: string;
   battery: string;
   designTitle: string;
   designBody: string;
   cameraTitle: string;
   cameraBody: string;
+  secondarySectionKicker?: string;
   performanceTitle: string;
   performanceBody: string;
 };

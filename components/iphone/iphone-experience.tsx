@@ -235,7 +235,7 @@ export function AppleProductExperience() {
             </span>
             <span>
               {active.camera}
-              <small>{content.controls.camera}</small>
+              <small>{active.secondarySpecLabel ?? content.controls.camera}</small>
             </span>
             <span>
               {active.battery}
@@ -260,7 +260,9 @@ export function AppleProductExperience() {
           </article>
 
           <article className="journey-copy journey-copy--three">
-            <p className="journey-kicker">{content.journey.cameraKicker}</p>
+            <p className="journey-kicker">
+              {active.secondarySectionKicker ?? content.journey.cameraKicker}
+            </p>
             <h2>{active.cameraTitle}</h2>
             <p>{active.cameraBody}</p>
           </article>

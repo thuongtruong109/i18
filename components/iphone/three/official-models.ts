@@ -63,6 +63,15 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
   "ipad-mini-a17-pro": {
     purple: "/models/ipad-mini-a17-pro.glb",
   },
+  "apple-watch-series-11": {
+    "rose-gold": "/models/apple-watch-series-11.glb",
+  },
+  "apple-watch-ultra-3": {
+    "natural-titanium": "/models/apple-watch-ultra-3.glb",
+  },
+  "apple-watch-se-3": {
+    midnight: "/models/apple-watch-se-3.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";
