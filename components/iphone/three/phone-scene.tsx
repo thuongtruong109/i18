@@ -23,6 +23,9 @@ const finishColors: Record<Finish, string> = {
   lavender: "#b8afd1",
   "soft-pink": "#e7c1bd",
   "cosmic-orange": "#e95d22",
+  "desert-titanium": "#b9a08e",
+  ultramarine: "#5463c6",
+  white: "#f2f1ed",
 };
 
 const AUTO_ROTATION_IDLE_DELAY_MS = 1800;

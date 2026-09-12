@@ -24,6 +24,21 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
   "17e": {
     "soft-pink": "/models/iphone-17e.glb",
   },
+  "16-pro": {
+    "desert-titanium": "/models/iphone-16-pro.glb",
+  },
+  "16-pro-max": {
+    "desert-titanium": "/models/iphone-16-pro-max.glb",
+  },
+  "16": {
+    ultramarine: "/models/iphone-16.glb",
+  },
+  "16-plus": {
+    ultramarine: "/models/iphone-16-plus.glb",
+  },
+  "16e": {
+    white: "/models/iphone-16e.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";

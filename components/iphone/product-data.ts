@@ -1,5 +1,17 @@
 export type LegacyModel = "pro" | "duo";
-export type NewModel = "17-pro" | "17-pro-max" | "air" | "17" | "17e";
+export type Iphone17Model =
+  | "17-pro"
+  | "17-pro-max"
+  | "air"
+  | "17"
+  | "17e";
+export type Iphone16Model =
+  | "16-pro"
+  | "16-pro-max"
+  | "16"
+  | "16-plus"
+  | "16e";
+export type NewModel = Iphone17Model | Iphone16Model;
 export type Model = LegacyModel | NewModel;
 
 export type Finish =
@@ -12,7 +24,10 @@ export type Finish =
   | "sky-blue"
   | "lavender"
   | "soft-pink"
-  | "cosmic-orange";
+  | "cosmic-orange"
+  | "desert-titanium"
+  | "ultramarine"
+  | "white";
 
 type ProductDefinition = {
   label: string;
@@ -72,6 +87,41 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     isFoldable: false,
     sceneHeight: 6.42,
   },
+  "16-pro": {
+    label: "iPhone 16 Pro",
+    shortLabel: "16 Pro",
+    defaultFinish: "desert-titanium",
+    isFoldable: false,
+    sceneHeight: 6.42,
+  },
+  "16-pro-max": {
+    label: "iPhone 16 Pro Max",
+    shortLabel: "16 Pro Max",
+    defaultFinish: "desert-titanium",
+    isFoldable: false,
+    sceneHeight: 7,
+  },
+  "16": {
+    label: "iPhone 16",
+    shortLabel: "16",
+    defaultFinish: "ultramarine",
+    isFoldable: false,
+    sceneHeight: 6.31,
+  },
+  "16-plus": {
+    label: "iPhone 16 Plus",
+    shortLabel: "16 Plus",
+    defaultFinish: "ultramarine",
+    isFoldable: false,
+    sceneHeight: 6.9,
+  },
+  "16e": {
+    label: "iPhone 16e",
+    shortLabel: "16e",
+    defaultFinish: "white",
+    isFoldable: false,
+    sceneHeight: 6.28,
+  },
 };
 
 export const modelIds = [
@@ -82,6 +132,11 @@ export const modelIds = [
   "air",
   "17",
   "17e",
+  "16-pro",
+  "16-pro-max",
+  "16",
+  "16-plus",
+  "16e",
 ] as const satisfies ReadonlyArray<Model>;
 
 export const finishes: Record<Finish, { name: string; color: string; accent: string }> = {
@@ -95,6 +150,9 @@ export const finishes: Record<Finish, { name: string; color: string; accent: str
   lavender: { name: "Lavender", color: "#b8afd1", accent: "#eee9ff" },
   "soft-pink": { name: "Soft Pink", color: "#e7c1bd", accent: "#fff0ec" },
   "cosmic-orange": { name: "Cosmic Orange", color: "#e95d22", accent: "#ffad82" },
+  "desert-titanium": { name: "Desert Titanium", color: "#b9a08e", accent: "#ead3c1" },
+  ultramarine: { name: "Ultramarine", color: "#5463c6", accent: "#a8b0ff" },
+  white: { name: "White", color: "#f2f1ed", accent: "#ffffff" },
 };
 
 export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
@@ -105,10 +163,23 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   air: ["sky-blue"],
   "17": ["lavender"],
   "17e": ["soft-pink"],
+  "16-pro": ["desert-titanium"],
+  "16-pro-max": ["desert-titanium"],
+  "16": ["ultramarine"],
+  "16-plus": ["ultramarine"],
+  "16e": ["white"],
 };
 
 export function isModel(value: string): value is Model {
   return modelIds.some((model) => model === value);
+}
+
+export function isIphone16Model(model: Model): model is Iphone16Model {
+  return model === "16-pro"
+    || model === "16-pro-max"
+    || model === "16"
+    || model === "16-plus"
+    || model === "16e";
 }
 
 export function isFinish(value: string): value is Finish {

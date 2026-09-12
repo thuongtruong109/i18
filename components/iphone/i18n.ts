@@ -166,6 +166,9 @@ export const translations: Record<Language, Translation> = {
       lavender: "Lavender",
       "soft-pink": "Soft Pink",
       "cosmic-orange": "Cosmic Orange",
+      "desert-titanium": "Desert Titanium",
+      ultramarine: "Ultramarine",
+      white: "White",
     },
     models: {
       pro: {
@@ -263,6 +266,9 @@ export const translations: Record<Language, Translation> = {
       lavender: "Tím Oải Hương",
       "soft-pink": "Hồng Phấn",
       "cosmic-orange": "Cam Vũ Trụ",
+      "desert-titanium": "Titan Sa Mạc",
+      ultramarine: "Xanh Lưu Ly",
+      white: "Trắng",
     },
     models: {
       pro: {
@@ -360,6 +366,9 @@ export const translations: Record<Language, Translation> = {
       lavender: "Lavanda",
       "soft-pink": "Rosa Suave",
       "cosmic-orange": "Laranja Cósmico",
+      "desert-titanium": "Titânio-deserto",
+      ultramarine: "Ultramarino",
+      white: "Branco",
     },
     models: {
       pro: {
@@ -457,6 +466,9 @@ export const translations: Record<Language, Translation> = {
       lavender: "Lavanda",
       "soft-pink": "Rosa Suave",
       "cosmic-orange": "Naranja Cósmico",
+      "desert-titanium": "Titanio del Desierto",
+      ultramarine: "Ultramarino",
+      white: "Blanco",
     },
     models: {
       pro: {
@@ -554,6 +566,9 @@ export const translations: Record<Language, Translation> = {
       lavender: "薰衣草紫",
       "soft-pink": "柔粉色",
       "cosmic-orange": "宇宙橙色",
+      "desert-titanium": "沙漠色钛金属",
+      ultramarine: "群青色",
+      white: "白色",
     },
     models: {
       pro: {
@@ -651,6 +666,9 @@ export const translations: Record<Language, Translation> = {
       lavender: "ラベンダー",
       "soft-pink": "ソフトピンク",
       "cosmic-orange": "コズミックオレンジ",
+      "desert-titanium": "デザートチタニウム",
+      ultramarine: "ウルトラマリン",
+      white: "ホワイト",
     },
     models: {
       pro: {

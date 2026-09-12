@@ -1,20 +1,9 @@
 import type { Language, Translation } from "./i18n";
-import type { Model, NewModel } from "./product-data";
+import { getIphone16ProductCopy } from "./product-copy-16";
+import { isIphone16Model, type Iphone17Model, type Model } from "./product-data";
+import type { ProductCopy } from "./product-copy-types";
 
-export type ProductCopy = {
-  name: string;
-  eyebrow: string;
-  intro: string;
-  display: string;
-  camera: string;
-  battery: string;
-  designTitle: string;
-  designBody: string;
-  cameraTitle: string;
-  cameraBody: string;
-  performanceTitle: string;
-  performanceBody: string;
-};
+export type { ProductCopy } from "./product-copy-types";
 
 type ProSeriesBase = Omit<ProductCopy, "name" | "display" | "battery">;
 
@@ -26,7 +15,7 @@ function proSeriesCopy(
     maxDisplay: string;
     maxBattery: string;
   },
-): Pick<Record<NewModel, ProductCopy>, "17-pro" | "17-pro-max"> {
+): Pick<Record<Iphone17Model, ProductCopy>, "17-pro" | "17-pro-max"> {
   return {
     "17-pro": {
       ...base,
@@ -43,7 +32,7 @@ function proSeriesCopy(
   };
 }
 
-const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
+const iphone17ProductCopy: Record<Language, Record<Iphone17Model, ProductCopy>> = {
   en: {
     ...proSeriesCopy(
       {
@@ -411,5 +400,6 @@ export function getProductCopy(
     };
   }
 
-  return newProductCopy[language][model];
+  if (isIphone16Model(model)) return getIphone16ProductCopy(language, model);
+  return iphone17ProductCopy[language][model];
 }
