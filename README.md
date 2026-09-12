@@ -4,11 +4,12 @@ An extensible Apple product catalog built with React, Three.js, Vinext, and the
 Cloudflare runtime. The product selector separates iPhone, iPad, Apple Watch,
 Mac, AirPods, and Apple Vision into independent catalog boundaries.
 
-The iPhone catalog currently includes iPhone 18 Pro, iPhone Duo, and the complete
-iPhone 17, iPhone 16, and iPhone 15 families. Its browser-ready models are
+The iPhone catalog includes iPhone 18 Pro, iPhone Duo, and the complete iPhone
+17, iPhone 16, and iPhone 15 families. The iPad catalog includes iPad Pro M5,
+iPad Air M4, iPad A16, and iPad mini A17 Pro. Their browser-ready models are
 converted from Apple's public AR assets. Other product categories expose their
 planned series and can receive dedicated model, finish, copy, and AR modules
-without coupling them to the iPhone catalog.
+without coupling them to the existing catalogs.
 
 The control dock follows the hierarchy `Product → Series → Model → Finish`.
 

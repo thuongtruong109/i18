@@ -2,7 +2,12 @@
 
 import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { productCatalog, type Finish, type Model } from "../product-data";
+import {
+  isIpadModel,
+  productCatalog,
+  type Finish,
+  type Model,
+} from "../product-data";
 import {
   getOfficialModelUrl,
   loadOfficialProduct,
@@ -25,7 +30,10 @@ const finishColors: Record<Finish, string> = {
   "cosmic-orange": "#e95d22",
   "desert-titanium": "#b9a08e",
   "natural-titanium": "#8f897f",
+  "space-black": "#3a3a3c",
   ultramarine: "#5463c6",
+  blue: "#9eb7c6",
+  purple: "#aaa5bd",
   pink: "#e8c2c8",
   white: "#f2f1ed",
 };
@@ -40,7 +48,7 @@ function officialModelKey(model: Model, finish: Finish, duoPose: DuoPose) {
     : `${model}:${finish}`;
 }
 
-type PhoneSceneProps = {
+type ProductSceneProps = {
   containerRef: RefObject<HTMLElement | null>;
   model: Model;
   finish: Finish;
@@ -49,7 +57,7 @@ type PhoneSceneProps = {
   resetKey: number;
 };
 
-export function PhoneScene({ containerRef, model, finish, duoPose, exploded, resetKey }: PhoneSceneProps) {
+export function ProductScene({ containerRef, model, finish, duoPose, exploded, resetKey }: ProductSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const configRef = useRef({ model, finish, duoPose, exploded, resetKey });
   const [failed, setFailed] = useState(false);
@@ -113,6 +121,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
             return;
           }
           product.root.visible = false;
+          product.root.rotation.z = productCatalog[requestedModel].sceneRotationZ ?? 0;
           officialModels.set(modelKey, product);
           officialHost.add(product.root);
           canvas.dataset.modelSource = "apple-ar-mesh";
@@ -262,7 +271,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       const activeModelKey = officialModelKey(config.model, config.finish, config.duoPose);
       const activeOfficial = officialModels.get(activeModelKey) ?? null;
       const useOfficial = activeOfficial !== null;
-      pro.root.visible = config.model !== "duo" && !useOfficial;
+      pro.root.visible = !isIpadModel(config.model) && config.model !== "duo" && !useOfficial;
       duo.root.visible = config.model === "duo" && !useOfficial;
       officialHost.visible = useOfficial;
       officialModels.forEach((product, productKey) => {
@@ -293,7 +302,8 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       const foldRatio = fold / (Math.PI / 2);
       const closeViewAssist = THREE.MathUtils.smoothstep(foldRatio, 0.52, 0.9);
       const duoViewRotation = config.model === "duo" ? fold * closeViewAssist : 0;
-      const targetRotationY = Math.PI + duoViewRotation + orbit + dragY + autoRotation;
+      const sceneRotationY = productCatalog[config.model].sceneRotationY ?? 0;
+      const targetRotationY = Math.PI + sceneRotationY + duoViewRotation + orbit + dragY + autoRotation;
       const targetRotationX = -0.08 + Math.sin(scrollProgress * Math.PI * 2) * 0.24 + dragX;
       world.rotation.y += (targetRotationY - world.rotation.y) * 0.055;
       world.rotation.x += (targetRotationX - world.rotation.x) * 0.055;
@@ -301,7 +311,11 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       const introOffset = window.innerWidth < 760 ? (config.model === "duo" ? 0.15 : 0.65) : 1.2;
       world.position.x += ((scrollProgress < 0.18 ? introOffset : scrollProgress > 0.78 ? -0.8 : 0) - world.position.x) * 0.04;
       world.position.y = breathing + Math.sin(scrollProgress * Math.PI * 3) * 0.18;
-      const baseScale = config.model === "duo" ? (window.innerWidth < 760 ? 0.58 : 0.76) : (window.innerWidth < 760 ? 0.72 : 0.94);
+      const baseScale = config.model === "duo"
+        ? (window.innerWidth < 760 ? 0.58 : 0.76)
+        : isIpadModel(config.model)
+          ? (window.innerWidth < 760 ? 0.58 : 0.76)
+          : (window.innerWidth < 760 ? 0.72 : 0.94);
       const focusScale = 1 + Math.max(0, 1 - Math.abs(scrollProgress - 0.48) * 7) * 0.33;
       world.scale.setScalar(baseScale * focusScale);
       camera.position.z += ((13.2 - zoom - cameraPush) - camera.position.z) * 0.06;

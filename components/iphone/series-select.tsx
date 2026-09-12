@@ -11,22 +11,22 @@ import { Layers3 } from "lucide-react";
 import {
   isSeries,
   seriesCatalog,
-  seriesIds,
   type Series,
 } from "./product-data";
 
 type SeriesSelectProps = {
   label: string;
   value: Series;
+  series: ReadonlyArray<Series>;
   onChange: (series: Series) => void;
 };
 
-export function SeriesSelect({ label, value, onChange }: SeriesSelectProps) {
+export function SeriesSelect({ label, value, series, onChange }: SeriesSelectProps) {
   return (
     <Select
       value={value}
       onValueChange={(next) => {
-        if (isSeries(next)) onChange(next);
+        if (isSeries(next) && series.includes(next)) onChange(next);
       }}
     >
       <SelectTrigger
@@ -41,7 +41,7 @@ export function SeriesSelect({ label, value, onChange }: SeriesSelectProps) {
         position="popper"
         align="start"
       >
-        {seriesIds.map((series) => (
+        {series.map((series) => (
           <SelectItem
             key={series}
             value={series}

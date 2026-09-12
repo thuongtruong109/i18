@@ -11,12 +11,17 @@
 - `iphone-16e.usdz` — Apple AR asset for iPhone 16e in White.
 - `iphone-15-pro.usdz` / `iphone-15-pro-max.usdz` — separate Apple AR assets for the Pro sizes in Natural Titanium.
 - `iphone-15.usdz` / `iphone-15-plus.usdz` — separate Apple AR assets for the base sizes in Pink.
+- `ipad-pro-m5.usdz` — Apple AR asset for iPad Pro in Space Black.
+- `ipad-air-m4.usdz` — Apple AR asset for iPad Air in Blue with its published accessories.
+- `ipad-a16.usdz` — Apple AR asset for iPad in Pink.
+- `ipad-mini-a17-pro.usdz` — Apple AR asset for iPad mini in Purple.
 - `iphone-18-pro*.glb` — browser-ready exports for Apple's Burgundy, Glacier, Silver, and Black variants.
 - `iphone-duo.glb` / `iphone-duo-night-sky.glb` — browser-ready Duo color exports.
 - `iphone-17-pro.glb` / `iphone-17-pro-max.glb` — separate browser-ready exports of the Pro and Pro Max subtrees from Apple's shared Cosmic Orange scene.
 - `iphone-air.glb`, `iphone-17.glb`, and `iphone-17e.glb` — browser-ready exports of the representative AR finish published on each Apple product page.
 - `iphone-16-pro*.glb`, `iphone-16*.glb`, and `iphone-16e.glb` — browser-ready exports of all five iPhone 16 series devices.
 - `iphone-15-pro*.glb` and `iphone-15*.glb` — browser-ready exports of all four iPhone 15 series devices.
+- `ipad-pro-m5.glb`, `ipad-air-m4.glb`, `ipad-a16.glb`, and `ipad-mini-a17-pro.glb` — browser-ready exports of the current iPad families.
 
 The Three.js experience loads the GLB exports. They retain the source meshes, per-vertex normals,
 face-varying UVs, textures, and PBR material values; `scripts/convert_usdz_to_glb.py` performs the conversion.
@@ -38,3 +43,7 @@ Original public AR URLs:
 - https://www.apple.com/105/media/us/iphone/shared/ar/2023/f6ca1075-bfa5-441b-b6c2-61e5ce4c15b2/iphone-15-pro/iphone_15_pro_max_natural_titanium_5G.usdz
 - https://www.apple.com/105/media/us/iphone/shared/ar/2023/f6ca1075-bfa5-441b-b6c2-61e5ce4c15b2/iphone-15/iphone_15_pink_5G.usdz
 - https://www.apple.com/105/media/us/iphone/shared/ar/2023/f6ca1075-bfa5-441b-b6c2-61e5ce4c15b2/iphone-15/iphone_15_plus_pink_5G.usdz
+- https://www.apple.com/105/media/us/ipad-pro/2025/adee90db-c01e-430d-b726-fe64c0063f08/ar/ipad-pro-space-black.usdz
+- https://www.apple.com/105/media/us/ipad-air/2025/e184d49a-4015-42ae-8a8b-db06bfeabd75/ar/ipad-air-blue-with-accessories.usdz
+- https://www.apple.com/105/media/us/ipad-11/2025/21af9618-666d-4368-9fb9-38822c35dc35/ar/ipad-11-pink.usdz
+- https://www.apple.com/105/media/us/ipad-mini/2024/ab503ae9-d404-4d31-8983-47a8cb46614f/ar/ipad-mini-purple.usdz

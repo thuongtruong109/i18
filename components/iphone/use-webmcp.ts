@@ -9,6 +9,7 @@ import {
 } from "./product-category-data";
 import {
   finishes,
+  getSeriesForModel,
   isFinish,
   isModel,
   modelFinishes,
@@ -46,7 +47,7 @@ export function useConceptTool(
     void Promise.resolve(registerTool({
       name: "configure_apple_product_experience",
       title: "Cấu hình trải nghiệm sản phẩm Apple",
-      description: "Chọn nhóm sản phẩm Apple; với iPhone có thể chọn thêm model và màu hoàn thiện.",
+      description: "Chọn nhóm sản phẩm Apple, model và màu hoàn thiện đang hiển thị.",
       inputSchema: {
         type: "object",
         properties: {
@@ -65,17 +66,24 @@ export function useConceptTool(
           throw new Error("Nhóm sản phẩm không hợp lệ.");
         }
 
-        setCategory(requestedCategory);
-        if (requestedCategory !== "iphone") {
+        const categoryDefinition = productCategoryCatalog[requestedCategory];
+        if (!categoryDefinition.defaultModel) {
+          setCategory(requestedCategory);
           return { configured: true, product: requestedCategory };
         }
 
-        const requestedModel = value.model ?? productCategoryCatalog.iphone.defaultModel ?? "";
-        if (!isModel(requestedModel)) throw new Error("Dòng máy không hợp lệ.");
+        const requestedModel = value.model ?? categoryDefinition.defaultModel;
+        if (
+          !isModel(requestedModel)
+          || !categoryDefinition.series.includes(getSeriesForModel(requestedModel))
+        ) {
+          throw new Error("Model không thuộc nhóm sản phẩm đã chọn.");
+        }
         const requestedFinish = value.finish ?? productCatalog[requestedModel].defaultFinish;
         if (!isFinish(requestedFinish) || !modelFinishes[requestedModel].includes(requestedFinish)) {
           throw new Error("Màu không phù hợp với dòng máy đã chọn.");
         }
+        setCategory(requestedCategory);
         setModel(requestedModel);
         setFinish(requestedFinish);
         return {

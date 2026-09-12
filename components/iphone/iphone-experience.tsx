@@ -7,6 +7,7 @@ import { DeviceSelect } from "./device-select";
 import { ExperienceFooter } from "./experience-footer";
 import { LanguageSelect } from "./language-select";
 import {
+  hasProductModels,
   productCategoryCatalog,
   type ProductCategory,
 } from "./product-category-data";
@@ -25,7 +26,7 @@ import {
   type Model,
 } from "./product-data";
 import type { DuoPose } from "./three/official-models";
-import { PhoneScene } from "./three/phone-scene";
+import { ProductScene } from "./three/phone-scene";
 import { useLanguage } from "./use-language";
 import { useConceptTool } from "./use-webmcp";
 
@@ -41,7 +42,7 @@ export function AppleProductExperience() {
   const active = getProductCopy(content, language, model);
   const availableFinishes = modelFinishes[model];
   const series = getSeriesForModel(model);
-  const isIphone = category === "iphone";
+  const hasCatalog = hasProductModels(category);
 
   useConceptTool(setCategory, setModel, setFinish);
 
@@ -62,12 +63,12 @@ export function AppleProductExperience() {
     <main className={`immersive-page immersive-page--${category} immersive-page--${model}`}>
       <section
         ref={experienceRef}
-        className={`immersive-stage${isIphone ? "" : " immersive-stage--category"}`}
+        className={`immersive-stage${hasCatalog ? "" : " immersive-stage--category"}`}
         id="experience"
       >
         <div className="stage-sticky">
-          {isIphone ? (
-            <PhoneScene
+          {hasCatalog ? (
+            <ProductScene
               containerRef={experienceRef}
               model={model}
               finish={finish}
@@ -97,7 +98,7 @@ export function AppleProductExperience() {
             </div>
           </header>
 
-          {isIphone && (
+          {hasCatalog && (
             <>
               <div className="scene-reticle" aria-hidden="true">
                 <span />
@@ -133,13 +134,14 @@ export function AppleProductExperience() {
               />
             </div>
 
-            {isIphone && (
+            {hasCatalog && (
               <>
                 <div className="control-block control-block--series">
                   <span className="control-caption">{content.controls.series}</span>
                   <SeriesSelect
                     label={content.controls.series}
                     value={series}
+                    series={productCategoryCatalog[category].series}
                     onChange={(next) => changeModel(seriesCatalog[next].defaultModel)}
                   />
                 </div>
@@ -180,7 +182,7 @@ export function AppleProductExperience() {
               </>
             )}
 
-            {isIphone && productCatalog[model].isFoldable && (
+            {hasCatalog && productCatalog[model].isFoldable && (
               <div className="control-block control-block--fold">
                 <span className="control-caption">{content.controls.pose}</span>
                 <SegmentedControl
@@ -197,7 +199,7 @@ export function AppleProductExperience() {
               </div>
             )}
 
-            {isIphone && (
+            {hasCatalog && (
               <div className="control-actions">
                 <Button
                   variant="ghost"
@@ -226,7 +228,7 @@ export function AppleProductExperience() {
             )}
           </aside>
 
-          {isIphone && <div className="live-specs" aria-live="polite">
+          {hasCatalog && <div className="live-specs" aria-live="polite">
             <span>
               {active.display}
               <small>{content.controls.display}</small>
@@ -242,7 +244,7 @@ export function AppleProductExperience() {
           </div>}
         </div>
 
-        {isIphone && <div className="scroll-narrative">
+        {hasCatalog && <div className="scroll-narrative">
           <article className="journey-copy journey-copy--one">
             <p className="journey-kicker">{content.journey.introKicker}</p>
             <h1>{active.name}</h1>

@@ -1,7 +1,9 @@
 import type { Language, Translation } from "./i18n";
 import { getIphone15ProductCopy } from "./product-copy-15";
 import { getIphone16ProductCopy } from "./product-copy-16";
+import { getIpadProductCopy } from "./product-copy-ipad";
 import {
+  isIpadModel,
   isIphone15Model,
   isIphone16Model,
   type Iphone17Model,
@@ -408,5 +410,6 @@ export function getProductCopy(
 
   if (isIphone16Model(model)) return getIphone16ProductCopy(language, model);
   if (isIphone15Model(model)) return getIphone15ProductCopy(language, model);
+  if (isIpadModel(model)) return getIpadProductCopy(language, model);
   return iphone17ProductCopy[language][model];
 }

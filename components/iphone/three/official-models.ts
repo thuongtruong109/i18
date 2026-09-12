@@ -51,6 +51,18 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
   "15-plus": {
     pink: "/models/iphone-15-plus.glb",
   },
+  "ipad-pro-m5": {
+    "space-black": "/models/ipad-pro-m5.glb",
+  },
+  "ipad-air-m4": {
+    blue: "/models/ipad-air-m4.glb",
+  },
+  "ipad-a16": {
+    pink: "/models/ipad-a16.glb",
+  },
+  "ipad-mini-a17-pro": {
+    purple: "/models/ipad-mini-a17-pro.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";

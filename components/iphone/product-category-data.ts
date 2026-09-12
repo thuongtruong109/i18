@@ -1,5 +1,6 @@
 import {
-  seriesIds,
+  ipadSeriesIds,
+  iphoneSeriesIds,
   type Model,
   type Series,
 } from "./product-data";
@@ -31,15 +32,15 @@ export const productCategoryCatalog: Record<
     label: "iPhone",
     shortLabel: "iPhone",
     defaultModel: "pro",
-    series: seriesIds,
+    series: iphoneSeriesIds,
     plannedSeries: [],
   },
   ipad: {
     label: "iPad",
     shortLabel: "iPad",
-    defaultModel: null,
-    series: [],
-    plannedSeries: ["iPad Pro", "iPad Air", "iPad", "iPad mini"],
+    defaultModel: "ipad-pro-m5",
+    series: ipadSeriesIds,
+    plannedSeries: [],
   },
   "apple-watch": {
     label: "Apple Watch",

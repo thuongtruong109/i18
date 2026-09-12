@@ -16,9 +16,16 @@ export type Iphone15Model =
   | "15-pro-max"
   | "15"
   | "15-plus";
-export type NewModel = Iphone17Model | Iphone16Model | Iphone15Model;
+export type IpadModel =
+  | "ipad-pro-m5"
+  | "ipad-air-m4"
+  | "ipad-a16"
+  | "ipad-mini-a17-pro";
+export type NewModel = Iphone17Model | Iphone16Model | Iphone15Model | IpadModel;
 export type Model = LegacyModel | NewModel;
-export type Series = "18" | "17" | "16" | "15";
+export type IphoneSeries = "18" | "17" | "16" | "15";
+export type IpadSeries = "ipad-pro" | "ipad-air" | "ipad" | "ipad-mini";
+export type Series = IphoneSeries | IpadSeries;
 
 export type Finish =
   | "burgundy"
@@ -33,7 +40,10 @@ export type Finish =
   | "cosmic-orange"
   | "desert-titanium"
   | "natural-titanium"
+  | "space-black"
   | "ultramarine"
+  | "blue"
+  | "purple"
   | "pink"
   | "white";
 
@@ -43,6 +53,8 @@ type ProductDefinition = {
   defaultFinish: Finish;
   isFoldable: boolean;
   sceneHeight: number;
+  sceneRotationY?: number;
+  sceneRotationZ?: number;
 };
 
 export const productCatalog: Record<Model, ProductDefinition> = {
@@ -158,6 +170,39 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     isFoldable: false,
     sceneHeight: 6.33,
   },
+  "ipad-pro-m5": {
+    label: "iPad Pro (M5)",
+    shortLabel: "Pro M5",
+    defaultFinish: "space-black",
+    isFoldable: false,
+    sceneHeight: 7.2,
+    sceneRotationY: 1.05,
+    sceneRotationZ: Math.PI,
+  },
+  "ipad-air-m4": {
+    label: "iPad Air (M4)",
+    shortLabel: "Air M4",
+    defaultFinish: "blue",
+    isFoldable: false,
+    sceneHeight: 7.1,
+    sceneRotationY: 1.05,
+    sceneRotationZ: Math.PI,
+  },
+  "ipad-a16": {
+    label: "iPad (A16)",
+    shortLabel: "A16",
+    defaultFinish: "pink",
+    isFoldable: false,
+    sceneHeight: 6.9,
+    sceneRotationY: 0.32,
+  },
+  "ipad-mini-a17-pro": {
+    label: "iPad mini (A17 Pro)",
+    shortLabel: "mini",
+    defaultFinish: "purple",
+    isFoldable: false,
+    sceneHeight: 6.15,
+  },
 };
 
 type SeriesDefinition = {
@@ -167,7 +212,9 @@ type SeriesDefinition = {
   models: ReadonlyArray<Model>;
 };
 
-export const seriesIds = ["18", "17", "16", "15"] as const satisfies ReadonlyArray<Series>;
+export const iphoneSeriesIds = ["18", "17", "16", "15"] as const satisfies ReadonlyArray<IphoneSeries>;
+export const ipadSeriesIds = ["ipad-pro", "ipad-air", "ipad", "ipad-mini"] as const satisfies ReadonlyArray<IpadSeries>;
+export const seriesIds = [...iphoneSeriesIds, ...ipadSeriesIds] as const satisfies ReadonlyArray<Series>;
 
 export const seriesCatalog: Record<Series, SeriesDefinition> = {
   "18": {
@@ -194,6 +241,30 @@ export const seriesCatalog: Record<Series, SeriesDefinition> = {
     defaultModel: "15-pro",
     models: ["15-pro", "15-pro-max", "15", "15-plus"],
   },
+  "ipad-pro": {
+    label: "iPad Pro",
+    shortLabel: "Pro",
+    defaultModel: "ipad-pro-m5",
+    models: ["ipad-pro-m5"],
+  },
+  "ipad-air": {
+    label: "iPad Air",
+    shortLabel: "Air",
+    defaultModel: "ipad-air-m4",
+    models: ["ipad-air-m4"],
+  },
+  ipad: {
+    label: "iPad",
+    shortLabel: "iPad",
+    defaultModel: "ipad-a16",
+    models: ["ipad-a16"],
+  },
+  "ipad-mini": {
+    label: "iPad mini",
+    shortLabel: "mini",
+    defaultModel: "ipad-mini-a17-pro",
+    models: ["ipad-mini-a17-pro"],
+  },
 };
 
 export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
@@ -213,7 +284,10 @@ export const finishes: Record<Finish, { name: string; color: string; accent: str
   "cosmic-orange": { name: "Cosmic Orange", color: "#e95d22", accent: "#ffad82" },
   "desert-titanium": { name: "Desert Titanium", color: "#b9a08e", accent: "#ead3c1" },
   "natural-titanium": { name: "Natural Titanium", color: "#8f897f", accent: "#d5cec2" },
+  "space-black": { name: "Space Black", color: "#3a3a3c", accent: "#a5a5aa" },
   ultramarine: { name: "Ultramarine", color: "#5463c6", accent: "#a8b0ff" },
+  blue: { name: "Blue", color: "#9eb7c6", accent: "#dceef7" },
+  purple: { name: "Purple", color: "#aaa5bd", accent: "#e8e4f3" },
   pink: { name: "Pink", color: "#e8c2c8", accent: "#fff0f2" },
   white: { name: "White", color: "#f2f1ed", accent: "#ffffff" },
 };
@@ -235,6 +309,10 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   "15-pro-max": ["natural-titanium"],
   "15": ["pink"],
   "15-plus": ["pink"],
+  "ipad-pro-m5": ["space-black"],
+  "ipad-air-m4": ["blue"],
+  "ipad-a16": ["pink"],
+  "ipad-mini-a17-pro": ["purple"],
 };
 
 export function isModel(value: string): value is Model {
@@ -263,6 +341,13 @@ export function isIphone15Model(model: Model): model is Iphone15Model {
     || model === "15-pro-max"
     || model === "15"
     || model === "15-plus";
+}
+
+export function isIpadModel(model: Model): model is IpadModel {
+  return model === "ipad-pro-m5"
+    || model === "ipad-air-m4"
+    || model === "ipad-a16"
+    || model === "ipad-mini-a17-pro";
 }
 
 export function isFinish(value: string): value is Finish {
