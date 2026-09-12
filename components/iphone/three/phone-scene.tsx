@@ -174,6 +174,7 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
     let lastInteractionTime = performance.now();
     let lastResetKey = configRef.current.resetKey;
     let animationFrame = 0;
+    let resizeFrame = 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targetColor = new THREE.Color();
 
@@ -194,6 +195,10 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
       renderer.setSize(width, height, false);
       camera.aspect = width / Math.max(1, height);
       camera.updateProjectionMatrix();
+    };
+    const scheduleResize = () => {
+      window.cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(resize);
     };
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -235,7 +240,7 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
       updateScroll();
     };
 
-    const resizeObserver = new ResizeObserver(resize);
+    const resizeObserver = new ResizeObserver(scheduleResize);
     resizeObserver.observe(canvas);
     window.addEventListener("scroll", handleScroll, { passive: true });
     canvas.addEventListener("pointerdown", handlePointerDown);
@@ -342,6 +347,7 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
     return () => {
       disposed = true;
       window.cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(resizeFrame);
       timer.dispose();
       resizeObserver.disconnect();
       window.removeEventListener("scroll", handleScroll);
