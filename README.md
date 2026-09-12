@@ -6,6 +6,9 @@ iPhone 17 family and iPhone 16 family, including each Pro, Pro Max, Plus, base,
 Air, and e model Apple released in those generations. Every model is converted
 from Apple's public AR assets.
 
+The control dock groups devices by generation: choose a series first, then pick
+from only the models available in that series.
+
 ## Requirements
 
 - Node.js 22.13 or newer

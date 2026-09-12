@@ -12,7 +12,6 @@ import type { CSSProperties } from "react";
 import {
   finishes,
   isModel,
-  modelIds,
   productCatalog,
   type Model,
 } from "./product-data";
@@ -20,15 +19,16 @@ import {
 type DeviceSelectProps = {
   label: string;
   value: Model;
+  models: ReadonlyArray<Model>;
   onChange: (model: Model) => void;
 };
 
-export function DeviceSelect({ label, value, onChange }: DeviceSelectProps) {
+export function DeviceSelect({ label, value, models, onChange }: DeviceSelectProps) {
   return (
     <Select
       value={value}
       onValueChange={(next) => {
-        if (isModel(next)) onChange(next);
+        if (isModel(next) && models.includes(next)) onChange(next);
       }}
     >
       <SelectTrigger className="device-select-trigger" aria-label={label}>
@@ -40,7 +40,7 @@ export function DeviceSelect({ label, value, onChange }: DeviceSelectProps) {
         position="popper"
         align="start"
       >
-        {modelIds.map((model) => {
+        {models.map((model) => {
           const product = productCatalog[model];
           const finish = finishes[product.defaultFinish];
 

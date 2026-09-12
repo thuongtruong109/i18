@@ -393,6 +393,9 @@ a {
   padding: 0.72rem 1rem;
   border-right: 1px solid #ffffff14;
 }
+.control-block--series {
+  min-width: 8rem;
+}
 .control-caption {
   display: block;
   margin-bottom: 0.45rem;
@@ -418,6 +421,15 @@ a {
 }
 .device-select-trigger > svg:first-child {
   color: #d58a9a;
+}
+.series-select-trigger {
+  width: 7rem;
+}
+.series-select-trigger > svg:first-child {
+  color: #a7a2d8;
+}
+.series-select-content {
+  min-width: 9rem;
 }
 .device-select-content {
   min-width: 11.5rem;
@@ -935,14 +947,23 @@ a {
   }
   .control-dock {
     display: grid;
-    grid-template-columns: 1.2fr 1fr auto;
+    grid-template-columns: 0.82fr 1.4fr 0.78fr auto;
     bottom: 0.75rem;
     min-height: auto;
     border-radius: 1.2rem;
   }
   .control-block {
     min-width: 0;
-    padding: 0.65rem 0.75rem;
+    padding: 0.65rem 0.5rem;
+  }
+  .control-block--series {
+    grid-column: 1;
+  }
+  .control-block--model {
+    grid-column: 2;
+  }
+  .control-block--finish {
+    grid-column: 3;
   }
   .control-block--fold {
     grid-column: 1 / -1;
@@ -958,11 +979,14 @@ a {
     width: 100%;
     gap: 0.25rem;
     padding-inline: 0.4rem;
+    font-size: 0.82rem;
   }
   .device-select-trigger > svg:first-child {
     display: none;
   }
   .control-actions {
+    grid-row: 1;
+    grid-column: 4;
     padding: 0.55rem;
   }
   .control-actions button:first-child {

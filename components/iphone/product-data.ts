@@ -13,6 +13,7 @@ export type Iphone16Model =
   | "16e";
 export type NewModel = Iphone17Model | Iphone16Model;
 export type Model = LegacyModel | NewModel;
+export type Series = "18" | "17" | "16";
 
 export type Finish =
   | "burgundy"
@@ -124,20 +125,39 @@ export const productCatalog: Record<Model, ProductDefinition> = {
   },
 };
 
-export const modelIds = [
-  "pro",
-  "duo",
-  "17-pro",
-  "17-pro-max",
-  "air",
-  "17",
-  "17e",
-  "16-pro",
-  "16-pro-max",
-  "16",
-  "16-plus",
-  "16e",
-] as const satisfies ReadonlyArray<Model>;
+type SeriesDefinition = {
+  label: string;
+  shortLabel: string;
+  defaultModel: Model;
+  models: ReadonlyArray<Model>;
+};
+
+export const seriesIds = ["18", "17", "16"] as const satisfies ReadonlyArray<Series>;
+
+export const seriesCatalog: Record<Series, SeriesDefinition> = {
+  "18": {
+    label: "iPhone 18",
+    shortLabel: "18",
+    defaultModel: "pro",
+    models: ["pro", "duo"],
+  },
+  "17": {
+    label: "iPhone 17",
+    shortLabel: "17",
+    defaultModel: "17-pro",
+    models: ["17-pro", "17-pro-max", "air", "17", "17e"],
+  },
+  "16": {
+    label: "iPhone 16",
+    shortLabel: "16",
+    defaultModel: "16-pro",
+    models: ["16-pro", "16-pro-max", "16", "16-plus", "16e"],
+  },
+};
+
+export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
+  (series) => seriesCatalog[series].models,
+);
 
 export const finishes: Record<Finish, { name: string; color: string; accent: string }> = {
   burgundy: { name: "Burgundy", color: "#5b1828", accent: "#d38491" },
@@ -172,6 +192,15 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
 
 export function isModel(value: string): value is Model {
   return modelIds.some((model) => model === value);
+}
+
+export function isSeries(value: string): value is Series {
+  return seriesIds.some((series) => series === value);
+}
+
+export function getSeriesForModel(model: Model): Series {
+  return seriesIds.find((series) =>
+    seriesCatalog[series].models.some((candidate) => candidate === model)) ?? "18";
 }
 
 export function isIphone16Model(model: Model): model is Iphone16Model {

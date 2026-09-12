@@ -7,11 +7,14 @@ import { DeviceSelect } from "./device-select";
 import { ExperienceFooter } from "./experience-footer";
 import { LanguageSelect } from "./language-select";
 import { SegmentedControl } from "./segmented-control";
+import { SeriesSelect } from "./series-select";
 import { getProductCopy } from "./product-copy";
 import {
   finishes,
+  getSeriesForModel,
   modelFinishes,
   productCatalog,
+  seriesCatalog,
   type Finish,
   type Model,
 } from "./product-data";
@@ -30,6 +33,7 @@ export function IphoneExperience() {
   const { language, setLanguage, content } = useLanguage();
   const active = getProductCopy(content, language, model);
   const availableFinishes = modelFinishes[model];
+  const series = getSeriesForModel(model);
 
   useConceptTool(setModel, setFinish);
 
@@ -93,11 +97,21 @@ export function IphoneExperience() {
             className="control-dock"
             aria-label={content.controls.panelLabel}
           >
+            <div className="control-block control-block--series">
+              <span className="control-caption">{content.controls.series}</span>
+              <SeriesSelect
+                label={content.controls.series}
+                value={series}
+                onChange={(next) => changeModel(seriesCatalog[next].defaultModel)}
+              />
+            </div>
+
             <div className="control-block control-block--model">
               <span className="control-caption">{content.controls.model}</span>
               <DeviceSelect
                 label={content.controls.model}
                 value={model}
+                models={seriesCatalog[series].models}
                 onChange={changeModel}
               />
             </div>

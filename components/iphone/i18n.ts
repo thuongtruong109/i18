@@ -22,6 +22,7 @@ export type Translation = {
   gesture: { rotate: string; zoom: string };
   controls: {
     panelLabel: string;
+    series: string;
     model: string;
     finish: string;
     pose: string;
@@ -103,6 +104,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "DRAG TO ROTATE", zoom: "+ / − KEYS TO ZOOM" },
     controls: {
       panelLabel: "3D model controls",
+      series: "SERIES",
       model: "MODEL",
       finish: "FINISH",
       pose: "POSE",
@@ -203,6 +205,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "KÉO ĐỂ XOAY", zoom: "PHÍM + / − ĐỂ ZOOM" },
     controls: {
       panelLabel: "Điều khiển mô hình 3D",
+      series: "DÒNG",
       model: "PHIÊN BẢN",
       finish: "MÀU",
       pose: "TƯ THẾ",
@@ -303,6 +306,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ARRASTE PARA GIRAR", zoom: "TECLAS + / − PARA ZOOM" },
     controls: {
       panelLabel: "Controles do modelo 3D",
+      series: "SÉRIE",
       model: "MODELO",
       finish: "ACABAMENTO",
       pose: "POSIÇÃO",
@@ -403,6 +407,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ARRASTRA PARA GIRAR", zoom: "TECLAS + / − PARA ZOOM" },
     controls: {
       panelLabel: "Controles del modelo 3D",
+      series: "SERIE",
       model: "MODELO",
       finish: "ACABADO",
       pose: "POSICIÓN",
@@ -503,6 +508,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "拖动以旋转", zoom: "按 + / − 键缩放" },
     controls: {
       panelLabel: "3D 模型控制",
+      series: "系列",
       model: "机型",
       finish: "外观",
       pose: "形态",
@@ -603,6 +609,7 @@ export const translations: Record<Language, Translation> = {
     gesture: { rotate: "ドラッグして回転", zoom: "+ / − キーでズーム" },
     controls: {
       panelLabel: "3Dモデルの操作",
+      series: "シリーズ",
       model: "モデル",
       finish: "仕上げ",
       pose: "スタイル",
