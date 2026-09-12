@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "iPhone 18 Pro + iPhone Duo — Interactive 3D",
-  description: "Trải nghiệm Three.js tương tác dành cho iPhone 18 Pro, Pro Max và iPhone Duo.",
+  title: "Các dòng iPhone — Trải nghiệm 3D tương tác",
+  description: "Khám phá đầy đủ iPhone 17 series và các dòng iPhone mới bằng mô hình AR chính thức của Apple.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

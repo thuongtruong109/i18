@@ -165,6 +165,7 @@ export const translations: Record<Language, Translation> = {
       "sky-blue": "Sky Blue",
       lavender: "Lavender",
       "soft-pink": "Soft Pink",
+      "cosmic-orange": "Cosmic Orange",
     },
     models: {
       pro: {
@@ -261,6 +262,7 @@ export const translations: Record<Language, Translation> = {
       "sky-blue": "Xanh Da Trời",
       lavender: "Tím Oải Hương",
       "soft-pink": "Hồng Phấn",
+      "cosmic-orange": "Cam Vũ Trụ",
     },
     models: {
       pro: {
@@ -357,6 +359,7 @@ export const translations: Record<Language, Translation> = {
       "sky-blue": "Azul-Céu",
       lavender: "Lavanda",
       "soft-pink": "Rosa Suave",
+      "cosmic-orange": "Laranja Cósmico",
     },
     models: {
       pro: {
@@ -453,6 +456,7 @@ export const translations: Record<Language, Translation> = {
       "sky-blue": "Azul Cielo",
       lavender: "Lavanda",
       "soft-pink": "Rosa Suave",
+      "cosmic-orange": "Naranja Cósmico",
     },
     models: {
       pro: {
@@ -549,6 +553,7 @@ export const translations: Record<Language, Translation> = {
       "sky-blue": "天蓝色",
       lavender: "薰衣草紫",
       "soft-pink": "柔粉色",
+      "cosmic-orange": "宇宙橙色",
     },
     models: {
       pro: {
@@ -645,6 +650,7 @@ export const translations: Record<Language, Translation> = {
       "sky-blue": "スカイブルー",
       lavender: "ラベンダー",
       "soft-pink": "ソフトピンク",
+      "cosmic-orange": "コズミックオレンジ",
     },
     models: {
       pro: {

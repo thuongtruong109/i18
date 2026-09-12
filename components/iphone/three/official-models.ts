@@ -9,6 +9,12 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
     silver: "/models/iphone-18-pro-silver.glb",
     black: "/models/iphone-18-pro-black.glb",
   },
+  "17-pro": {
+    "cosmic-orange": "/models/iphone-17-pro.glb",
+  },
+  "17-pro-max": {
+    "cosmic-orange": "/models/iphone-17-pro-max.glb",
+  },
   air: {
     "sky-blue": "/models/iphone-air.glb",
   },

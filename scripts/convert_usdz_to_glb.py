@@ -318,7 +318,7 @@ def expanded_attribute(
     return np.asarray(values, dtype=np.float32)[lookup]
 
 
-def convert(source: Path, output: Path, variants: list[str]) -> None:
+def convert(source: Path, output: Path, variants: list[str], subtree: str | None = None) -> None:
     stage = Usd.Stage.Open(str(source))
     if not stage:
         raise RuntimeError(f"Could not open {source}")
@@ -335,13 +335,17 @@ def convert(source: Path, output: Path, variants: list[str]) -> None:
             )
         variant_set.SetVariantSelection(selection)
 
+    export_root = stage.GetPrimAtPath(subtree) if subtree else default_prim
+    if not export_root or not export_root.IsValid():
+        raise ValueError(f"Unknown USD subtree '{subtree}'")
+
     builder = GlbBuilder()
     xforms = UsdGeom.XformCache(Usd.TimeCode.Default())
     exported_vertices = 0
     exported_meshes = 0
     with zipfile.ZipFile(source) as archive:
         materials = MaterialExporter(builder, archive)
-        for prim in stage.Traverse():
+        for prim in Usd.PrimRange(export_root):
             if not prim.IsA(UsdGeom.Mesh):
                 continue
             if UsdGeom.Imageable(prim).ComputeVisibility() == UsdGeom.Tokens.invisible:
@@ -427,8 +431,12 @@ def main() -> None:
         default=[],
         help="Select a root USD variant, for example --variant Color=Glacier",
     )
+    parser.add_argument(
+        "--subtree",
+        help="Export only one USD prim subtree, for example /Root/iPhone_Pro",
+    )
     args = parser.parse_args()
-    convert(args.source, args.output, args.variant)
+    convert(args.source, args.output, args.variant, args.subtree)
 
 
 if __name__ == "__main__":

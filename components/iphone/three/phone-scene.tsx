@@ -2,7 +2,7 @@
 
 import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import type { Finish, Model } from "../product-data";
+import { productCatalog, type Finish, type Model } from "../product-data";
 import {
   getOfficialModelUrl,
   loadOfficialProduct,
@@ -22,6 +22,7 @@ const finishColors: Record<Finish, string> = {
   "sky-blue": "#c9d8e5",
   lavender: "#b8afd1",
   "soft-pink": "#e7c1bd",
+  "cosmic-orange": "#e95d22",
 };
 
 const AUTO_ROTATION_IDLE_DELAY_MS = 1800;
@@ -98,7 +99,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       if (!url || officialModels.has(modelKey) || pendingOfficialModels.has(modelKey)) return;
 
       pendingOfficialModels.add(modelKey);
-      const targetHeight = requestedModel === "duo" ? 6.1 : 6.42;
+      const targetHeight = productCatalog[requestedModel].sceneHeight;
       void loadOfficialProduct(url, targetHeight)
         .then((product) => {
           pendingOfficialModels.delete(modelKey);

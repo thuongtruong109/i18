@@ -16,8 +16,49 @@ export type ProductCopy = {
   performanceBody: string;
 };
 
+type ProSeriesBase = Omit<ProductCopy, "name" | "display" | "battery">;
+
+function proSeriesCopy(
+  base: ProSeriesBase,
+  sizes: {
+    proDisplay: string;
+    proBattery: string;
+    maxDisplay: string;
+    maxBattery: string;
+  },
+): Pick<Record<NewModel, ProductCopy>, "17-pro" | "17-pro-max"> {
+  return {
+    "17-pro": {
+      ...base,
+      name: "iPhone 17 Pro",
+      display: sizes.proDisplay,
+      battery: sizes.proBattery,
+    },
+    "17-pro-max": {
+      ...base,
+      name: "iPhone 17 Pro Max",
+      display: sizes.maxDisplay,
+      battery: sizes.maxBattery,
+    },
+  };
+}
+
 const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
   en: {
+    ...proSeriesCopy(
+      {
+        eyebrow: "THE MOST POWERFUL IPHONE EVER.",
+        intro: "An aluminum unibody, vapor-cooled A19 Pro, and three 48MP Fusion cameras with up to 8x optical-quality zoom.",
+        camera: "3 × 48MP",
+        designTitle: "Forged in aluminum. Built for Pro.",
+        designBody: "A heat-forged aluminum unibody combines Ceramic Shield 2 on the front, Ceramic Shield on the back, and an integrated vapor chamber.",
+        cameraTitle: "Three 48MP cameras. Eight pro lenses.",
+        cameraBody: "Fusion Main, Ultra Wide, and Telephoto cover 13 mm to 200 mm, including an optical-quality 8x zoom.",
+        performanceTitle: "A19 Pro. Cooled by vapor.",
+        performanceBody: "A19 Pro works with an Apple-designed vapor chamber to deliver exceptional sustained performance for games, video, and Apple Intelligence.",
+      },
+      { proDisplay: "6.3″ ProMotion", proBattery: "33 hours", maxDisplay: "6.9″ ProMotion", maxBattery: "39 hours" },
+    ),
     air: {
       name: "iPhone Air",
       eyebrow: "IMPOSSIBLY THIN.",
@@ -62,6 +103,20 @@ const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
     },
   },
   vi: {
+    ...proSeriesCopy(
+      {
+        eyebrow: "IPHONE MẠNH MẼ NHẤT TỪ TRƯỚC ĐẾN NAY.",
+        intro: "Thiết kế nhôm nguyên khối, A19 Pro làm mát bằng buồng hơi và ba camera Fusion 48MP với zoom 8x chất lượng quang học.",
+        camera: "3 × 48MP",
+        designTitle: "Rèn từ nhôm. Sinh ra cho Pro.",
+        designBody: "Khung nhôm nguyên khối rèn nhiệt kết hợp Ceramic Shield 2 ở mặt trước, Ceramic Shield ở mặt sau và buồng hơi tích hợp.",
+        cameraTitle: "Ba camera 48MP. Tám ống kính Pro.",
+        cameraBody: "Fusion Main, Ultra Wide và Telephoto phủ dải tiêu cự 13 mm đến 200 mm, bao gồm zoom 8x chất lượng quang học.",
+        performanceTitle: "A19 Pro. Làm mát bằng buồng hơi.",
+        performanceBody: "A19 Pro kết hợp buồng hơi do Apple thiết kế để duy trì hiệu năng vượt trội cho game, video và Apple Intelligence.",
+      },
+      { proDisplay: "6,3″ ProMotion", proBattery: "33 giờ", maxDisplay: "6,9″ ProMotion", maxBattery: "39 giờ" },
+    ),
     air: {
       name: "iPhone Air",
       eyebrow: "MỎNG KHÔNG TƯỞNG.",
@@ -106,6 +161,20 @@ const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
     },
   },
   pt: {
+    ...proSeriesCopy(
+      {
+        eyebrow: "O IPHONE MAIS PODEROSO DE TODOS.",
+        intro: "Estrutura unibody de alumínio, A19 Pro com câmara de vapor e três câmeras Fusion de 48 MP com zoom 8x de qualidade óptica.",
+        camera: "3 × 48 MP",
+        designTitle: "Forjado em alumínio. Feito para ser Pro.",
+        designBody: "A estrutura unibody de alumínio forjado a quente combina Ceramic Shield 2 na frente, Ceramic Shield atrás e câmara de vapor integrada.",
+        cameraTitle: "Três câmeras de 48 MP. Oito lentes Pro.",
+        cameraBody: "Fusion principal, ultra-angular e teleobjetiva cobrem de 13 mm a 200 mm, incluindo zoom 8x de qualidade óptica.",
+        performanceTitle: "A19 Pro. Resfriado a vapor.",
+        performanceBody: "O A19 Pro e a câmara de vapor criada pela Apple mantêm desempenho excepcional em jogos, vídeo e Apple Intelligence.",
+      },
+      { proDisplay: "6,3″ ProMotion", proBattery: "33 horas", maxDisplay: "6,9″ ProMotion", maxBattery: "39 horas" },
+    ),
     air: {
       name: "iPhone Air",
       eyebrow: "INCRIVELMENTE FINO.",
@@ -150,6 +219,20 @@ const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
     },
   },
   es: {
+    ...proSeriesCopy(
+      {
+        eyebrow: "EL IPHONE MÁS POTENTE HASTA AHORA.",
+        intro: "Diseño unibody de aluminio, A19 Pro con cámara de vapor y tres cámaras Fusion de 48 MP con zoom 8x de calidad óptica.",
+        camera: "3 × 48 MP",
+        designTitle: "Forjado en aluminio. Creado para ser Pro.",
+        designBody: "El cuerpo unibody de aluminio forjado en caliente combina Ceramic Shield 2 delante, Ceramic Shield detrás y una cámara de vapor integrada.",
+        cameraTitle: "Tres cámaras de 48 MP. Ocho lentes Pro.",
+        cameraBody: "Fusion principal, ultra gran angular y teleobjetivo cubren de 13 mm a 200 mm, incluido zoom 8x de calidad óptica.",
+        performanceTitle: "A19 Pro. Refrigerado por vapor.",
+        performanceBody: "El A19 Pro y la cámara de vapor diseñada por Apple mantienen un rendimiento excepcional en juegos, vídeo y Apple Intelligence.",
+      },
+      { proDisplay: "6,3″ ProMotion", proBattery: "33 horas", maxDisplay: "6,9″ ProMotion", maxBattery: "39 horas" },
+    ),
     air: {
       name: "iPhone Air",
       eyebrow: "INCREÍBLEMENTE FINO.",
@@ -194,6 +277,20 @@ const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
     },
   },
   zh: {
+    ...proSeriesCopy(
+      {
+        eyebrow: "迄今最强大的 IPHONE。",
+        intro: "铝金属一体成型机身、蒸汽室散热 A19 Pro，以及支持光学品质 8 倍变焦的三颗 4800 万像素 Fusion 相机。",
+        camera: "3 × 4800 万像素",
+        designTitle: "铝金属锻造，为 Pro 而生。",
+        designBody: "热锻铝金属一体成型机身，正面采用 Ceramic Shield 2，背面采用 Ceramic Shield，并集成蒸汽室。",
+        cameraTitle: "三颗 4800 万像素相机，八个 Pro 级镜头。",
+        cameraBody: "Fusion 主摄、超广角与长焦覆盖 13 毫米至 200 毫米焦段，并支持光学品质 8 倍变焦。",
+        performanceTitle: "A19 Pro，蒸汽室散热。",
+        performanceBody: "A19 Pro 与 Apple 设计的蒸汽室协同，为游戏、视频和 Apple 智能持续输出卓越性能。",
+      },
+      { proDisplay: "6.3″ ProMotion", proBattery: "33 小时", maxDisplay: "6.9″ ProMotion", maxBattery: "39 小时" },
+    ),
     air: {
       name: "iPhone Air",
       eyebrow: "轻薄，难以置信。",
@@ -238,6 +335,20 @@ const newProductCopy: Record<Language, Record<NewModel, ProductCopy>> = {
     },
   },
   ja: {
+    ...proSeriesCopy(
+      {
+        eyebrow: "史上最もパワフルな IPHONE。",
+        intro: "アルミニウムユニボディ、ベイパーチャンバー冷却のA19 Pro、光学品質の8倍ズームに対応する3つの48MP Fusionカメラ。",
+        camera: "3 × 48MP",
+        designTitle: "アルミニウムから鍛造。Proのために。",
+        designBody: "熱間鍛造アルミニウムのユニボディに、前面のCeramic Shield 2、背面のCeramic Shield、ベイパーチャンバーを統合しました。",
+        cameraTitle: "3つの48MPカメラ。8つのProレンズ。",
+        cameraBody: "Fusionメイン、超広角、望遠が13mmから200mmをカバーし、光学品質の8倍ズームにも対応します。",
+        performanceTitle: "A19 Pro。ベイパーチャンバーで冷却。",
+        performanceBody: "A19 ProとApple設計のベイパーチャンバーが、ゲーム、ビデオ、Apple Intelligenceで高い持続性能を発揮します。",
+      },
+      { proDisplay: "6.3″ ProMotion", proBattery: "33時間", maxDisplay: "6.9″ ProMotion", maxBattery: "39時間" },
+    ),
     air: {
       name: "iPhone Air",
       eyebrow: "驚くほど薄い。",
