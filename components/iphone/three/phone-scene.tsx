@@ -4,9 +4,8 @@ import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import type { Finish, Model } from "../product-data";
 import {
+  getOfficialModelUrl,
   loadOfficialProduct,
-  OFFICIAL_DUO_MODEL_URLS,
-  OFFICIAL_PRO_MODEL_URLS,
   setOfficialExploded,
   type DuoPose,
   type OfficialProduct,
@@ -20,11 +19,20 @@ const finishColors: Record<Finish, string> = {
   black: "#202125",
   "night-sky": "#182433",
   "star-white": "#e4e2dd",
+  "sky-blue": "#c9d8e5",
+  lavender: "#b8afd1",
+  "soft-pink": "#e7c1bd",
 };
 
 const AUTO_ROTATION_IDLE_DELAY_MS = 1800;
 const AUTO_ROTATION_SPEED = 0.18;
 const AUTO_ROTATION_EASING = 2.8;
+
+function officialModelKey(model: Model, finish: Finish, duoPose: DuoPose) {
+  return model === "duo"
+    ? `${model}:${finish}:${duoPose}`
+    : `${model}:${finish}`;
+}
 
 type PhoneSceneProps = {
   containerRef: RefObject<HTMLElement | null>;
@@ -73,55 +81,43 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
     const world = new THREE.Group();
     const pro = createProModel();
     const duo = createDuoModel();
-    const officialProHost = new THREE.Group();
-    const officialDuoHost = new THREE.Group();
-    world.add(pro.root, duo.root, officialProHost, officialDuoHost);
+    const officialHost = new THREE.Group();
+    world.add(pro.root, duo.root, officialHost);
     scene.add(world);
 
-    const officialProModels = new Map<Finish, OfficialProduct>();
-    const pendingOfficialFinishes = new Set<Finish>();
+    const officialModels = new Map<string, OfficialProduct>();
+    const pendingOfficialModels = new Set<string>();
     let disposed = false;
-    const requestOfficialPro = (requestedFinish: Finish) => {
-      const url = OFFICIAL_PRO_MODEL_URLS[requestedFinish];
-      if (!url || officialProModels.has(requestedFinish) || pendingOfficialFinishes.has(requestedFinish)) return;
-      pendingOfficialFinishes.add(requestedFinish);
-      void loadOfficialProduct(url, 6.42)
+    const requestOfficialModel = (
+      requestedModel: Model,
+      requestedFinish: Finish,
+      requestedPose: DuoPose,
+    ) => {
+      const url = getOfficialModelUrl(requestedModel, requestedFinish, requestedPose);
+      const modelKey = officialModelKey(requestedModel, requestedFinish, requestedPose);
+      if (!url || officialModels.has(modelKey) || pendingOfficialModels.has(modelKey)) return;
+
+      pendingOfficialModels.add(modelKey);
+      const targetHeight = requestedModel === "duo" ? 6.1 : 6.42;
+      void loadOfficialProduct(url, targetHeight)
         .then((product) => {
-          pendingOfficialFinishes.delete(requestedFinish);
+          pendingOfficialModels.delete(modelKey);
           if (disposed || product.meshCount === 0) {
             canvas.dataset.modelSource = "procedural-fallback";
             return;
           }
           product.root.visible = false;
-          officialProModels.set(requestedFinish, product);
-          officialProHost.add(product.root);
+          officialModels.set(modelKey, product);
+          officialHost.add(product.root);
           canvas.dataset.modelSource = "apple-ar-mesh";
           canvas.dataset.meshCount = String(product.meshCount);
         })
         .catch(() => {
-          pendingOfficialFinishes.delete(requestedFinish);
+          pendingOfficialModels.delete(modelKey);
           canvas.dataset.modelSource = "procedural-fallback";
         });
     };
-    requestOfficialPro("burgundy");
-
-    const officialDuoModels = new Map<string, OfficialProduct>();
-    const pendingOfficialDuoModels = new Set<string>();
-    const requestOfficialDuo = (requestedFinish: Finish, requestedPose: DuoPose) => {
-      const url = OFFICIAL_DUO_MODEL_URLS[requestedPose][requestedFinish];
-      const key = `${requestedFinish}:${requestedPose}`;
-      if (!url || officialDuoModels.has(key) || pendingOfficialDuoModels.has(key)) return;
-      pendingOfficialDuoModels.add(key);
-      void loadOfficialProduct(url, 6.1)
-        .then((product) => {
-          pendingOfficialDuoModels.delete(key);
-          if (disposed || product.meshCount === 0) return;
-          product.root.visible = false;
-          officialDuoModels.set(key, product);
-          officialDuoHost.add(product.root);
-        })
-        .catch(() => pendingOfficialDuoModels.delete(key));
-    };
+    requestOfficialModel("pro", "burgundy", "landscape");
 
     const ambient = new THREE.HemisphereLight("#b7d8ff", "#16090d", 1.7);
     const key = new THREE.DirectionalLight("#ffffff", 7.5);
@@ -256,23 +252,18 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       autoRotationSpeed += (idleRotationSpeed - autoRotationSpeed) * Math.min(1, frameDelta * AUTO_ROTATION_EASING);
       autoRotation += autoRotationSpeed * frameDelta;
 
-      requestOfficialPro(config.finish);
-      const activeOfficialPro = officialProModels.get(config.finish) ?? null;
-      if (config.model === "duo") requestOfficialDuo(config.finish, config.duoPose);
-      const activeDuoKey = `${config.finish}:${config.duoPose}`;
-      const activeOfficialDuo = officialDuoModels.get(activeDuoKey) ?? null;
-      const useOfficialPro = activeOfficialPro !== null;
-      const useOfficialDuo = activeOfficialDuo !== null;
-      pro.root.visible = config.model === "pro" && !useOfficialPro;
-      officialProHost.visible = config.model === "pro" && useOfficialPro;
-      officialProModels.forEach((product, productFinish) => {
-        product.root.visible = useOfficialPro && productFinish === config.finish;
+      requestOfficialModel(config.model, config.finish, config.duoPose);
+      const activeModelKey = officialModelKey(config.model, config.finish, config.duoPose);
+      const activeOfficial = officialModels.get(activeModelKey) ?? null;
+      const useOfficial = activeOfficial !== null;
+      pro.root.visible = config.model !== "duo" && !useOfficial;
+      duo.root.visible = config.model === "duo" && !useOfficial;
+      officialHost.visible = useOfficial;
+      officialModels.forEach((product, productKey) => {
+        product.root.visible = useOfficial && productKey === activeModelKey;
       });
-      duo.root.visible = config.model === "duo" && !useOfficialDuo;
-      officialDuoHost.visible = config.model === "duo" && useOfficialDuo;
-      officialDuoModels.forEach((product, productKey) => {
-        product.root.visible = useOfficialDuo && productKey === activeDuoKey;
-      });
+      canvas.dataset.modelSource = useOfficial ? "apple-ar-mesh" : "procedural-fallback";
+      if (activeOfficial) canvas.dataset.meshCount = String(activeOfficial.meshCount);
       targetColor.set(finishColors[config.finish]);
       [...pro.finishMaterials, ...duo.finishMaterials].forEach((material) => material.color.lerp(targetColor, 0.08));
 
@@ -287,8 +278,7 @@ export function PhoneScene({ containerRef, model, finish, duoPose, exploded, res
       explodeAmount += ((config.exploded ? 1 : 0) - explodeAmount) * 0.08;
       setAssemblyExploded(pro, explodeAmount);
       setAssemblyExploded(duo, explodeAmount);
-      if (activeOfficialPro) setOfficialExploded(activeOfficialPro, explodeAmount);
-      if (activeOfficialDuo) setOfficialExploded(activeOfficialDuo, explodeAmount);
+      if (activeOfficial) setOfficialExploded(activeOfficial, explodeAmount);
 
       const chapter = scrollProgress * 4;
       const orbit = scrollProgress * Math.PI * 2.75;

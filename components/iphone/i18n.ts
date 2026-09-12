@@ -1,4 +1,4 @@
-import type { Finish, Model } from "./product-data";
+import type { Finish, LegacyModel } from "./product-data";
 
 export type Language = "en" | "vi" | "pt" | "es" | "zh" | "ja";
 
@@ -42,10 +42,10 @@ export type Translation = {
     cameraKicker: string;
     performanceKicker: string;
     turnKicker: string;
-    designTitle: Record<Model, string>;
-    designBody: Record<Model, string>;
-    cameraTitle: Record<Model, string>;
-    cameraBody: Record<Model, string>;
+    designTitle: Record<LegacyModel, string>;
+    designBody: Record<LegacyModel, string>;
+    cameraTitle: Record<LegacyModel, string>;
+    cameraBody: Record<LegacyModel, string>;
     performanceTitle: string;
     performanceBody: string;
     finalTitle: readonly [string, string];
@@ -63,7 +63,7 @@ export type Translation = {
     conceptNote: string;
   };
   finishes: Record<Finish, string>;
-  models: Record<Model, ModelContent>;
+  models: Record<LegacyModel, ModelContent>;
 };
 
 export const languageOptions: ReadonlyArray<{
@@ -91,11 +91,11 @@ export const htmlLanguage: Record<Language, string> = {
 export const translations: Record<Language, Translation> = {
   en: {
     meta: {
-      title: "iPhone 18 Pro + iPhone Duo — Interactive 3D",
-      description: "An interactive 3D experience for iPhone 18 Pro, Pro Max, and iPhone Duo.",
+      title: "iPhone lineup — Interactive 3D",
+      description: "Explore Apple’s current iPhone lineup through official AR geometry in an interactive 3D experience.",
     },
     header: {
-      homeLabel: "iPhone 18 interactive, return to the start",
+      homeLabel: "Interactive iPhone lineup, return to the start",
       productLab: "INTERACTIVE PRODUCT LAB",
       sources: "SOURCES",
       language: "Choose display language",
@@ -162,6 +162,9 @@ export const translations: Record<Language, Translation> = {
       black: "Black",
       "night-sky": "Night Sky",
       "star-white": "Star White",
+      "sky-blue": "Sky Blue",
+      lavender: "Lavender",
+      "soft-pink": "Soft Pink",
     },
     models: {
       pro: {
@@ -184,11 +187,11 @@ export const translations: Record<Language, Translation> = {
   },
   vi: {
     meta: {
-      title: "iPhone 18 Pro + iPhone Duo — Trải nghiệm 3D",
-      description: "Trải nghiệm 3D tương tác dành cho iPhone 18 Pro, Pro Max và iPhone Duo.",
+      title: "Các dòng iPhone — Trải nghiệm 3D tương tác",
+      description: "Khám phá các dòng iPhone hiện tại bằng hình học AR chính thức của Apple trong không gian 3D tương tác.",
     },
     header: {
-      homeLabel: "iPhone 18 tương tác, về đầu trải nghiệm",
+      homeLabel: "Các dòng iPhone tương tác, về đầu trải nghiệm",
       productLab: "PHÒNG LAB SẢN PHẨM TƯƠNG TÁC",
       sources: "NGUỒN",
       language: "Chọn ngôn ngữ hiển thị",
@@ -255,6 +258,9 @@ export const translations: Record<Language, Translation> = {
       black: "Đen",
       "night-sky": "Trời Đêm",
       "star-white": "Trắng Sao",
+      "sky-blue": "Xanh Da Trời",
+      lavender: "Tím Oải Hương",
+      "soft-pink": "Hồng Phấn",
     },
     models: {
       pro: {
@@ -277,11 +283,11 @@ export const translations: Record<Language, Translation> = {
   },
   pt: {
     meta: {
-      title: "iPhone 18 Pro + iPhone Duo — Experiência 3D interativa",
-      description: "Uma experiência 3D interativa para iPhone 18 Pro, Pro Max e iPhone Duo.",
+      title: "Linha iPhone — Experiência 3D interativa",
+      description: "Explore a linha atual do iPhone com a geometria AR oficial da Apple em uma experiência 3D interativa.",
     },
     header: {
-      homeLabel: "iPhone 18 interativo, voltar ao início",
+      homeLabel: "Linha iPhone interativa, voltar ao início",
       productLab: "LABORATÓRIO INTERATIVO DE PRODUTOS",
       sources: "FONTES",
       language: "Escolher idioma de exibição",
@@ -348,6 +354,9 @@ export const translations: Record<Language, Translation> = {
       black: "Preto",
       "night-sky": "Céu Noturno",
       "star-white": "Branco Estelar",
+      "sky-blue": "Azul-Céu",
+      lavender: "Lavanda",
+      "soft-pink": "Rosa Suave",
     },
     models: {
       pro: {
@@ -370,11 +379,11 @@ export const translations: Record<Language, Translation> = {
   },
   es: {
     meta: {
-      title: "iPhone 18 Pro + iPhone Duo — Experiencia 3D interactiva",
-      description: "Una experiencia 3D interactiva para iPhone 18 Pro, Pro Max y iPhone Duo.",
+      title: "Gama iPhone — Experiencia 3D interactiva",
+      description: "Explora la gama actual de iPhone con la geometría AR oficial de Apple en una experiencia 3D interactiva.",
     },
     header: {
-      homeLabel: "iPhone 18 interactivo, volver al inicio",
+      homeLabel: "Gama iPhone interactiva, volver al inicio",
       productLab: "LABORATORIO INTERACTIVO DE PRODUCTOS",
       sources: "FUENTES",
       language: "Elegir idioma de visualización",
@@ -441,6 +450,9 @@ export const translations: Record<Language, Translation> = {
       black: "Negro",
       "night-sky": "Cielo Nocturno",
       "star-white": "Blanco Estelar",
+      "sky-blue": "Azul Cielo",
+      lavender: "Lavanda",
+      "soft-pink": "Rosa Suave",
     },
     models: {
       pro: {
@@ -463,11 +475,11 @@ export const translations: Record<Language, Translation> = {
   },
   zh: {
     meta: {
-      title: "iPhone 18 Pro + iPhone Duo — 互动 3D 体验",
-      description: "为 iPhone 18 Pro、Pro Max 和 iPhone Duo 打造的互动 3D 体验。",
+      title: "iPhone 系列 — 互动 3D 体验",
+      description: "通过 Apple 官方 AR 几何结构，在互动 3D 体验中探索当前 iPhone 系列。",
     },
     header: {
-      homeLabel: "iPhone 18 互动体验，返回开头",
+      homeLabel: "iPhone 系列互动体验，返回开头",
       productLab: "互动产品实验室",
       sources: "资料来源",
       language: "选择显示语言",
@@ -534,6 +546,9 @@ export const translations: Record<Language, Translation> = {
       black: "黑色",
       "night-sky": "夜空色",
       "star-white": "星光白",
+      "sky-blue": "天蓝色",
+      lavender: "薰衣草紫",
+      "soft-pink": "柔粉色",
     },
     models: {
       pro: {
@@ -556,11 +571,11 @@ export const translations: Record<Language, Translation> = {
   },
   ja: {
     meta: {
-      title: "iPhone 18 Pro + iPhone Duo — インタラクティブ3D",
-      description: "iPhone 18 Pro、Pro Max、iPhone Duoのためのインタラクティブな3D体験。",
+      title: "iPhoneラインナップ — インタラクティブ3D",
+      description: "Apple公式ARジオメトリで、現在のiPhoneラインナップをインタラクティブな3D空間で探索できます。",
     },
     header: {
-      homeLabel: "iPhone 18 インタラクティブ体験の先頭へ戻る",
+      homeLabel: "iPhoneラインナップのインタラクティブ体験の先頭へ戻る",
       productLab: "インタラクティブ・プロダクトラボ",
       sources: "情報源",
       language: "表示言語を選択",
@@ -627,6 +642,9 @@ export const translations: Record<Language, Translation> = {
       black: "ブラック",
       "night-sky": "ナイトスカイ",
       "star-white": "スターホワイト",
+      "sky-blue": "スカイブルー",
+      lavender: "ラベンダー",
+      "soft-pink": "ソフトピンク",
     },
     models: {
       pro: {

@@ -23,7 +23,9 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
           <nav aria-label={content.navLabel}>
             <a href="https://www.apple.com/iphone-18-pro/" target="_blank" rel="noreferrer">Apple · 18 Pro <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/iphone-duo/" target="_blank" rel="noreferrer">Apple · Duo <ArrowUpRight aria-hidden="true" /></a>
-            <a href="https://cellphones.com.vn/mobile/apple/iphone-18.html" target="_blank" rel="noreferrer">CellphoneS <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/iphone-air/" target="_blank" rel="noreferrer">Apple · Air <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/iphone-17/" target="_blank" rel="noreferrer">Apple · 17 <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/iphone-17e/" target="_blank" rel="noreferrer">Apple · 17e <ArrowUpRight aria-hidden="true" /></a>
           </nav>
         </div>
 
@@ -35,7 +37,7 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
       </div>
 
       <div className="footer-bottom">
-        <span>i18 CONCEPT LAB / 2026</span>
+        <span>iPHONE AR LAB / 2026</span>
         <span>THREE.JS / APPLE AR</span>
       </div>
     </footer>

@@ -3,12 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Box, Maximize2, Minimize2, Rotate3D, Scan } from "lucide-react";
 import { useRef, useState, type CSSProperties } from "react";
+import { DeviceSelect } from "./device-select";
 import { ExperienceFooter } from "./experience-footer";
 import { LanguageSelect } from "./language-select";
 import { SegmentedControl } from "./segmented-control";
+import { getProductCopy } from "./product-copy";
 import {
   finishes,
   modelFinishes,
+  productCatalog,
   type Finish,
   type Model,
 } from "./product-data";
@@ -25,7 +28,7 @@ export function IphoneExperience() {
   const [resetKey, setResetKey] = useState(0);
   const experienceRef = useRef<HTMLElement>(null);
   const { language, setLanguage, content } = useLanguage();
-  const active = content.models[model];
+  const active = getProductCopy(content, language, model);
   const availableFinishes = modelFinishes[model];
 
   useConceptTool(setModel, setFinish);
@@ -33,7 +36,7 @@ export function IphoneExperience() {
   function changeModel(next: Model) {
     setModel(next);
     setExploded(false);
-    setFinish(next === "pro" ? "burgundy" : "night-sky");
+    setFinish(productCatalog[next].defaultFinish);
   }
 
   return (
@@ -55,7 +58,7 @@ export function IphoneExperience() {
               className="apple-mark"
               aria-label={content.header.homeLabel}
             >
-              <span>i</span>18
+              <span>i</span>Phone
             </a>
             <p>{content.header.productLab}</p>
             <div className="header-actions">
@@ -92,15 +95,10 @@ export function IphoneExperience() {
           >
             <div className="control-block control-block--model">
               <span className="control-caption">{content.controls.model}</span>
-              <SegmentedControl
+              <DeviceSelect
                 label={content.controls.model}
-                name="iphone-model"
                 value={model}
                 onChange={changeModel}
-                options={[
-                  { value: "pro", label: "18 Pro" },
-                  { value: "duo", label: "iPhone Duo" },
-                ]}
               />
             </div>
 
@@ -128,7 +126,7 @@ export function IphoneExperience() {
               </div>
             </div>
 
-            {model === "duo" && (
+            {productCatalog[model].isFoldable && (
               <div className="control-block control-block--fold">
                 <span className="control-caption">{content.controls.pose}</span>
                 <SegmentedControl
@@ -199,22 +197,22 @@ export function IphoneExperience() {
 
           <article className="journey-copy journey-copy--two journey-copy--right">
             <p className="journey-kicker">{content.journey.designKicker}</p>
-            <h2>{content.journey.designTitle[model]}</h2>
-            <p>{content.journey.designBody[model]}</p>
+            <h2>{active.designTitle}</h2>
+            <p>{active.designBody}</p>
           </article>
 
           <article className="journey-copy journey-copy--three">
             <p className="journey-kicker">{content.journey.cameraKicker}</p>
-            <h2>{content.journey.cameraTitle[model]}</h2>
-            <p>{content.journey.cameraBody[model]}</p>
+            <h2>{active.cameraTitle}</h2>
+            <p>{active.cameraBody}</p>
           </article>
 
           <article className="journey-copy journey-copy--four journey-copy--right">
             <p className="journey-kicker">
               {content.journey.performanceKicker}
             </p>
-            <h2>{content.journey.performanceTitle}</h2>
-            <p>{content.journey.performanceBody}</p>
+            <h2>{active.performanceTitle}</h2>
+            <p>{active.performanceBody}</p>
           </article>
 
           <article className="journey-copy journey-copy--five">

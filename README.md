@@ -1,7 +1,8 @@
-# iPhone 18 interactive 3D
+# iPhone lineup interactive 3D
 
-An interactive iPhone 18 Pro and iPhone Duo experience built with React, Three.js,
-Vinext, and the Cloudflare runtime.
+An interactive iPhone lineup experience built with React, Three.js, Vinext, and
+the Cloudflare runtime. It includes iPhone 18 Pro, iPhone Duo, iPhone Air,
+iPhone 17, and iPhone 17e models converted from Apple's public AR assets.
 
 ## Requirements
 

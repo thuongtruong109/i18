@@ -1,12 +1,23 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import type { Finish } from "../product-data";
+import type { Finish, Model } from "../product-data";
 
-export const OFFICIAL_PRO_MODEL_URLS: Partial<Record<Finish, string>> = {
-  burgundy: "/models/iphone-18-pro.glb",
-  glacier: "/models/iphone-18-pro-glacier.glb",
-  silver: "/models/iphone-18-pro-silver.glb",
-  black: "/models/iphone-18-pro-black.glb",
+const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, string>>> = {
+  pro: {
+    burgundy: "/models/iphone-18-pro.glb",
+    glacier: "/models/iphone-18-pro-glacier.glb",
+    silver: "/models/iphone-18-pro-silver.glb",
+    black: "/models/iphone-18-pro-black.glb",
+  },
+  air: {
+    "sky-blue": "/models/iphone-air.glb",
+  },
+  "17": {
+    lavender: "/models/iphone-17.glb",
+  },
+  "17e": {
+    "soft-pink": "/models/iphone-17e.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";
@@ -21,6 +32,15 @@ export const OFFICIAL_DUO_MODEL_URLS: Record<DuoPose, Partial<Record<Finish, str
     "star-white": "/models/iphone-duo-landscape.glb",
   },
 };
+
+export function getOfficialModelUrl(
+  model: Model,
+  finish: Finish,
+  duoPose: DuoPose,
+): string | undefined {
+  if (model === "duo") return OFFICIAL_DUO_MODEL_URLS[duoPose][finish];
+  return OFFICIAL_MODEL_URLS[model][finish];
+}
 
 export type OfficialProduct = {
   root: THREE.Group;

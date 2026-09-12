@@ -1,7 +1,15 @@
 "use client";
 
 import { useEffect, type Dispatch, type SetStateAction } from "react";
-import type { Finish, Model } from "./product-data";
+import {
+  finishes,
+  isFinish,
+  isModel,
+  modelFinishes,
+  modelIds,
+  type Finish,
+  type Model,
+} from "./product-data";
 
 type RegisterTool = (tool: {
   name: string;
@@ -29,13 +37,13 @@ export function useConceptTool(
 
     void Promise.resolve(registerTool({
       name: "configure_iphone_concept",
-      title: "Cấu hình concept iPhone 18",
-      description: "Chọn phiên bản và lớp hoàn thiện đang hiển thị trong landing page.",
+      title: "Cấu hình trải nghiệm iPhone 3D",
+      description: "Chọn dòng iPhone và lớp hoàn thiện đang hiển thị trong trải nghiệm.",
       inputSchema: {
         type: "object",
         properties: {
-          model: { type: "string", enum: ["pro", "duo"] },
-          finish: { type: "string", enum: ["burgundy", "glacier", "silver", "black", "night-sky", "star-white"] },
+          model: { type: "string", enum: modelIds },
+          finish: { type: "string", enum: Object.keys(finishes) },
         },
         required: ["model", "finish"],
         additionalProperties: false,
@@ -43,13 +51,14 @@ export function useConceptTool(
       annotations: { readOnlyHint: false, untrustedContentHint: false },
       async execute(input) {
         const value = input as { model?: string; finish?: string };
-        if (!value || !["pro", "duo"].includes(value.model ?? "")) throw new Error("Phiên bản không hợp lệ.");
-        const validFinishes = value.model === "pro"
-          ? ["burgundy", "glacier", "silver", "black"]
-          : ["night-sky", "star-white"];
-        if (!validFinishes.includes(value.finish ?? "")) throw new Error("Màu không phù hợp với phiên bản đã chọn.");
-        setModel(value.model as Model);
-        setFinish(value.finish as Finish);
+        const requestedModel = value?.model ?? "";
+        const requestedFinish = value?.finish ?? "";
+        if (!isModel(requestedModel)) throw new Error("Dòng máy không hợp lệ.");
+        if (!isFinish(requestedFinish) || !modelFinishes[requestedModel].includes(requestedFinish)) {
+          throw new Error("Màu không phù hợp với dòng máy đã chọn.");
+        }
+        setModel(requestedModel);
+        setFinish(requestedFinish);
         return { configured: true, model: value.model, finish: value.finish };
       },
     }, { signal: lifecycle.signal })).catch(() => undefined);
