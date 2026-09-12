@@ -2,9 +2,9 @@
 
 An interactive iPhone lineup experience built with React, Three.js, Vinext, and
 the Cloudflare runtime. It includes iPhone 18 Pro, iPhone Duo, and the complete
-iPhone 17 family and iPhone 16 family, including each Pro, Pro Max, Plus, base,
-Air, and e model Apple released in those generations. Every model is converted
-from Apple's public AR assets.
+iPhone 17, iPhone 16, and iPhone 15 families, including each Pro, Pro Max, Plus,
+base, Air, and e model Apple released in those generations. Every model is
+converted from Apple's public AR assets.
 
 The control dock groups devices by generation: choose a series first, then pick
 from only the models available in that series.

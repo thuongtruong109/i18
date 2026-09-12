@@ -11,9 +11,14 @@ export type Iphone16Model =
   | "16"
   | "16-plus"
   | "16e";
-export type NewModel = Iphone17Model | Iphone16Model;
+export type Iphone15Model =
+  | "15-pro"
+  | "15-pro-max"
+  | "15"
+  | "15-plus";
+export type NewModel = Iphone17Model | Iphone16Model | Iphone15Model;
 export type Model = LegacyModel | NewModel;
-export type Series = "18" | "17" | "16";
+export type Series = "18" | "17" | "16" | "15";
 
 export type Finish =
   | "burgundy"
@@ -27,7 +32,9 @@ export type Finish =
   | "soft-pink"
   | "cosmic-orange"
   | "desert-titanium"
+  | "natural-titanium"
   | "ultramarine"
+  | "pink"
   | "white";
 
 type ProductDefinition = {
@@ -123,6 +130,34 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     isFoldable: false,
     sceneHeight: 6.28,
   },
+  "15-pro": {
+    label: "iPhone 15 Pro",
+    shortLabel: "15 Pro",
+    defaultFinish: "natural-titanium",
+    isFoldable: false,
+    sceneHeight: 5.77,
+  },
+  "15-pro-max": {
+    label: "iPhone 15 Pro Max",
+    shortLabel: "15 Pro Max",
+    defaultFinish: "natural-titanium",
+    isFoldable: false,
+    sceneHeight: 6.29,
+  },
+  "15": {
+    label: "iPhone 15",
+    shortLabel: "15",
+    defaultFinish: "pink",
+    isFoldable: false,
+    sceneHeight: 5.81,
+  },
+  "15-plus": {
+    label: "iPhone 15 Plus",
+    shortLabel: "15 Plus",
+    defaultFinish: "pink",
+    isFoldable: false,
+    sceneHeight: 6.33,
+  },
 };
 
 type SeriesDefinition = {
@@ -132,7 +167,7 @@ type SeriesDefinition = {
   models: ReadonlyArray<Model>;
 };
 
-export const seriesIds = ["18", "17", "16"] as const satisfies ReadonlyArray<Series>;
+export const seriesIds = ["18", "17", "16", "15"] as const satisfies ReadonlyArray<Series>;
 
 export const seriesCatalog: Record<Series, SeriesDefinition> = {
   "18": {
@@ -153,6 +188,12 @@ export const seriesCatalog: Record<Series, SeriesDefinition> = {
     defaultModel: "16-pro",
     models: ["16-pro", "16-pro-max", "16", "16-plus", "16e"],
   },
+  "15": {
+    label: "iPhone 15",
+    shortLabel: "15",
+    defaultModel: "15-pro",
+    models: ["15-pro", "15-pro-max", "15", "15-plus"],
+  },
 };
 
 export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
@@ -171,7 +212,9 @@ export const finishes: Record<Finish, { name: string; color: string; accent: str
   "soft-pink": { name: "Soft Pink", color: "#e7c1bd", accent: "#fff0ec" },
   "cosmic-orange": { name: "Cosmic Orange", color: "#e95d22", accent: "#ffad82" },
   "desert-titanium": { name: "Desert Titanium", color: "#b9a08e", accent: "#ead3c1" },
+  "natural-titanium": { name: "Natural Titanium", color: "#8f897f", accent: "#d5cec2" },
   ultramarine: { name: "Ultramarine", color: "#5463c6", accent: "#a8b0ff" },
+  pink: { name: "Pink", color: "#e8c2c8", accent: "#fff0f2" },
   white: { name: "White", color: "#f2f1ed", accent: "#ffffff" },
 };
 
@@ -188,6 +231,10 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   "16": ["ultramarine"],
   "16-plus": ["ultramarine"],
   "16e": ["white"],
+  "15-pro": ["natural-titanium"],
+  "15-pro-max": ["natural-titanium"],
+  "15": ["pink"],
+  "15-plus": ["pink"],
 };
 
 export function isModel(value: string): value is Model {
@@ -209,6 +256,13 @@ export function isIphone16Model(model: Model): model is Iphone16Model {
     || model === "16"
     || model === "16-plus"
     || model === "16e";
+}
+
+export function isIphone15Model(model: Model): model is Iphone15Model {
+  return model === "15-pro"
+    || model === "15-pro-max"
+    || model === "15"
+    || model === "15-plus";
 }
 
 export function isFinish(value: string): value is Finish {

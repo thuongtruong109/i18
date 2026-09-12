@@ -169,7 +169,9 @@ export const translations: Record<Language, Translation> = {
       "soft-pink": "Soft Pink",
       "cosmic-orange": "Cosmic Orange",
       "desert-titanium": "Desert Titanium",
+      "natural-titanium": "Natural Titanium",
       ultramarine: "Ultramarine",
+      pink: "Pink",
       white: "White",
     },
     models: {
@@ -270,7 +272,9 @@ export const translations: Record<Language, Translation> = {
       "soft-pink": "Hồng Phấn",
       "cosmic-orange": "Cam Vũ Trụ",
       "desert-titanium": "Titan Sa Mạc",
+      "natural-titanium": "Titan Tự Nhiên",
       ultramarine: "Xanh Lưu Ly",
+      pink: "Hồng",
       white: "Trắng",
     },
     models: {
@@ -371,7 +375,9 @@ export const translations: Record<Language, Translation> = {
       "soft-pink": "Rosa Suave",
       "cosmic-orange": "Laranja Cósmico",
       "desert-titanium": "Titânio-deserto",
+      "natural-titanium": "Titânio Natural",
       ultramarine: "Ultramarino",
+      pink: "Rosa",
       white: "Branco",
     },
     models: {
@@ -472,7 +478,9 @@ export const translations: Record<Language, Translation> = {
       "soft-pink": "Rosa Suave",
       "cosmic-orange": "Naranja Cósmico",
       "desert-titanium": "Titanio del Desierto",
+      "natural-titanium": "Titanio Natural",
       ultramarine: "Ultramarino",
+      pink: "Rosa",
       white: "Blanco",
     },
     models: {
@@ -573,7 +581,9 @@ export const translations: Record<Language, Translation> = {
       "soft-pink": "柔粉色",
       "cosmic-orange": "宇宙橙色",
       "desert-titanium": "沙漠色钛金属",
+      "natural-titanium": "原色钛金属",
       ultramarine: "群青色",
+      pink: "粉色",
       white: "白色",
     },
     models: {
@@ -674,7 +684,9 @@ export const translations: Record<Language, Translation> = {
       "soft-pink": "ソフトピンク",
       "cosmic-orange": "コズミックオレンジ",
       "desert-titanium": "デザートチタニウム",
+      "natural-titanium": "ナチュラルチタニウム",
       ultramarine: "ウルトラマリン",
+      pink: "ピンク",
       white: "ホワイト",
     },
     models: {

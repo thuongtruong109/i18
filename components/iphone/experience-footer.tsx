@@ -28,6 +28,7 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
             <a href="https://www.apple.com/iphone-17/" target="_blank" rel="noreferrer">Apple · 17 <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/iphone-17e/" target="_blank" rel="noreferrer">Apple · 17e <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://www.apple.com/iphone/compare/?modelList=iphone-16-pro%2Ciphone-16-pro-max%2Ciphone-16" target="_blank" rel="noreferrer">Apple · 16 series <ArrowUpRight aria-hidden="true" /></a>
+            <a href="https://www.apple.com/iphone/compare/?modelList=iphone-15-pro%2Ciphone-15-pro-max%2Ciphone-15%2Ciphone-15-plus" target="_blank" rel="noreferrer">Apple · 15 series <ArrowUpRight aria-hidden="true" /></a>
           </nav>
         </div>
 

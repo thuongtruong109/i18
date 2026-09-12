@@ -24,7 +24,9 @@ const finishColors: Record<Finish, string> = {
   "soft-pink": "#e7c1bd",
   "cosmic-orange": "#e95d22",
   "desert-titanium": "#b9a08e",
+  "natural-titanium": "#8f897f",
   ultramarine: "#5463c6",
+  pink: "#e8c2c8",
   white: "#f2f1ed",
 };
 
