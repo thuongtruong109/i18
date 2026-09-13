@@ -1,7 +1,7 @@
-import { ArrowUp, ArrowUpRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import type { Translation } from "./i18n";
 import { FooterGlow } from "./footer-glow";
-import { footerProductLinks } from "./footer-source-data";
+import { FooterOrbitNav } from "./footer-orbit-nav";
 
 type ExperienceFooterProps = {
   content: Translation["sources"];
@@ -12,37 +12,26 @@ export function ExperienceFooter({ content }: ExperienceFooterProps) {
     <footer className="experience-footer" id="sources">
       <FooterGlow />
 
-      <div className="footer-content">
-        <div className="footer-about">
+      <div className="footer-closing">
+        <article className="footer-manifesto">
           <div className="footer-badge">
             <Sparkles aria-hidden="true" />
             <span>{content.badge}</span>
           </div>
           <h2>{content.title}</h2>
-          <p>{content.description}</p>
-        </div>
-
-        <div className="footer-return">
-          <span className="footer-column__label">{content.experience}</span>
-          <p>{content.conceptNote}</p>
-          <a href="#experience" className="footer-top-link">
-            <span>{content.backToTop}</span>
-            <ArrowUp aria-hidden="true" />
-          </a>
-        </div>
-
-        <nav className="footer-source-line" aria-label={content.navLabel}>
-          <span className="footer-column__label">{content.resources}</span>
-          <div className="footer-source-line__links">
-            {footerProductLinks.map((product, index) => (
-              <a href={product.href} target="_blank" rel="noreferrer" key={product.label}>
-                <small>{String(index + 1).padStart(2, "0")}</small>
-                <span>{product.label}</span>
-                <ArrowUpRight aria-hidden="true" />
-              </a>
-            ))}
+          <p className="footer-manifesto__intro">{content.description}</p>
+          <div className="footer-manifesto__note">
+            <span className="footer-column__label">{content.experience}</span>
+            <p>{content.conceptNote}</p>
           </div>
-        </nav>
+        </article>
+
+        <FooterOrbitNav
+          backToTop={content.backToTop}
+          experienceLabel={content.experience}
+          navLabel={content.navLabel}
+          resourcesLabel={content.resources}
+        />
       </div>
 
       <div className="footer-bottom">
