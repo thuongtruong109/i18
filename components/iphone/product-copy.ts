@@ -4,12 +4,14 @@ import { getAppleWatchProductCopy } from "./product-copy-apple-watch";
 import { getIphone15ProductCopy } from "./product-copy-15";
 import { getIphone16ProductCopy } from "./product-copy-16";
 import { getIpadProductCopy } from "./product-copy-ipad";
+import { getMacProductCopy } from "./product-copy-mac";
 import {
   isAirPodsModel,
   isAppleWatchModel,
   isIpadModel,
   isIphone15Model,
   isIphone16Model,
+  isMacModel,
   type Iphone17Model,
   type Model,
 } from "./product-data";
@@ -417,5 +419,6 @@ export function getProductCopy(
   if (isIpadModel(model)) return getIpadProductCopy(language, model);
   if (isAppleWatchModel(model)) return getAppleWatchProductCopy(language, model);
   if (isAirPodsModel(model)) return getAirPodsProductCopy(language, model);
+  if (isMacModel(model)) return getMacProductCopy(language, model);
   return iphone17ProductCopy[language][model];
 }

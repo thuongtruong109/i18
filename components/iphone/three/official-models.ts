@@ -81,6 +81,24 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
   "airpods-max-2": {
     midnight: "/models/airpods-max-2.glb",
   },
+  "macbook-air-m5": {
+    "sky-blue": "/models/macbook-air-m5.glb",
+  },
+  "macbook-pro-m5": {
+    "space-black": "/models/macbook-pro-m5.glb",
+  },
+  "imac-m4": {
+    blue: "/models/imac-m4.glb",
+  },
+  "mac-mini-m6": {
+    silver: "/models/mac-mini-m6.glb",
+  },
+  "mac-studio-m5": {
+    silver: "/models/mac-studio-m5.glb",
+  },
+  "mac-pro-m2-ultra": {
+    silver: "/models/mac-pro-m2-ultra.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";
@@ -129,10 +147,15 @@ function orientTallProduct(source: THREE.Group) {
   return oriented;
 }
 
-export async function loadOfficialProduct(url: string, targetHeight: number): Promise<OfficialProduct> {
+export async function loadOfficialProduct(
+  url: string,
+  targetHeight: number,
+  orientation: "tall" | "native" = "tall",
+): Promise<OfficialProduct> {
   const loader = new GLTFLoader();
   const source = (await loader.loadAsync(url)).scene;
-  const oriented = orientTallProduct(source);
+  const oriented = orientation === "native" ? new THREE.Group() : orientTallProduct(source);
+  if (orientation === "native") oriented.add(source);
   oriented.updateMatrixWorld(true);
 
   const orientedBox = new THREE.Box3().setFromObject(oriented);
@@ -142,7 +165,7 @@ export async function loadOfficialProduct(url: string, targetHeight: number): Pr
 
   const normalized = new THREE.Group();
   normalized.add(oriented);
-  normalized.scale.setScalar(targetHeight / Math.max(size.y, 0.0001));
+  normalized.scale.setScalar(targetHeight / Math.max(size.x, size.y, size.z, 0.0001));
   normalized.rotation.y = Math.PI;
 
   let meshCount = 0;

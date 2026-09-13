@@ -29,19 +29,28 @@ export type AirPodsModel =
   | "airpods-5"
   | "airpods-pro-3"
   | "airpods-max-2";
+export type MacModel =
+  | "macbook-air-m5"
+  | "macbook-pro-m5"
+  | "imac-m4"
+  | "mac-mini-m6"
+  | "mac-studio-m5"
+  | "mac-pro-m2-ultra";
 export type NewModel =
   | Iphone17Model
   | Iphone16Model
   | Iphone15Model
   | IpadModel
   | AppleWatchModel
-  | AirPodsModel;
+  | AirPodsModel
+  | MacModel;
 export type Model = LegacyModel | NewModel;
 export type IphoneSeries = "18" | "17" | "16" | "15";
 export type IpadSeries = "ipad-pro" | "ipad-air" | "ipad" | "ipad-mini";
 export type AppleWatchSeries = "apple-watch-series" | "apple-watch-ultra" | "apple-watch-se";
 export type AirPodsSeries = "airpods" | "airpods-pro" | "airpods-max";
-export type Series = IphoneSeries | IpadSeries | AppleWatchSeries | AirPodsSeries;
+export type MacSeries = "macbook-air" | "macbook-pro" | "imac" | "mac-mini" | "mac-studio" | "mac-pro";
+export type Series = IphoneSeries | IpadSeries | AppleWatchSeries | AirPodsSeries | MacSeries;
 
 export type Finish =
   | "burgundy"
@@ -74,6 +83,7 @@ type ProductDefinition = {
   sceneRotationX?: number;
   sceneRotationY?: number;
   sceneRotationZ?: number;
+  sceneOrientation?: "native";
 };
 
 export const productCatalog: Record<Model, ProductDefinition> = {
@@ -273,6 +283,54 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     sceneHeight: 6.5,
     sceneRotationY: 0.18,
   },
+  "macbook-air-m5": {
+    label: "MacBook Air (M5)",
+    shortLabel: "Air M5",
+    defaultFinish: "sky-blue",
+    isFoldable: false,
+    sceneHeight: 7.3,
+    sceneOrientation: "native",
+  },
+  "macbook-pro-m5": {
+    label: "MacBook Pro (M5)",
+    shortLabel: "Pro M5",
+    defaultFinish: "space-black",
+    isFoldable: false,
+    sceneHeight: 7.3,
+    sceneOrientation: "native",
+  },
+  "imac-m4": {
+    label: "iMac (M4)",
+    shortLabel: "iMac M4",
+    defaultFinish: "blue",
+    isFoldable: false,
+    sceneHeight: 7.5,
+    sceneOrientation: "native",
+  },
+  "mac-mini-m6": {
+    label: "Mac mini (M6)",
+    shortLabel: "mini M6",
+    defaultFinish: "silver",
+    isFoldable: false,
+    sceneHeight: 6.4,
+    sceneOrientation: "native",
+  },
+  "mac-studio-m5": {
+    label: "Mac Studio (M5)",
+    shortLabel: "Studio M5",
+    defaultFinish: "silver",
+    isFoldable: false,
+    sceneHeight: 6.4,
+    sceneOrientation: "native",
+  },
+  "mac-pro-m2-ultra": {
+    label: "Mac Pro (M2 Ultra)",
+    shortLabel: "Pro M2 Ultra",
+    defaultFinish: "silver",
+    isFoldable: false,
+    sceneHeight: 7,
+    sceneOrientation: "native",
+  },
 };
 
 type SeriesDefinition = {
@@ -294,11 +352,20 @@ export const airPodsSeriesIds = [
   "airpods-pro",
   "airpods-max",
 ] as const satisfies ReadonlyArray<AirPodsSeries>;
+export const macSeriesIds = [
+  "macbook-air",
+  "macbook-pro",
+  "imac",
+  "mac-mini",
+  "mac-studio",
+  "mac-pro",
+] as const satisfies ReadonlyArray<MacSeries>;
 export const seriesIds = [
   ...iphoneSeriesIds,
   ...ipadSeriesIds,
   ...appleWatchSeriesIds,
   ...airPodsSeriesIds,
+  ...macSeriesIds,
 ] as const satisfies ReadonlyArray<Series>;
 
 export const seriesCatalog: Record<Series, SeriesDefinition> = {
@@ -386,6 +453,42 @@ export const seriesCatalog: Record<Series, SeriesDefinition> = {
     defaultModel: "airpods-max-2",
     models: ["airpods-max-2"],
   },
+  "macbook-air": {
+    label: "MacBook Air",
+    shortLabel: "Air",
+    defaultModel: "macbook-air-m5",
+    models: ["macbook-air-m5"],
+  },
+  "macbook-pro": {
+    label: "MacBook Pro",
+    shortLabel: "Pro",
+    defaultModel: "macbook-pro-m5",
+    models: ["macbook-pro-m5"],
+  },
+  imac: {
+    label: "iMac",
+    shortLabel: "iMac",
+    defaultModel: "imac-m4",
+    models: ["imac-m4"],
+  },
+  "mac-mini": {
+    label: "Mac mini",
+    shortLabel: "mini",
+    defaultModel: "mac-mini-m6",
+    models: ["mac-mini-m6"],
+  },
+  "mac-studio": {
+    label: "Mac Studio",
+    shortLabel: "Studio",
+    defaultModel: "mac-studio-m5",
+    models: ["mac-studio-m5"],
+  },
+  "mac-pro": {
+    label: "Mac Pro",
+    shortLabel: "Pro",
+    defaultModel: "mac-pro-m2-ultra",
+    models: ["mac-pro-m2-ultra"],
+  },
 };
 
 export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
@@ -442,6 +545,12 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   "airpods-5": ["white"],
   "airpods-pro-3": ["white"],
   "airpods-max-2": ["midnight"],
+  "macbook-air-m5": ["sky-blue"],
+  "macbook-pro-m5": ["space-black"],
+  "imac-m4": ["blue"],
+  "mac-mini-m6": ["silver"],
+  "mac-studio-m5": ["silver"],
+  "mac-pro-m2-ultra": ["silver"],
 };
 
 export function isModel(value: string): value is Model {
@@ -489,6 +598,15 @@ export function isAirPodsModel(model: Model): model is AirPodsModel {
   return model === "airpods-5"
     || model === "airpods-pro-3"
     || model === "airpods-max-2";
+}
+
+export function isMacModel(model: Model): model is MacModel {
+  return model === "macbook-air-m5"
+    || model === "macbook-pro-m5"
+    || model === "imac-m4"
+    || model === "mac-mini-m6"
+    || model === "mac-studio-m5"
+    || model === "mac-pro-m2-ultra";
 }
 
 export function isFinish(value: string): value is Finish {

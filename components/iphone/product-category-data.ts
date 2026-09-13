@@ -3,6 +3,7 @@ import {
   appleWatchSeriesIds,
   ipadSeriesIds,
   iphoneSeriesIds,
+  macSeriesIds,
   type Model,
   type Series,
 } from "./product-data";
@@ -54,9 +55,9 @@ export const productCategoryCatalog: Record<
   mac: {
     label: "Mac",
     shortLabel: "Mac",
-    defaultModel: null,
-    series: [],
-    plannedSeries: ["MacBook Air", "MacBook Pro", "iMac", "Mac mini", "Mac Studio", "Mac Pro"],
+    defaultModel: "macbook-air-m5",
+    series: macSeriesIds,
+    plannedSeries: [],
   },
   airpods: {
     label: "AirPods",

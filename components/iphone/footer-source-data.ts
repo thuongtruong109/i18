@@ -51,6 +51,20 @@ export const productSourceGroups: ReadonlyArray<ProductSourceGroup> = [
     ],
   },
   {
+    product: "Mac",
+    series: [
+      { label: "Air", href: "https://www.apple.com/macbook-air/" },
+      { label: "Pro", href: "https://www.apple.com/macbook-pro/" },
+      { label: "iMac", href: "https://www.apple.com/imac/" },
+      { label: "mini", href: "https://www.apple.com/mac-mini/" },
+      { label: "Studio", href: "https://www.apple.com/mac-studio/" },
+      {
+        label: "Mac Pro",
+        href: "https://www.apple.com/newsroom/2023/06/apple-introduces-m2-ultra/",
+      },
+    ],
+  },
+  {
     product: "AirPods",
     series: [
       { label: "AirPods", href: "https://www.apple.com/airpods-5/" },
