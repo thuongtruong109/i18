@@ -1,9 +1,9 @@
-import type { Language } from "./i18n";
+import { resolveContentLanguage, type ContentLanguage, type Language } from "./i18n";
 import type { AppleWatchModel } from "./product-data";
 import type { ProductCopy } from "./product-copy-types";
 
 const appleWatchProductCopy: Record<
-  Language,
+  ContentLanguage,
   Record<AppleWatchModel, ProductCopy>
 > = {
   en: {
@@ -156,5 +156,5 @@ export function getAppleWatchProductCopy(
   language: Language,
   model: AppleWatchModel,
 ) {
-  return appleWatchProductCopy[language][model];
+  return appleWatchProductCopy[resolveContentLanguage(language)][model];
 }

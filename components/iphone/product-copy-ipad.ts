@@ -1,8 +1,8 @@
-import type { Language } from "./i18n";
+import { resolveContentLanguage, type ContentLanguage, type Language } from "./i18n";
 import type { IpadModel } from "./product-data";
 import type { ProductCopy } from "./product-copy-types";
 
-const ipadProductCopy: Record<Language, Record<IpadModel, ProductCopy>> = {
+const ipadProductCopy: Record<ContentLanguage, Record<IpadModel, ProductCopy>> = {
   en: {
     "ipad-pro-m5": {
       name: "iPad Pro",
@@ -178,5 +178,5 @@ const ipadProductCopy: Record<Language, Record<IpadModel, ProductCopy>> = {
 };
 
 export function getIpadProductCopy(language: Language, model: IpadModel) {
-  return ipadProductCopy[language][model];
+  return ipadProductCopy[resolveContentLanguage(language)][model];
 }

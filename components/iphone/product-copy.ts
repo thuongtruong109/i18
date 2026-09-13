@@ -1,4 +1,9 @@
-import type { Language, Translation } from "./i18n";
+import {
+  resolveContentLanguage,
+  type ContentLanguage,
+  type Language,
+  type Translation,
+} from "./i18n";
 import { getAirPodsProductCopy } from "./product-copy-airpods";
 import { getAppleWatchProductCopy } from "./product-copy-apple-watch";
 import { getIphone15ProductCopy } from "./product-copy-15";
@@ -46,7 +51,7 @@ function proSeriesCopy(
   };
 }
 
-const iphone17ProductCopy: Record<Language, Record<Iphone17Model, ProductCopy>> = {
+const iphone17ProductCopy: Record<ContentLanguage, Record<Iphone17Model, ProductCopy>> = {
   en: {
     ...proSeriesCopy(
       {
@@ -420,5 +425,5 @@ export function getProductCopy(
   if (isAppleWatchModel(model)) return getAppleWatchProductCopy(language, model);
   if (isAirPodsModel(model)) return getAirPodsProductCopy(language, model);
   if (isMacModel(model)) return getMacProductCopy(language, model);
-  return iphone17ProductCopy[language][model];
+  return iphone17ProductCopy[resolveContentLanguage(language)][model];
 }

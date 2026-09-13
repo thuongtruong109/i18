@@ -1,14 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { htmlLanguage, translations, type Language } from "./i18n";
+import { htmlLanguage, isLanguage, translations, type Language } from "./i18n";
 
 const STORAGE_KEY = "apple-product-experience-language";
 const LEGACY_STORAGE_KEY = "iphone-experience-language";
-
-function isLanguage(value: string | null): value is Language {
-  return value === "en" || value === "vi" || value === "pt" || value === "es" || value === "zh" || value === "ja";
-}
 
 function browserLanguage(): Language {
   const candidate = navigator.language.toLowerCase().split("-")[0];

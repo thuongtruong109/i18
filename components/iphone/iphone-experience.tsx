@@ -290,7 +290,12 @@ export function AppleProductExperience() {
         </div>}
       </section>
 
-      <ExperienceFooter content={content.sources} />
+      <ExperienceFooter
+        content={content.sources}
+        language={language}
+        languageLabel={content.header.language}
+        onLanguageChange={setLanguage}
+      />
     </main>
   );
 }

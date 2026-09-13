@@ -1,6 +1,8 @@
 import type { Finish, LegacyModel } from "./product-data";
+import { extendedTranslations } from "./locales/extended-translations";
 
-export type Language = "en" | "vi" | "pt" | "es" | "zh" | "ja";
+export type ContentLanguage = "en" | "vi" | "pt" | "es" | "zh" | "ja";
+export type Language = ContentLanguage | "fr" | "de" | "ko";
 
 type ModelContent = {
   name: string;
@@ -79,6 +81,9 @@ export const languageOptions: ReadonlyArray<{
   { value: "es", label: "Español", flagCode: "es" },
   { value: "zh", label: "简体中文", flagCode: "cn" },
   { value: "ja", label: "日本語", flagCode: "jp" },
+  { value: "fr", label: "Français", flagCode: "fr" },
+  { value: "de", label: "Deutsch", flagCode: "de" },
+  { value: "ko", label: "한국어", flagCode: "kr" },
 ];
 
 export const htmlLanguage: Record<Language, string> = {
@@ -88,7 +93,20 @@ export const htmlLanguage: Record<Language, string> = {
   es: "es",
   zh: "zh-Hans",
   ja: "ja",
+  fr: "fr",
+  de: "de",
+  ko: "ko",
 };
+
+const contentLanguages: ReadonlyArray<ContentLanguage> = ["en", "vi", "pt", "es", "zh", "ja"];
+
+export function isLanguage(value: string | null): value is Language {
+  return languageOptions.some((option) => option.value === value);
+}
+
+export function resolveContentLanguage(language: Language): ContentLanguage {
+  return contentLanguages.includes(language as ContentLanguage) ? language as ContentLanguage : "en";
+}
 
 export const translations: Record<Language, Translation> = {
   en: {
@@ -745,4 +763,5 @@ export const translations: Record<Language, Translation> = {
       },
     },
   },
+  ...extendedTranslations,
 };

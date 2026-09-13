@@ -48,6 +48,24 @@ const categoryCopy: Record<Language, CategoryCopyTemplate> = {
     intro: (product) => `${product}専用のカタログを用意しました。シリーズ、モデル、仕上げ、公式ARアセットを個別に追加できます。`,
     plannedLabel: "追加できるコレクション",
   },
+  fr: {
+    kicker: "COLLECTION DE PRODUITS APPLE",
+    eyebrow: "PRÊT POUR UNE NOUVELLE DIMENSION.",
+    intro: (product) => `${product} dispose maintenant de son propre catalogue, prêt à accueillir ses gammes, modèles, finitions et ressources AR officielles.`,
+    plannedLabel: "COLLECTIONS PRÊTES À ÊTRE AJOUTÉES",
+  },
+  de: {
+    kicker: "APPLE PRODUKTKOLLEKTION",
+    eyebrow: "BEREIT FÜR DIE NÄCHSTE DIMENSION.",
+    intro: (product) => `${product} hat jetzt einen eigenen Katalog für Serien, Modelle, Finishes und offizielle AR-Ressourcen.`,
+    plannedLabel: "BEREITSTEHENDE KOLLEKTIONEN",
+  },
+  ko: {
+    kicker: "APPLE 제품 컬렉션",
+    eyebrow: "새로운 차원을 위한 준비 완료.",
+    intro: (product) => `${product} 전용 카탈로그가 마련되었습니다. 시리즈, 모델, 마감 및 공식 AR 에셋을 추가할 수 있습니다.`,
+    plannedLabel: "추가할 수 있는 컬렉션",
+  },
 };
 
 export function getProductCategoryCopy(

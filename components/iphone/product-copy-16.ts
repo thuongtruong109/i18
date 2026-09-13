@@ -1,4 +1,4 @@
-import type { Language } from "./i18n";
+import { resolveContentLanguage, type ContentLanguage, type Language } from "./i18n";
 import type { Iphone16Model } from "./product-data";
 import type { ProductCopy } from "./product-copy-types";
 
@@ -17,7 +17,7 @@ function productVariants<ModelId extends Iphone16Model>(
   ) as Record<ModelId, ProductCopy>;
 }
 
-const iphone16ProductCopy: Record<Language, Record<Iphone16Model, ProductCopy>> = {
+const iphone16ProductCopy: Record<ContentLanguage, Record<Iphone16Model, ProductCopy>> = {
   en: {
     ...productVariants(
       {
@@ -324,5 +324,5 @@ export function getIphone16ProductCopy(
   language: Language,
   model: Iphone16Model,
 ): ProductCopy {
-  return iphone16ProductCopy[language][model];
+  return iphone16ProductCopy[resolveContentLanguage(language)][model];
 }

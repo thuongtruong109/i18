@@ -1,9 +1,9 @@
-import type { Language } from "./i18n";
+import { resolveContentLanguage, type ContentLanguage, type Language } from "./i18n";
 import type { AirPodsModel } from "./product-data";
 import type { ProductCopy } from "./product-copy-types";
 
 const airPodsProductCopy: Record<
-  Language,
+  ContentLanguage,
   Record<AirPodsModel, ProductCopy>
 > = {
   en: {
@@ -162,5 +162,5 @@ export function getAirPodsProductCopy(
   language: Language,
   model: AirPodsModel,
 ) {
-  return airPodsProductCopy[language][model];
+  return airPodsProductCopy[resolveContentLanguage(language)][model];
 }

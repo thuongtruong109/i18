@@ -1,8 +1,8 @@
-import type { Language } from "./i18n";
+import { resolveContentLanguage, type ContentLanguage, type Language } from "./i18n";
 import type { MacModel } from "./product-data";
 import type { ProductCopy } from "./product-copy-types";
 
-const macProductCopy: Record<Language, Record<MacModel, ProductCopy>> = {
+const macProductCopy: Record<ContentLanguage, Record<MacModel, ProductCopy>> = {
   en: {
     "macbook-air-m5": {
       name: "MacBook Air",
@@ -156,5 +156,5 @@ const macProductCopy: Record<Language, Record<MacModel, ProductCopy>> = {
 };
 
 export function getMacProductCopy(language: Language, model: MacModel) {
-  return macProductCopy[language][model];
+  return macProductCopy[resolveContentLanguage(language)][model];
 }
