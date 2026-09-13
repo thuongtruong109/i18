@@ -92,7 +92,7 @@ export function ExperienceFooter({
       </div>
 
       <div className="footer-bottom">
-        <span>APPLE PRODUCT LAB® / 2026</span>
+        <span>APPLE PRODUCT LAB / 2026</span>
         <span className="footer-bottom__pulse"><i /> LIVE GEOMETRY</span>
         <span>THREE.JS / APPLE AR / INDEPENDENT</span>
       </div>
