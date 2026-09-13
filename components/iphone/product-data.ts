@@ -36,6 +36,7 @@ export type MacModel =
   | "mac-mini-m6"
   | "mac-studio-m5"
   | "mac-pro-m2-ultra";
+export type AppleVisionModel = "apple-vision-pro-m5";
 export type NewModel =
   | Iphone17Model
   | Iphone16Model
@@ -43,14 +44,16 @@ export type NewModel =
   | IpadModel
   | AppleWatchModel
   | AirPodsModel
-  | MacModel;
+  | MacModel
+  | AppleVisionModel;
 export type Model = LegacyModel | NewModel;
 export type IphoneSeries = "18" | "17" | "16" | "15";
 export type IpadSeries = "ipad-pro" | "ipad-air" | "ipad" | "ipad-mini";
 export type AppleWatchSeries = "apple-watch-series" | "apple-watch-ultra" | "apple-watch-se";
 export type AirPodsSeries = "airpods" | "airpods-pro" | "airpods-max";
 export type MacSeries = "macbook-air" | "macbook-pro" | "imac" | "mac-mini" | "mac-studio" | "mac-pro";
-export type Series = IphoneSeries | IpadSeries | AppleWatchSeries | AirPodsSeries | MacSeries;
+export type AppleVisionSeries = "apple-vision-pro";
+export type Series = IphoneSeries | IpadSeries | AppleWatchSeries | AirPodsSeries | MacSeries | AppleVisionSeries;
 
 export type Finish =
   | "burgundy"
@@ -331,6 +334,16 @@ export const productCatalog: Record<Model, ProductDefinition> = {
     sceneHeight: 7,
     sceneOrientation: "native",
   },
+  "apple-vision-pro-m5": {
+    label: "Apple Vision Pro (M5)",
+    shortLabel: "Vision Pro",
+    defaultFinish: "silver",
+    isFoldable: false,
+    sceneHeight: 6.9,
+    sceneRotationX: 0.08,
+    sceneRotationY: Math.PI - 0.12,
+    sceneOrientation: "native",
+  },
 };
 
 type SeriesDefinition = {
@@ -360,12 +373,16 @@ export const macSeriesIds = [
   "mac-studio",
   "mac-pro",
 ] as const satisfies ReadonlyArray<MacSeries>;
+export const appleVisionSeriesIds = [
+  "apple-vision-pro",
+] as const satisfies ReadonlyArray<AppleVisionSeries>;
 export const seriesIds = [
   ...iphoneSeriesIds,
   ...ipadSeriesIds,
   ...appleWatchSeriesIds,
   ...airPodsSeriesIds,
   ...macSeriesIds,
+  ...appleVisionSeriesIds,
 ] as const satisfies ReadonlyArray<Series>;
 
 export const seriesCatalog: Record<Series, SeriesDefinition> = {
@@ -489,6 +506,12 @@ export const seriesCatalog: Record<Series, SeriesDefinition> = {
     defaultModel: "mac-pro-m2-ultra",
     models: ["mac-pro-m2-ultra"],
   },
+  "apple-vision-pro": {
+    label: "Apple Vision Pro",
+    shortLabel: "Vision Pro",
+    defaultModel: "apple-vision-pro-m5",
+    models: ["apple-vision-pro-m5"],
+  },
 };
 
 export const modelIds: ReadonlyArray<Model> = seriesIds.flatMap(
@@ -551,6 +574,7 @@ export const modelFinishes: Record<Model, ReadonlyArray<Finish>> = {
   "mac-mini-m6": ["silver"],
   "mac-studio-m5": ["silver"],
   "mac-pro-m2-ultra": ["silver"],
+  "apple-vision-pro-m5": ["silver"],
 };
 
 export function isModel(value: string): value is Model {
@@ -607,6 +631,10 @@ export function isMacModel(model: Model): model is MacModel {
     || model === "mac-mini-m6"
     || model === "mac-studio-m5"
     || model === "mac-pro-m2-ultra";
+}
+
+export function isAppleVisionModel(model: Model): model is AppleVisionModel {
+  return model === "apple-vision-pro-m5";
 }
 
 export function isFinish(value: string): value is Finish {

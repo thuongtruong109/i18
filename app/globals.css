@@ -1102,7 +1102,7 @@ a {
   left: 50%;
   z-index: -1;
   color: #ffffff05;
-  content: "05";
+  content: "06";
   font-family: Didot, "Bodoni MT", "Bodoni 72", Baskerville, Georgia, serif;
   font-size: clamp(17rem, 27vw, 30rem);
   font-style: italic;
@@ -1248,20 +1248,24 @@ a {
   left: 0;
 }
 .footer-orbit-nav__item--2 {
-  top: 2%;
-  left: 36%;
+  top: 7%;
+  left: 14%;
 }
 .footer-orbit-nav__item--3 {
-  top: 25%;
-  right: 0;
+  top: 2%;
+  right: 16%;
 }
 .footer-orbit-nav__item--4 {
-  right: 7%;
-  bottom: 8%;
+  top: 44%;
+  right: 0;
 }
 .footer-orbit-nav__item--5 {
-  bottom: 1%;
-  left: 17%;
+  right: 15%;
+  bottom: 3%;
+}
+.footer-orbit-nav__item--6 {
+  bottom: 3%;
+  left: 14%;
 }
 .footer-orbit-nav__item a {
   display: grid;
@@ -1307,16 +1311,19 @@ a {
   --footer-orbit-angle: 180deg;
 }
 .footer-orbit-nav:has(.footer-orbit-nav__item--2 a:is(:hover, :focus-visible)) {
-  --footer-orbit-angle: -100deg;
+  --footer-orbit-angle: -132deg;
 }
 .footer-orbit-nav:has(.footer-orbit-nav__item--3 a:is(:hover, :focus-visible)) {
-  --footer-orbit-angle: -42deg;
+  --footer-orbit-angle: -52deg;
 }
 .footer-orbit-nav:has(.footer-orbit-nav__item--4 a:is(:hover, :focus-visible)) {
-  --footer-orbit-angle: 39deg;
+  --footer-orbit-angle: 0deg;
 }
 .footer-orbit-nav:has(.footer-orbit-nav__item--5 a:is(:hover, :focus-visible)) {
-  --footer-orbit-angle: 137deg;
+  --footer-orbit-angle: 52deg;
+}
+.footer-orbit-nav:has(.footer-orbit-nav__item--6 a:is(:hover, :focus-visible)) {
+  --footer-orbit-angle: 132deg;
 }
 .footer-orbit-nav:has(.footer-orbit-nav__item a:is(:hover, :focus-visible)) .footer-orbit-nav__beam {
   opacity: 0.82;

@@ -1,5 +1,6 @@
 import {
   airPodsSeriesIds,
+  appleVisionSeriesIds,
   appleWatchSeriesIds,
   ipadSeriesIds,
   iphoneSeriesIds,
@@ -69,9 +70,9 @@ export const productCategoryCatalog: Record<
   "apple-vision": {
     label: "Apple Vision",
     shortLabel: "Vision",
-    defaultModel: null,
-    series: [],
-    plannedSeries: ["Apple Vision Pro"],
+    defaultModel: "apple-vision-pro-m5",
+    series: appleVisionSeriesIds,
+    plannedSeries: [],
   },
 };
 

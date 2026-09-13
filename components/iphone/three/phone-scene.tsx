@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import {
   isAirPodsModel,
+  isAppleVisionModel,
   isAppleWatchModel,
   isIpadModel,
   isMacModel,
@@ -94,6 +95,10 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#050506");
     scene.fog = new THREE.FogExp2("#050506", 0.045);
+    const sceneBackground = scene.background;
+    const sceneFog = scene.fog;
+    const defaultBackground = new THREE.Color("#050506");
+    const visionBackground = new THREE.Color("#0b111b");
     const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
     camera.position.set(0, 0, 13.2);
 
@@ -265,6 +270,11 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
       const frameDelta = Math.min((timestamp - lastFrameTime) / 1000, 0.05);
       lastFrameTime = timestamp;
       const config = configRef.current;
+      const backgroundTarget = isAppleVisionModel(config.model)
+        ? visionBackground
+        : defaultBackground;
+      sceneBackground.lerp(backgroundTarget, 0.055);
+      sceneFog.color.lerp(backgroundTarget, 0.055);
       if (config.resetKey !== lastResetKey) {
         targetDragX = 0;
         targetDragY = 0;
@@ -289,6 +299,7 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
         && !isAppleWatchModel(config.model)
         && !isAirPodsModel(config.model)
         && !isMacModel(config.model)
+        && !isAppleVisionModel(config.model)
         && config.model !== "duo"
         && !useOfficial;
       duo.root.visible = config.model === "duo" && !useOfficial;
@@ -341,6 +352,8 @@ export function ProductScene({ containerRef, model, finish, duoPose, exploded, r
             ? (window.innerWidth < 760 ? 0.66 : 0.86)
           : isMacModel(config.model)
             ? (window.innerWidth < 760 ? 0.56 : 0.76)
+          : isAppleVisionModel(config.model)
+            ? (window.innerWidth < 760 ? 0.66 : 0.86)
           : (window.innerWidth < 760 ? 0.72 : 0.94);
       const focusScale = 1 + Math.max(0, 1 - Math.abs(scrollProgress - 0.48) * 7) * 0.33;
       world.scale.setScalar(baseScale * focusScale);

@@ -1,0 +1,130 @@
+import { resolveContentLanguage, type ContentLanguage, type Language } from "./i18n";
+import type { AppleVisionModel } from "./product-data";
+import type { ProductCopy } from "./product-copy-types";
+
+const appleVisionProductCopy: Record<
+  ContentLanguage,
+  Record<AppleVisionModel, ProductCopy>
+> = {
+  en: {
+    "apple-vision-pro-m5": {
+      name: "Apple Vision Pro",
+      eyebrow: "WELCOME TO SPATIAL COMPUTING.",
+      intro: "A three-dimensional interface powered by M5 and R1, with 23 million pixels and precise eye and hand tracking.",
+      display: "23M pixels",
+      primarySpecLabel: "3D DISPLAY",
+      camera: "12 ms",
+      secondarySpecLabel: "PHOTON LATENCY",
+      battery: "2.5 hours",
+      designTitle: "A singular piece of three-dimensionally formed glass.",
+      designBody: "The laminated glass flows into a custom aluminum alloy frame, while the Light Seal and Dual Knit Band shape a comfortable, modular fit.",
+      cameraTitle: "Your eyes and hands become the interface.",
+      cameraBody: "High-performance eye tracking, outward-facing cameras, and LiDAR understand where you look, how you move, and the space around you.",
+      secondarySectionKicker: "INPUT / 02",
+      performanceTitle: "M5 and R1. Reality, with almost no delay.",
+      performanceBody: "M5 runs visionOS and rich spatial experiences while R1 streams camera and sensor data to the displays within 12 milliseconds.",
+    },
+  },
+  vi: {
+    "apple-vision-pro-m5": {
+      name: "Apple Vision Pro",
+      eyebrow: "CHÀO MỪNG ĐẾN VỚI ĐIỆN TOÁN KHÔNG GIAN.",
+      intro: "Giao diện ba chiều được vận hành bởi M5 và R1, với 23 triệu điểm ảnh cùng khả năng theo dõi mắt và tay chính xác.",
+      display: "23 triệu điểm ảnh",
+      primarySpecLabel: "MÀN HÌNH 3D",
+      camera: "12 ms",
+      secondarySpecLabel: "ĐỘ TRỄ PHOTON",
+      battery: "2,5 giờ",
+      designTitle: "Một khối kính uốn cong ba chiều liền mạch.",
+      designBody: "Kính nhiều lớp hòa vào khung hợp kim nhôm tùy chỉnh; Light Seal và Dual Knit Band tạo nên thiết kế mô-đun vừa vặn, thoải mái.",
+      cameraTitle: "Đôi mắt và bàn tay trở thành giao diện.",
+      cameraBody: "Hệ thống theo dõi mắt hiệu năng cao, camera hướng ra ngoài và LiDAR hiểu hướng nhìn, cử động và không gian xung quanh bạn.",
+      secondarySectionKicker: "TƯƠNG TÁC / 02",
+      performanceTitle: "M5 và R1. Thực tại gần như không độ trễ.",
+      performanceBody: "M5 vận hành visionOS cùng các trải nghiệm không gian phong phú, còn R1 truyền dữ liệu camera và cảm biến đến màn hình chỉ trong 12 mili giây.",
+    },
+  },
+  pt: {
+    "apple-vision-pro-m5": {
+      name: "Apple Vision Pro",
+      eyebrow: "BEM-VINDO À COMPUTAÇÃO ESPACIAL.",
+      intro: "Uma interface tridimensional com M5 e R1, 23 milhões de píxeis e seguimento preciso dos olhos e das mãos.",
+      display: "23 M de píxeis",
+      primarySpecLabel: "ECRÃ 3D",
+      camera: "12 ms",
+      secondarySpecLabel: "LATÊNCIA DE FÓTONS",
+      battery: "2,5 horas",
+      designTitle: "Uma única peça de vidro moldado em três dimensões.",
+      designBody: "O vidro laminado encontra uma estrutura personalizada em liga de alumínio, enquanto o Light Seal e a Dual Knit Band criam um ajuste modular e confortável.",
+      cameraTitle: "Os olhos e as mãos tornam-se a interface.",
+      cameraBody: "O seguimento ocular, as câmaras exteriores e o LiDAR entendem para onde olha, como se move e o espaço à sua volta.",
+      secondarySectionKicker: "INTERAÇÃO / 02",
+      performanceTitle: "M5 e R1. Realidade quase sem atraso.",
+      performanceBody: "O M5 executa o visionOS e experiências espaciais ricas, enquanto o R1 envia dados das câmaras e sensores aos ecrãs em 12 milissegundos.",
+    },
+  },
+  es: {
+    "apple-vision-pro-m5": {
+      name: "Apple Vision Pro",
+      eyebrow: "TE DAMOS LA BIENVENIDA A LA COMPUTACIÓN ESPACIAL.",
+      intro: "Una interfaz tridimensional con M5 y R1, 23 millones de píxeles y seguimiento preciso de ojos y manos.",
+      display: "23 M de píxeles",
+      primarySpecLabel: "PANTALLA 3D",
+      camera: "12 ms",
+      secondarySpecLabel: "LATENCIA DE FOTONES",
+      battery: "2,5 horas",
+      designTitle: "Una única pieza de vidrio moldeado en tres dimensiones.",
+      designBody: "El vidrio laminado se integra en un marco de aleación de aluminio, mientras el Light Seal y la Dual Knit Band crean un ajuste modular y cómodo.",
+      cameraTitle: "Tus ojos y manos se convierten en la interfaz.",
+      cameraBody: "El seguimiento ocular, las cámaras exteriores y el LiDAR entienden dónde miras, cómo te mueves y el espacio que te rodea.",
+      secondarySectionKicker: "INTERACCIÓN / 02",
+      performanceTitle: "M5 y R1. Realidad casi sin demora.",
+      performanceBody: "El M5 mueve visionOS y experiencias espaciales avanzadas, mientras el R1 lleva los datos de cámaras y sensores a las pantallas en 12 milisegundos.",
+    },
+  },
+  zh: {
+    "apple-vision-pro-m5": {
+      name: "Apple Vision Pro",
+      eyebrow: "欢迎来到空间计算时代。",
+      intro: "M5 与 R1 驱动三维交互界面，配备 2300 万像素显示系统，并可精准追踪眼睛与双手。",
+      display: "2300 万像素",
+      primarySpecLabel: "3D 显示系统",
+      camera: "12 毫秒",
+      secondarySpecLabel: "光子延迟",
+      battery: "2.5 小时",
+      designTitle: "一整片三维层压玻璃，一体成形。",
+      designBody: "层压玻璃自然过渡至定制铝合金边框，遮光罩与 Dual Knit Band 则带来舒适灵活的模块化贴合体验。",
+      cameraTitle: "眼睛与双手，就是你的交互界面。",
+      cameraBody: "高性能眼动追踪、外向摄像头与激光雷达可理解你的视线、动作，以及周围空间。",
+      secondarySectionKicker: "交互 / 02",
+      performanceTitle: "M5 与 R1，让现实几乎零延迟。",
+      performanceBody: "M5 驱动 visionOS 和丰富的空间体验，R1 则在 12 毫秒内将摄像头与传感器数据传送到显示屏。",
+    },
+  },
+  ja: {
+    "apple-vision-pro-m5": {
+      name: "Apple Vision Pro",
+      eyebrow: "空間コンピューティングの世界へようこそ。",
+      intro: "M5とR1が動かす3Dインターフェイス。2,300万ピクセルと、精密な視線・ハンドトラッキングを備えています。",
+      display: "2,300万ピクセル",
+      primarySpecLabel: "3Dディスプレイ",
+      camera: "12ミリ秒",
+      secondarySpecLabel: "フォトンレイテンシ",
+      battery: "2.5時間",
+      designTitle: "3次元的に成形された一枚のガラス。",
+      designBody: "ラミネートガラスが専用アルミニウム合金フレームへ滑らかにつながり、Light SealとDual Knit Bandが快適なモジュラー構造を形作ります。",
+      cameraTitle: "目と手が、そのままインターフェイスに。",
+      cameraBody: "高性能な視線追跡、外向きカメラ、LiDARが、視線と動き、周囲の空間を理解します。",
+      secondarySectionKicker: "入力 / 02",
+      performanceTitle: "M5とR1。現実を、ほぼ遅延なく。",
+      performanceBody: "M5がvisionOSと豊かな空間体験を動かし、R1がカメラとセンサーのデータを12ミリ秒以内でディスプレイへ届けます。",
+    },
+  },
+};
+
+export function getAppleVisionProductCopy(
+  language: Language,
+  model: AppleVisionModel,
+) {
+  return appleVisionProductCopy[resolveContentLanguage(language)][model];
+}

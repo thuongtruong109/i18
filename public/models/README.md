@@ -27,6 +27,7 @@
 - `mac-mini-m6.usdz` — Apple AR asset for the silver Mac mini M6 / M5 Pro enclosure.
 - `mac-studio-m5.usdz` — Apple AR asset for the silver Mac Studio M5 Max / M5 Ultra enclosure.
 - `mac-pro-m2-ultra.usdz` — Apple AR asset for the final Mac Pro with M2 Ultra. Apple no longer lists Mac Pro in the current lineup, but the original 2023 USDZ remains available on Apple's CDN.
+- `apple-vision-pro-m5.usdz` — Apple AR asset for Apple Vision Pro with the Dual Knit Band in its current M5 configuration.
 - `iphone-18-pro*.glb` — browser-ready exports for Apple's Burgundy, Glacier, Silver, and Black variants.
 - `iphone-duo.glb` / `iphone-duo-night-sky.glb` — browser-ready Duo color exports.
 - `iphone-17-pro.glb` / `iphone-17-pro-max.glb` — separate browser-ready exports of the Pro and Pro Max subtrees from Apple's shared Cosmic Orange scene.
@@ -37,6 +38,7 @@
 - `apple-watch-series-11.glb`, `apple-watch-ultra-3.glb`, and `apple-watch-se-3.glb` — browser-ready exports of the latest complete Apple Watch lineup for which Apple published public AR assets.
 - `airpods-5.glb`, `airpods-pro-3.glb`, and `airpods-max-2.glb` — indexed browser-ready exports of Apple's current AirPods, AirPods Pro, and AirPods Max AR scenes.
 - `macbook-air-m5.glb`, `macbook-pro-m5.glb`, `imac-m4.glb`, `mac-mini-m6.glb`, `mac-studio-m5.glb`, and `mac-pro-m2-ultra.glb` — browser-ready exports for all six requested Mac branches.
+- `apple-vision-pro-m5.glb` — browser-ready export of the current Apple Vision Pro AR scene.
 
 The Three.js experience loads the GLB exports. They retain the source meshes, per-vertex normals,
 face-varying UVs, textures, and PBR material values; `scripts/convert_usdz_to_glb.py` performs the conversion.
@@ -74,3 +76,4 @@ Original public AR URLs:
 - https://www.apple.com/105/media/us/mac-mini/2026/2140fd43-1461-420d-942c-6f254535a9a4/ar/mac-mini-silver.usdz
 - https://www.apple.com/105/media/us/mac-studio/2026/e5b92529-6fd3-439c-9461-9d111718310f/ar/mac-studio-studio.usdz
 - https://www.apple.com/105/media/us/mac-pro/2023/77a557c5-d4ce-49bd-8298-c642195ed919/ar/mac_pro_ios16.usdz
+- https://www.apple.com/105/media/us/apple-vision-pro/2025/fda8750c-030b-40f2-a0f7-60ba2db6b547/ar/apple-vision-pro-dual-knit.usdz

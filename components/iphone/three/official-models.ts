@@ -99,6 +99,9 @@ const OFFICIAL_MODEL_URLS: Record<Exclude<Model, "duo">, Partial<Record<Finish, 
   "mac-pro-m2-ultra": {
     silver: "/models/mac-pro-m2-ultra.glb",
   },
+  "apple-vision-pro-m5": {
+    silver: "/models/apple-vision-pro-m5.glb",
+  },
 };
 
 export type DuoPose = "closed" | "landscape";
