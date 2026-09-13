@@ -11,7 +11,7 @@ export function FooterWordmark({ className }: FooterWordmarkProps) {
         <AppleMarkPath pathLength={100} className="footer-glow__mark" />
       </g>
       <text x="895" y="283" textAnchor="middle" className="footer-glow__text">
-        spatial.
+        Apple
       </text>
     </g>
   );
