@@ -1,18 +1,26 @@
 "use client";
 
 import { useRef, type CSSProperties, type PointerEvent } from "react";
-import { AppleMarkPath } from "./apple-mark";
+import { FooterWordmark } from "./footer-wordmark";
 
 type GlowStyle = CSSProperties & {
   "--footer-glow-x": string;
   "--footer-glow-y": string;
   "--footer-glow-opacity": number;
+  "--footer-shift-x": string;
+  "--footer-shift-y": string;
+  "--footer-shift-x-reverse": string;
+  "--footer-shift-y-reverse": string;
 };
 
 const initialGlowStyle: GlowStyle = {
   "--footer-glow-x": "50%",
   "--footer-glow-y": "50%",
   "--footer-glow-opacity": 0.45,
+  "--footer-shift-x": "0px",
+  "--footer-shift-y": "0px",
+  "--footer-shift-x-reverse": "0px",
+  "--footer-shift-y-reverse": "0px",
 };
 
 export function FooterGlow() {
@@ -23,13 +31,29 @@ export function FooterGlow() {
     if (!element) return;
 
     const bounds = element.getBoundingClientRect();
-    element.style.setProperty("--footer-glow-x", `${event.clientX - bounds.left}px`);
-    element.style.setProperty("--footer-glow-y", `${event.clientY - bounds.top}px`);
+    const localX = event.clientX - bounds.left;
+    const localY = event.clientY - bounds.top;
+    const shiftX = ((localX / bounds.width) - 0.5) * 8;
+    const shiftY = ((localY / bounds.height) - 0.5) * 5;
+
+    element.style.setProperty("--footer-glow-x", `${localX}px`);
+    element.style.setProperty("--footer-glow-y", `${localY}px`);
     element.style.setProperty("--footer-glow-opacity", "1");
+    element.style.setProperty("--footer-shift-x", `${shiftX}px`);
+    element.style.setProperty("--footer-shift-y", `${shiftY}px`);
+    element.style.setProperty("--footer-shift-x-reverse", `${-shiftX}px`);
+    element.style.setProperty("--footer-shift-y-reverse", `${-shiftY}px`);
   }
 
   function hideGlow() {
-    glowRef.current?.style.setProperty("--footer-glow-opacity", "0");
+    const element = glowRef.current;
+    if (!element) return;
+
+    element.style.setProperty("--footer-glow-opacity", "0");
+    element.style.setProperty("--footer-shift-x", "0px");
+    element.style.setProperty("--footer-shift-y", "0px");
+    element.style.setProperty("--footer-shift-x-reverse", "0px");
+    element.style.setProperty("--footer-shift-y-reverse", "0px");
   }
 
   return (
@@ -56,21 +80,26 @@ export function FooterGlow() {
           <circle cx="487" cy="145" r="5" />
           <circle cx="116" cy="286" r="3" />
         </g>
-        <g transform="translate(156 -98) scale(14.5)">
-          <AppleMarkPath className="footer-glow__mark footer-glow__text--base" />
-        </g>
-        <text x="895" y="283" textAnchor="middle" className="footer-glow__text footer-glow__text--base">spatial.</text>
-        <g transform="translate(156 -98) scale(14.5)" aria-hidden="true">
-          <AppleMarkPath className="footer-glow__mark footer-glow__text--ambient" />
-        </g>
-        <text x="895" y="283" textAnchor="middle" className="footer-glow__text footer-glow__text--ambient" aria-hidden="true">spatial.</text>
+        <path
+          className="footer-glow__sweep footer-glow__sweep--quiet"
+          d="M56 304C302 70 646 40 1008 112c184 37 294 122 342 216"
+          aria-hidden="true"
+        />
+        <path
+          className="footer-glow__sweep footer-glow__sweep--energy"
+          d="M56 304C302 70 646 40 1008 112c184 37 294 122 342 216"
+          pathLength="1000"
+          aria-hidden="true"
+        />
+        <FooterWordmark className="footer-glow__wordmark footer-glow__wordmark--base" />
+        <FooterWordmark className="footer-glow__wordmark footer-glow__wordmark--refraction footer-glow__wordmark--cyan" />
+        <FooterWordmark className="footer-glow__wordmark footer-glow__wordmark--refraction footer-glow__wordmark--rose" />
+        <FooterWordmark className="footer-glow__wordmark footer-glow__wordmark--ambient" />
+        <FooterWordmark className="footer-glow__wordmark footer-glow__wordmark--trace" />
       </svg>
       <div className="footer-glow__spotlight" aria-hidden="true">
         <svg className="footer-glow__logo" viewBox="0 0 1400 420" preserveAspectRatio="xMidYMid meet">
-          <g transform="translate(156 -98) scale(14.5)">
-            <AppleMarkPath className="footer-glow__mark footer-glow__text--lit" />
-          </g>
-          <text x="895" y="283" textAnchor="middle" className="footer-glow__text footer-glow__text--lit">spatial.</text>
+          <FooterWordmark className="footer-glow__wordmark footer-glow__wordmark--lit" />
         </svg>
       </div>
     </div>
